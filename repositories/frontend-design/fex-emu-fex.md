@@ -1,0 +1,30 @@
+---
+title: "FEX-Emu/FEX"
+repository: "FEX-Emu/FEX"
+url: "https://github.com/FEX-Emu/FEX"
+category: "frontend-design"
+created: "2026-09-14"
+status: "draft"
+star_reason: "GitHub Star 분류 초안"
+tags:
+  - "frontend-design"
+  - "starred-draft"
+---
+
+# FEX-Emu/FEX
+
+> https://github.com/FEX-Emu/FEX
+
+## 이 문서의 용도
+
+카테고리 우선순위대로 재분석 초안으로 생성합니다.
+
+## 한 줄 요약
+
+A fast usermode x86 and x86-64 emulator for Arm64 Linux
+
+## 확인 포인트
+
+- 핵심 해결 과제 파악
+- 적용 가능성 판단
+- 중복 분석 방지 포인트 정리
