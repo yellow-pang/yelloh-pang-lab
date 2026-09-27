@@ -17,48 +17,86 @@ tags:
 
 ## 0. 조사 배경
 
-이 항목은 기존 `repositories/github-stars-classified.md`에서 우선순위 대상에 포함되어,
-초안 형태로 먼저 정리한다.
+이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
 
 ## 1. 한 줄 요약
 
-Open-source agentic workspace enterprises can make their own. Connect the systems you already run — 100+ integrations, MCP, chat tools, apps, browser, local files — with shared mem...
+Open-source agentic workspace enterprises can make their own. Connect the systems you already run — 100+ integrations, MCP, chat tools, apps, browser, local files — with shared memory. Any agent (Claude Code, Codex), any model, or BYOK. Set up in clicks, not months. Local-first: your data never leaves your machines.
 
-## 2. 이 Repository는 무엇인가?
+## 2. GitHub 공식 정보 (검증 가능한 사실)
 
-- 목적: 추후 상세 확인 필요
-- 해결하려는 문제: 확인 후 기록 예정
-- 이 Repository를 주목한 이유: GitHub Star 초안 목록에서 우선순위 반영
+- 주 언어: TypeScript
+- Star 수: 11255
+- Fork 수: 721
+- 최근 수정일: 2026-09-14
+- 라이선스: Other
+- 기본 브랜치: main
+- 홈페이지만의 페이지: https://holaos.ai
+- 아카이브 상태: 아님
+- 활성도: 사용 가능
 
-## 3. 주요 기능
+## 3. 이 Repository는 무엇인가?
 
-- 저장소에서 확인한 핵심 기능을 1~3개로 정리할 예정
+- 목적: `Open-source agentic workspace enterprises can make their own. Connect the systems you already run — 100+ integrations, MCP, chat tools, apps, browser, local files — with shared memory. Any agent (Claude Code, Codex), any model, or BYOK. Set up in clicks, not months. Local-first: your data never leaves your machines.`를 공식 설명으로 시작점으로 둡니다.
+- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
+- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
 
-## 4. 어떻게 동작할 수 있는가?
+
+## 3-1. 쉽게 읽는 한 줄
+
+- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
+- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
+- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+
+## 4. 주제 라벨(Topics)
+
+- agent
+- agent-harness
+- agent-os
+- agentic
+- ai
+- ai-agent
+- ai-agents
+- artificial-intelligence
+- claude-code
+- codex
+
+## 5. 대략적인 동작 흐름
 
 ```text
-입력(요구사항/요청)
-  ↓
-Repository 동작 또는 스크립트 실행
-  ↓
-실행 결과/산출물
+요청 또는 필요성 파악
+    ↓
+저장소의 코어 파일(도구, 라이브러리, 문서)
+    ↓
+실행/적용/테스트
+    ↓
+결과를 기준으로 다시 판단
 ```
 
-## 5. 사용자 생각
+### 용어 풀이
 
-아래 항목은 실제 리뷰 전에 비워두고, 추후 판단을 반영한다.
+- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
+- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
+- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
+- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
+- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
 
-- [ ] 왜 이 저장소를 지금 살펴봐야 하는가?
-- [ ] 나의 사용 시나리오와 연결되는가?
-- [ ] 바로 실험해볼 만한 가치가 있는가?
 
-## 6. 나중에 할 일
+## 6. 사용자 생각
 
-- [ ] README 정독
-- [ ] 공식 문서/샘플 실행
-- [ ] 장단점 및 주의점 분리
-- [ ] Star 유지/해제 여부 판단
+아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
-## 7. 정리
+- [ ] 지금 보려는 이유가 분명한가?
+- [ ] 내 작업 환경에서 바로 적용할 수 있을까?
+- [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-현재는 초안 상태. 저장소 주제의 실제 활용성을 빠르게 판단하기 위한 기본 골격만 남긴다.
+## 7. 나중에 할 일
+
+- [ ] README 전체 읽기
+- [ ] 설치/실행 예시가 있는지 확인
+- [ ] 장단점, 주의점, 대체안 비교
+- [ ] 블로그 글 제목/개인 결론 반영
+
+## 8. 정리
+
+이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
