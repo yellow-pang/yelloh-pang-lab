@@ -1,7 +1,7 @@
 ---
-title: "chaitanyagiri/munder-difflin"
-repository: "chaitanyagiri/munder-difflin"
-url: "https://github.com/chaitanyagiri/munder-difflin"
+title: "HarnessMD/munder-difflin"
+repository: "HarnessMD/munder-difflin"
+url: "https://github.com/HarnessMD/munder-difflin"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
@@ -11,7 +11,7 @@ tags:
   - "starred-draft"
 ---
 
-# chaitanyagiri/munder-difflin
+# HarnessMD/munder-difflin
 
 ## ⭐ 내가 이 Repository를 Star한 이유
 
@@ -113,6 +113,11 @@ Munder Difflin은 여러 터미널 에이전트의 활동을 하나의 협업 �
 2026-09-27 수집 README의 동작·지원·telemetry·라이선스 설명과 breaker 구현의 입력, 기본값, 반복 기록 및 정책 설명을 읽었다.
 앱 설치, CLI 세션 실행, hive 생성이나 성능 측정은 하지 않았다.
 
+2026-10-04에 저장소 주소를 추가 확인했다.
+GitHub API에서 이전 주소 `chaitanyagiri/munder-difflin`과 현재 주소 `HarnessMD/munder-difflin`을 조회한 결과, 두 응답의 Repository ID가 `1255237198`로 같고 현재 이름도 동일했다.
+별도의 신규 프로젝트가 아니라 주소가 이전된 동일 저장소로 처리했다.[3][4]
+문서 파일명과 기존 조사 본문·출처는 보존했으며, 이번 주소 확인이 본문의 모든 기능을 다시 검증했다는 뜻은 아니다.
+
 ## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
@@ -137,3 +142,11 @@ Munder Difflin은 여러 터미널 에이전트의 활동을 하나의 협업 �
 [2] chaitanyagiri/munder-difflin — src/main/breaker.ts
 
 <https://github.com/chaitanyagiri/munder-difflin/blob/main/src/main/breaker.ts>
+
+[3] GitHub REST API — Munder Difflin 이전 주소 조회
+
+<https://api.github.com/repos/chaitanyagiri/munder-difflin>
+
+[4] GitHub REST API — Munder Difflin 현재 주소 조회
+
+<https://api.github.com/repos/HarnessMD/munder-difflin>
