@@ -5,7 +5,7 @@ url: "https://github.com/tinyhumansai/openhuman"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,109 @@ tags:
 
 # tinyhumansai/openhuman
 
-> https://github.com/tinyhumansai/openhuman
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+OpenHuman은 Rust 코어를 중심으로 에이전트 실행, 메모리, 도구와 자동화 흐름을 연결하는 agent harness다.
+Harness는 모델 호출 주변에서 작업 상태·도구·권한을 관리하는 실행 기반을 뜻한다.
+자체 언어 모델 하나를 가리키는 이름이 아니며, 같은 코어에 데스크톱 앱·브라우저 화면·터미널 클라이언트와 Rust 라이브러리 경로가 연결된다.[1]
 
-OpenHuman is an open source agent harness with local-first memory, agent orchestration, and workflows
+## 대화와 반복 작업을 한 구조에서
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+일회성 질문은 채팅으로 해결할 수 있지만 정해진 자료가 들어올 때마다 같은 검토와 후속 작업을 하려면 실행 조건과 상태를 보관해야 한다.
+OpenHuman은 모델·검색·메모리 엔진을 설정으로 선택하는 구조와 재사용 가능한 workflow를 함께 소개한다.
+모든 연결을 한 제공자로 고정하지 않으려는 설계지만, 현재 연결이 실제로 완성된 부분과 인터페이스만 준비된 부분은 구분해서 읽어야 한다.[1]
 
-- 주 언어: Rust
-- Star 수: 39775
-- Fork 수: 3922
-- 최근 수정일: 2026-09-14
-- 라이선스: GNU General Public License v3.0
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://tinyhumans.ai/openhuman
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+특히 README는 메모리에 여러 원격 엔진 어댑터와 설정 키가 있지만 현재 설치의 엔진을 실제로 바꾸는 host binding은 아직 연결되지 않았다고 명시한다.
+현재는 TinyCortex의 Memory Trees를 사용하고 로컬 Obsidian vault로 미러링하는 경로를 설명한다.
+“플러그형”이라는 소개가 모든 backend를 지금 즉시 교체할 수 있다는 뜻은 아니다.[1]
 
-## 3. 이 Repository는 무엇인가?
+코어 기능은 Cargo feature gate로 포함 범위를 나눌 수 있다.
+이는 빌드할 때 어떤 기능을 넣을지 고르는 장치이며 데스크톱 제품과 최소 임베딩 구성이 동일하지 않다는 뜻이다.
+README의 메모리·속도 수치는 특정 구성과 작업에서 저자가 측정한 것이므로 다른 장치나 실제 모델 응답 속도의 보장으로 사용하지 않는다.[1]
 
-- 목적: `OpenHuman is an open source agent harness with local-first memory, agent orchestration, and workflows`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+## 제안 그래프와 실행 그래프 사이의 경계
 
+대표 공식 문서 Workflows는 자동화를 단계와 연결로 이루어진 그래프로 설명한다.
+노드는 에이전트 호출, HTTP 요청, 변환, 조건, 반복, 승인 같은 한 단계이고 선은 자료가 다음 단계로 흐르는 길이다.
+tinyflows 엔진 위에서 스케줄·앱 이벤트·수동 실행으로 시작하고 승인 대기 뒤 이어 실행할 수 있다고 소개한다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+중요한 구분은 에이전트의 `propose_workflow`가 후보 그래프를 검증·설명할 뿐 저장하거나 활성화할 수 없다는 점이다.
+일반 제안에서 새 workflow로 넘어가는 경로는 사람이 카드의 `Save & enable`을 누르는 것으로 문서화되어 있다.
+자연어로 요청했다는 사실만으로 반복 자동화가 영구 등록되는 것을 막는 경계다.[2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+문서는 예외도 설명한다.
+사용자가 Workflows 화면에서 먼저 생성을 시작해 이미 흐름이 존재하는 경우 builder 에이전트의 `save_workflow`가 sandbox dry run 뒤 그 기존 흐름을 저장할 수 있다.
+그래도 새 흐름을 스스로 만들거나 활성화·승인 설정을 바꾸는 권한은 없으며 실제 시험 실행에는 명시적 확인이 필요하다고 한다.
+“에이전트는 절대 저장하지 않는다”는 요약 역시 부정확하다.[2]
 
-## 4. 주제 라벨(Topics)
+## 예시로 따라가는 흐름
 
-- agent-orchestration
-- ai-agents
-- ai-assistant
-- desktop
-- llm
-- local-first
-- mcp
-- personal-ai
-- privacy
-- rust
+이해를 위한 가상 예시이며 직접 실행한 결과가 아니다.
+개인 공개 독서 모임에서 사용 권한이 있는 알림 메일을 요약해 지정한 대화방에 전달하는 반복 작업을 생각해 보자.
+사용자는 어떤 메일을 대상으로 할지, 전달할 정보와 수신 채널이 무엇인지 요청한다.
+에이전트는 이벤트 입력, 요약 단계, 외부 전송 단계가 연결된 후보 그래프를 만들고 각 단계의 설명을 카드로 제시하는 흐름이다.[2]
 
-## 5. 대략적인 동작 흐름
+사람은 제목 필터가 너무 넓지 않은지, 메일 본문의 사적인 내용까지 전달되는지, 수신지가 맞는지 확인한 뒤 저장·활성화 여부를 정한다.
+실행할 때 들어오는 메일 내용은 신뢰할 수 없는 데이터로 취급하고, 저장 시 승인한 그래프의 정해진 동작에 인자를 공급하는 역할로 제한한다고 문서가 설명한다.
+외부 입력의 문장이 새로운 전송 도구나 목적지를 임의로 추가하는 권한은 아니어야 한다.[2]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+`Require approval for outbound actions`를 켜 두면 외부 효과가 있는 도구나 HTTP 호출이 승인 지점에서 멈추고 사람이 결정한 뒤 이어진다.
+결과는 요약문 하나만이 아니라 실행 상태, 단계별 출력과 오류·승인 기록이다.
+Run Inspector와 이력에서 무엇이 실제로 수행됐는지 확인하고, 대기 중을 완료로 오해하지 않는 것이 중요하다.
+실제 메일·채널 연결, 요약 정확도나 승인 차단의 강도는 이번 조사에서 시험하지 않았다.[2]
 
-### 용어 풀이
+## 하나의 런타임과 여러 에이전트
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+README의 Rust 라이브러리 예는 프로세스마다 하나의 Runtime을 만들고 별도 Agent에 제공자·접근 등급·작업 폴더·MCP·Skill을 지정한다.
+예를 들어 읽기 전용 reviewer와 수정 가능한 fixer를 나누어 결과를 전달하는 코드가 나온다.
+역할의 자연어 설명 외에 `Access::readonly()` 같은 접근 설정을 함께 지정하는 점을 볼 수 있다.[1]
 
+Jev는 긴 답변을 생성하는 모델이 아니라 고정 선택지 중 선택·점수·예아니오 판단을 돕는 작은 결정 모델로 소개된다.
+도구 후보를 좁히거나 브라우저 작업의 다음 단계를 결정하는 데 쓰며, 중요한 구매·전송·삭제는 확인 필요 상태를 반환한다고 README가 설명한다.
+이 설명은 해당 경로의 정책 소개이지 모든 도구 실행이 동일하게 차단된다는 독립 감사 결과는 아니다.[1]
 
-## 6. 사용자 생각
+## 맡기기 전에 확인할 것
+
+프로젝트는 Early Beta를 명시한다.
+기능 표에 많은 연결 대상이 있어도 현재 사용하려는 클라이언트·모델·도구 조합의 동작을 따로 살펴야 한다.
+관리형 모델·검색·임베딩·미디어 등을 묶는 TinyHumans 키 경로와 사용자 제공 키 경로도 서로 다르며, 로컬 코어를 쓴다고 모든 호출이 장치 내부에서 끝나는 것은 아니다.[1]
+
+workflow 문서는 저장된 동작 구성과 외부 이벤트를 구별하고 outbound 승인 스위치를 설명한다.
+스위치의 존재가 모든 설치에서 원하는 정책이 이미 켜졌음을 의미하지 않는다.
+저장 전에 외부 전송, 파일 쓰기와 shell 단계의 범위를 확인해야 한다.
+반복은 유한한 상한을 가지며 상한 도달 시 실패할지 마지막 결과로 진행할지도 구성에 따라 달라진다.[2]
+
+GPL-3.0 라이선스는 배포·결합 형태를 검토할 때 중요하다.
+공개 코드라고 조건 없이 모든 방식으로 재배포할 수 있는 것은 아니다.
+이 글은 라이브러리 포함 방식의 법적 판단이나 저자가 비교한 다른 harness의 성능 평가를 대신하지 않는다.[1]
+
+## 직접 읽어볼 자료
+
+- [README의 What is OpenHuman과 Pluggable engines](https://github.com/tinyhumansai/openhuman/blob/main/README.md)
+  제품 화면과 Rust 코어를 구별하고 실제 메모리 교체 연결이 아직 미완성이라는 제한을 읽는다.
+  기능 소개와 구현 가능 범위를 대조하는 출발점이다.
+- [Workflows의 The agent builds it, you approve it](https://github.com/tinyhumansai/openhuman/blob/main/gitbooks/features/workflows.md)
+  후보 제안, 새 흐름 생성, 기존 흐름 저장의 권한 차이를 확인한다.
+  사용자 클릭이 필요한 경계와 builder 예외가 같은 문서에 있다.
+- [Workflows의 Trust와 Watching it run](https://github.com/tinyhumansai/openhuman/blob/main/gitbooks/features/workflows.md)
+  외부 입력을 데이터로 제한하는 설명과 승인 대기·재개 기록을 읽는다.
+  자동화의 결과를 단일 답변이 아니라 단계별 실행 이력으로 확인하는 방법을 보여 준다.
+
+## 정리
+
+OpenHuman은 여러 에이전트와 반복 작업을 공통 코어에서 관리하려는 실행 기반이다.
+기능 연결의 완성도, 메모리·외부 호출 경로와 저장·실행 승인 경계를 확인하는 일이 화면의 편의와 별도로 남는다.
+
+## 자료 확인 범위
+
+2026-09-27 기준 README의 코어·엔진·임베딩 설명, 루트 구성과 공식 workflow 문서를 확인했다.
+설치, 라이브러리 빌드, 계정 연결과 자동화 실행은 하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +123,19 @@ OpenHuman is an open source agent harness with local-first memory, agent orchest
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] tinyhumansai/openhuman — README.md
+
+<https://github.com/tinyhumansai/openhuman/blob/main/README.md>
+
+[2] tinyhumansai/openhuman — gitbooks/features/workflows.md
+
+<https://github.com/tinyhumansai/openhuman/blob/main/gitbooks/features/workflows.md>

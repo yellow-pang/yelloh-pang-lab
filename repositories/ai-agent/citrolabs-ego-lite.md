@@ -5,7 +5,7 @@ url: "https://github.com/citrolabs/ego-lite"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,104 @@ tags:
 
 # citrolabs/ego-lite
 
-> https://github.com/citrolabs/ego-lite
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+ego lite는 사람과 AI 에이전트가 같은 브라우저 안의 서로 다른 작업 공간에서 일하도록 설계된 브라우저다.
+공개 저장소는 `ego-browser` Skill과 연결 자료를 제공하고, 브라우저 앱은 별도로 내려받는 무료 배포물이라고 README가 구분한다.
+따라서 저장소 전체가 브라우저 엔진 소스라고 가정하거나, Skill 파일만 있으면 독립 실행이 된다고 이해하면 안 된다.[1]
 
-The fastest browser for AI agents to run browser automation, built for sharing your logged-in browser state with your AI agents, like Codex or Claude Code, without disturbing you. Zero cost, zero config.
+## 로그인 상태와 작업 공간을 함께 다룬다
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+웹 자동화를 맡길 때 새 브라우저에는 로그인이 없고, 사람이 쓰던 창을 공유하면 자동화가 탭과 입력을 가로챌 수 있다.
+ego lite는 에이전트마다 Space라는 작업 공간을 주고 사용자는 자신의 공간에서 탐색을 계속하는 방식을 제시한다.
+첫 시작에서 Chrome 데이터 이전에 동의하면 로그인·쿠키·확장·북마크를 가져오는 흐름이 안내된다.[1]
 
-- 주 언어: JavaScript
-- Star 수: 15878
-- Fork 수: 827
-- 최근 수정일: 2026-09-14
-- 라이선스: MIT License
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://lite.ego.app
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+여기서 공간의 분리는 사용 중인 탭을 두고 경쟁하지 않게 하는 인터페이스의 성격이 크다.
+README는 에이전트가 실제 로그인과 탭에 접근할 수 있다는 점을 장점으로 소개한다.
+그러므로 “별도 Space”를 계정 권한이 완전히 분리된 익명 브라우저라고 바꾸어 읽으면 안 된다.
+로그인된 상태를 공유하는 편리함은 그 권한으로 행동할 수 있다는 책임과 함께 온다.[1]
 
-## 3. 이 Repository는 무엇인가?
+## 한 번의 스크립트로 여러 단계를 묶는다
 
-- 목적: `The fastest browser for AI agents to run browser automation, built for sharing your logged-in browser state with your AI agents, like Codex or Claude Code, without disturbing you. Zero cost, zero config.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+`ego-browser`는 브라우저 능력을 JavaScript 함수로 노출한다.
+실제 Skill 예시는 `taskSpace()`로 작업 공간을 얻고 `page("p1")`로 페이지를 참조한 뒤 이동과 스냅샷을 수행한다.
+개별 셸 명령을 계속 나열하는 대신 관련 행동과 대기를 스크립트 안에서 조합하는 방식이다.[2]
 
+이 코드는 페이지 안이 아니라 Node.js에서 실행된다. `document`나 `window` 같은 웹 페이지 객체를 다루려면 `page.evaluate()` 안으로 넣어야 한다.
+이름이 비슷하더라도 Playwright API가 아니므로 `locator()` 같은 메서드를 임의로 추측하지 말라고 지침이 명시한다.
+도구의 익숙한 단어와 실제 지원 인터페이스를 구분해야 한다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+프로세스와 브라우저 상태의 수명도 다르다.
+각 호출은 새 Node.js 프로세스라 변수는 남지 않지만 TaskSpace와 탭, 페이지 라벨은 유지된다.
+Skill은 하나의 목표에 하나의 TaskSpace를 만들고 ID를 출력해 다음 호출에서 재사용하도록 한다.
+문제가 생겼다고 새 공간을 계속 만들지 말고 기존 공간 안에서 복구하거나 사용자에게 묻는 것이 규정된 흐름이다.[2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## 관측, 행동, 결과 확인을 잇는다
 
-## 4. 주제 라벨(Topics)
+스냅샷은 화면을 구조화된 텍스트로 읽는 자료이며, 일반 DOM 페이지에서는 의미 있는 선택자와 함께 사용하는 경로를 권장한다.
+그림이나 위치가 필요한 상황에는 스크린샷을 사용한다.
+두 자료를 매번 동시에 받는 것보다 다음 행동을 정하는 데 필요한 최소 관측을 고르도록 설명한다.[2]
 
-- agent-skills
-- ai-agent
-- automation
-- browser
-- browser-automation
-- claude-code
-- codex
-- hermes-agent
-- skills
-- skills-sh
+행동 뒤에는 고정 시간을 무조건 기다리는 대신 URL이나 요소, 애플리케이션 상태의 변화처럼 관측 가능한 조건을 기다린다.
+클릭의 receipt는 행동을 보냈고 즉시 나타난 팝업·대화상자를 관측했다는 기록일 뿐, 원하는 결과가 실제로 저장되었다는 검증은 아니라고 문서가 구분한다.
+이 차이가 브라우저 자동화의 완료 판단에서 중요하다.[2]
 
-## 5. 대략적인 동작 흐름
+## 예시로 따라가는 흐름
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+Skill의 공개 예제는 `inspect example page`라는 TaskSpace를 만들고 첫 페이지 `p1`을 `https://example.com`으로 이동시킨다.
+그 뒤 공간 ID와 페이지 라벨, 스냅샷을 출력한다.
+입력은 대상 URL과 읽을 목적이고, 중간 산출물은 다음 호출이 같은 공간을 이어받을 수 있는 ID다.
+스냅샷에서 본 요소를 토대로 추가 행동을 정하는 구조이지 이전에 보지 않은 버튼을 추측해서 누르는 예제가 아니다.[2]
 
-### 용어 풀이
+후속 호출에서는 앞서 출력한 공간 ID로 재개하고 같은 페이지를 다른 URL로 이동할 수 있다.
+새 프로세스이므로 이전 변수 이름이 자동으로 살아 있다고 기대하지 않는다.
+읽기 작업이 끝났다면 최종 자료가 요청에 맞는지 확인하고 `finish({ keep: [] })`로 에이전트가 관리한 페이지를 정리하는 것이 기본 흐름이다.
+사용자가 만든 탭이나 소유가 불분명한 탭은 별도로 보호된다.
+이 글은 문서의 예시를 읽은 설명이며 실제 브라우저 이동이나 계정 조작을 실행하지 않았다.
+출력된 ID나 스냅샷 내용도 재현 결과처럼 만들어 제시하지 않는다.[2]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+## 사용자의 개입을 우회하지 않는다
 
+Skill은 사용자가 제어를 가져가거나 공간이 비활성·미할당 상태이면 중지하고 우회하지 말라고 규정한다.
+브라우저 권한 요청이나 장치 선택 등은 사용자가 처리하며, 필요한 경우 `handOff()`로 넘기고 확인 후 같은 공간을 재개한다.
+이 동작은 자동화 성공을 위해 모든 팝업을 강제로 넘기는 접근과 구별된다.[2]
 
-## 6. 사용자 생각
+쿠키와 저장소를 지우는 작업도 Space 안에서만 끝난다고 가정하면 위험하다.
+지침의 관련 참조는 일부 초기화가 브라우저 프로필 전체에 영향을 줄 수 있다고 경고한다.
+작업 공간의 분리와 데이터 삭제 범위를 같은 것으로 보면 안 된다.[2]
+
+README 수집본에서 현재 실행 플랫폼은 macOS이며 Windows는 예정된 비공개 시험, Linux는 로드맵으로 설명된다.
+속도·토큰 절감과 다른 제품보다 우수하다는 비교는 저자의 벤치마크 및 주장으로 남겨두어야 한다.
+이 글에서는 동일 조건 측정으로 검증하지 않았다.
+자료는 브라우징 데이터의 로컬 보관과 제한된 제품 신호 수집을 함께 설명하므로 “전송이 전혀 없다”는 주장도 하지 않는다.[1]
+
+## 직접 읽어볼 자료
+
+1. [README의 Quick Start](https://github.com/citrolabs/ego-lite/blob/main/README.md)
+   앱과 Skill의 설치가 서로 다른 단계임을 확인하고 Chrome 데이터 이전이 어떤 정보에 접근하도록 하는지 읽는다.
+   현재 플랫폼과 예정된 지원도 구분해야 한다.
+2. [ego-browser Skill의 실행 예시](https://github.com/citrolabs/ego-lite/blob/main/skills/ego-browser/SKILL.md)
+   Node.js 코드와 페이지 내부 코드의 경계를 읽은 다음 TaskSpace ID와 페이지 라벨을 따라간다.
+   변수는 사라지지만 브라우저 상태는 유지된다는 계약이 후속 작업을 이해하는 핵심이다.
+3. [동일 Skill의 User control and completion](https://github.com/citrolabs/ego-lite/blob/main/skills/ego-browser/SKILL.md)
+   사용자에게 넘기는 시점과 `finish`가 정리하는 탭의 범위를 살핀다.
+   클릭 receipt와 애플리케이션 결과 검증의 차이도 함께 읽으면 자동화의 완료 기준을 구체화할 수 있다.
+
+## 정리
+
+ego lite의 특징은 실제 로그인 상태를 가진 브라우저 안에서 사람과 에이전트의 작업 공간을 나누는 데 있다.
+Space 재사용, 관측에 근거한 조작, 사용자 제어권 반환을 함께 이해해야 편리함과 권한의 범위를 구분할 수 있다.
+
+## 자료 확인 범위
+
+2026-09-27 README와 ego-browser Skill의 TaskSpace·페이지 API·관측·파일·제어권·종료 설명을 확인했다.
+앱 다운로드, 설치, 로그인 이전, 스크립트 실행, 속도 비교는 하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +118,19 @@ The fastest browser for AI agents to run browser automation, built for sharing y
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] citrolabs/ego-lite — README.md
+
+<https://github.com/citrolabs/ego-lite/blob/main/README.md>
+
+[2] citrolabs/ego-lite — skills/ego-browser/SKILL.md
+
+<https://github.com/citrolabs/ego-lite/blob/main/skills/ego-browser/SKILL.md>

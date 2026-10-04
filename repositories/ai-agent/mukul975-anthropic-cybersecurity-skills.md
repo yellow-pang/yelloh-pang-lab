@@ -5,7 +5,7 @@ url: "https://github.com/mukul975/Anthropic-Cybersecurity-Skills"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,95 @@ tags:
 
 # mukul975/Anthropic-Cybersecurity-Skills
 
-> https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+Anthropic-Cybersecurity-Skills는 AI 에이전트가 보안 조사 절차를 참고하도록 만든 커뮤니티 Skill 모음이다.
+저장소 이름과 달리 Anthropic의 공식 제품은 아니며, README도 해당 조직과 무관한 독립 프로젝트라고 명시한다.
+Skill은 특정 상황에서 사용할 지침, 사전 조건, 작업 순서와 참고 자료를 묶은 단위다.[1]
 
-817 structured cybersecurity skills for AI agents · Mapped to 6 frameworks: MITRE ATT&CK, NIST CSF 2.0, MITRE ATLAS, D3FEND, NIST AI RMF & MITRE F3 (Fight Fraud) · agentskills.io standard · Works with Claude Code, GitHub Copilot, Codex CLI, Cursor, Gemini CLI & 20+ platforms · 29 security domains · Apache 2.0
+## 도구 이름을 아는 것과 조사 순서를 아는 것
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+보안 분석에는 로그나 네트워크 기록에서 무엇을 먼저 볼지, 어떤 증거를 추가로 확인할지, 결과를 어떻게 정리할지에 대한 판단이 필요하다.
+이 모음은 범용 모델에게 그런 절차를 제공하는 것을 목표로 한다.
+메모리 분석, 네트워크 방어, 사고 대응, 클라우드 보안 등 주제별 지침을 나누고 관련 보안 프레임워크와 연결한다.
+그 자체가 모든 검사 도구를 내장한 백신이나 자동 침해 판정 서비스는 아니다.[1]
 
-- 주 언어: Python
-- Star 수: 32750
-- Fork 수: 3954
-- 최근 수정일: 2026-09-14
-- 라이선스: Apache License 2.0
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://mahipal.engineer/Anthropic-Cybersecurity-Skills/
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+README는 먼저 Skill의 짧은 메타데이터를 읽고 필요한 본문만 여는 방식으로 설명한다.
+메타데이터에는 이름, 설명, 분야와 태그가 있어 선택을 돕고, 본문에는 적용 상황과 사전 조건, 절차가 들어간다.
+자료를 한꺼번에 모델 입력에 넣지 않고 관련 부분부터 읽는 구조라는 점이 일반적인 명령어 목록과 다른 설명의 중심이다.[1]
 
-## 3. 이 Repository는 무엇인가?
+## 분류 체계와 실제 절차를 함께 보기
 
-- 목적: `817 structured cybersecurity skills for AI agents · Mapped to 6 frameworks: MITRE ATT&CK, NIST CSF 2.0, MITRE ATLAS, D3FEND, NIST AI RMF & MITRE F3 (Fight Fraud) · agentskills.io standard · Works with Claude Code, GitHub Copilot, Codex CLI, Cursor, Gemini CLI & 20+ platforms · 29 security domains · Apache 2.0`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+README는 ATT&CK, NIST CSF 등 여러 프레임워크의 매핑을 소개한다.
+매핑은 한 절차가 어떤 공격 행동이나 방어·관리 범주와 관련되는지 표시하는 연결 정보다.
+관련 ID가 붙었다는 사실만으로 해당 표준의 인증을 받았거나 모든 통제를 구현했다는 뜻은 아니다.
+대표 파일의 실제 메타데이터와 본문을 함께 봐야 어느 범위까지 연결되어 있는지 판단할 수 있다.[1]
 
+읽어 본 `analyzing-network-traffic-of-malware/SKILL.md`는 이미 확보된 PCAP을 분석하는 지침이다.
+PCAP은 네트워크에서 관찰한 패킷을 저장한 파일 형식이다.
+이 Skill은 트래픽 개요, DNS와 웹 통신, 주기적 연결, 탐지 규칙, 추출 자료를 조사 항목으로 제시하며, 호스트의 프로세스 자체를 분석하는 용도로 쓰지 말라고 범위를 제한한다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+필요 도구로 Wireshark, Zeek, Suricata와 Python 라이브러리 등을 안내한다.
+이들은 각각 패킷을 읽거나 통신 메타데이터를 만들고 규칙에 맞는 신호를 찾는 역할이다.
+지침을 내려받는 것만으로 이 프로그램들이 설치되거나 권한이 부여되지는 않는다.
+사전 조건을 확인하는 일은 Skill 선택과 별도의 단계다.[2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## 예시로 따라가는 흐름
 
-## 4. 주제 라벨(Topics)
+대표 사례는 허가된 격리 환경에서 이미 수집한 PCAP을 방어 목적으로 읽는 상황이다.
+공식 Skill이 제시한 조사 순서를 설명하는 사례이며 이 글에서 악성코드를 실행하거나 트래픽을 수집한 결과는 아니다.
+먼저 기록의 시간 범위와 프로토콜, 통신 상대를 확인해 분석 범위를 잡는다.
+그 다음 DNS 질의와 웹 요청 등 서로 다른 관측 자료를 살펴 의심스러운 목적지나 반복 패턴이 있는지 조사한다.
+시작부터 특정 통신을 악성이라고 확정하지 않고 여러 근거를 모으는 읽기 흐름이다.[2]
 
-- ai-agents
-- claude-code
-- cloud-security
-- cybersecurity
-- devsecops
-- ethical-hacking
-- incident-response
-- infosec
-- llm
-- malware-analysis
+이어 일정한 간격으로 반복되는 연결 같은 후보를 찾았다면, 정상 소프트웨어의 정기 통신이나 공용 CDN 주소와 혼동한 것은 아닌지 검토한다.
+Skill도 정상 클라우드 트래픽을 명령·제어 통신으로 오인하는 위험을 주의점으로 든다.
+최종 정리는 기록의 범위, 관찰한 통신, 기존 탐지 규칙의 반응, 추가 검토가 필요한 항목을 구분하는 방식으로 이해할 수 있다.
+원문에 포함된 보고서 숫자와 주소는 출력 형식의 예시이지 이번 조사에서 관측한 지표가 아니다.
+사람은 원본 패킷과 분석 근거를 대조하고, 증거가 부족한 후보를 확정된 침해로 바꾸지 않아야 한다.[2]
 
-## 5. 대략적인 동작 흐름
+## 권한과 근거가 절차보다 먼저다
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+README는 공격·방어 양쪽으로 쓰일 수 있는 내용이 포함되어 있으며, 소유하거나 명시적 서면 허가가 있는 시스템에서만 합법적으로 사용하라고 요구한다.
+따라서 이 글은 저장소 전체를 공격 실행 안내로 풀지 않고, 확보된 자료를 읽는 방어적 분석 사례로 범위를 한정한다.
+네트워크 기록에는 인증 정보나 개인 데이터가 섞일 수 있으므로 분석 자료를 외부 모델에 넘길지 여부도 별도 승인 범위다.[1][2]
 
-### 용어 풀이
+AI가 절차를 따른다고 해서 보안 전문가의 검토가 없어지는 것은 아니다.
+대표 Skill은 주기성이나 도메인 특성 같은 신호를 제시하지만, 신호는 추가 조사 대상을 좁히는 단서이지 단독 판정의 근거가 되기 어렵다.
+어떤 분석 도구와 버전을 사용했는지, 기록이 전체 시간을 포함하는지, 암호화되어 보이지 않는 부분이 있는지도 결과 해석의 조건으로 남는다.[2]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+자료 자체의 일관성에도 한계가 보인다.
+README 안에는 Skill 수와 프레임워크 현황을 설명하는 서로 다른 시점의 수치·문장이 섞여 있다.
+이 글은 이를 최신 총계나 검증된 프레임워크 전체 지원 수로 재인용하지 않는다.
+또한 README가 제안하는 표준 폴더 구조와 개별 Skill의 실제 포함 파일은 별도로 확인해야 하며, 대표 한 개를 읽은 결과를 전체 모음의 정확성으로 확대하지 않는다.[1]
 
+## 직접 읽어볼 자료
 
-## 6. 사용자 생각
+- [README의 커뮤니티·허가 경고](https://github.com/mukul975/Anthropic-Cybersecurity-Skills/blob/main/README.md)
+  이름보다 먼저 독립 프로젝트라는 설명과 사용 권한 조건을 읽는다.
+  도구의 공개 여부와 검사 대상에 대한 허가는 다른 문제라는 점을 분명히 하는 출발점이다.
+- [네트워크 트래픽 분석 Skill](https://github.com/mukul975/Anthropic-Cybersecurity-Skills/blob/main/skills/analyzing-network-traffic-of-malware/SKILL.md)
+  When to Use와 Prerequisites를 먼저 보고 Workflow와 Pitfalls를 연결한다.
+  명령어를 복사하는 대신 어떤 관측 자료를 어떤 주장에 연결하는지 확인하는 읽기 순서다.
+- [README의 Skill anatomy](https://github.com/mukul975/Anthropic-Cybersecurity-Skills/blob/main/README.md)
+  메타데이터와 본문, 참조·스크립트의 역할을 나누어 읽는다.
+  자동 탐색용 설명이 충분한지와 실제 분석 절차가 검증 가능한지는 별개의 질문이라는 점을 살필 수 있다.
+
+## 정리
+
+이 저장소는 보안 지식을 AI가 읽기 쉬운 절차 문서로 정리한 모음이다.
+프레임워크 태그나 역할 지침은 분석을 돕는 자료이며, 합법적 권한·원본 증거·전문적 검토를 대신하지 않는다.
+
+## 자료 확인 범위
+
+2026-09-27 수집된 README와 네트워크 트래픽 분석 Skill 원문을 확인했다.
+보안 도구 설치, 악성코드 실행, 패킷 수집, 탐지 규칙 적용 및 외부 시스템 검사는 수행하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +109,19 @@ tags:
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] mukul975/Anthropic-Cybersecurity-Skills — README.md
+
+<https://github.com/mukul975/Anthropic-Cybersecurity-Skills/blob/main/README.md>
+
+[2] mukul975/Anthropic-Cybersecurity-Skills — skills/analyzing-network-traffic-of-malware/SKILL.md
+
+<https://github.com/mukul975/Anthropic-Cybersecurity-Skills/blob/main/skills/analyzing-network-traffic-of-malware/SKILL.md>

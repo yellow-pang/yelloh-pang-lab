@@ -5,7 +5,7 @@ url: "https://github.com/ansible/ansible"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,68 +13,101 @@ tags:
 
 # ansible/ansible
 
-> https://github.com/ansible/ansible
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+Ansible은 시스템 설정, 애플리케이션 배포, 네트워크와 여러 장비의 작업을 자동화하는 도구다.
+이 저장소의 핵심은 ansible-core이며 자연어로 추론하는 AI 에이전트가 아니다.
+README의 agentless는 관리 대상에 전용 상주 에이전트를 설치하지 않고 기존 SSH 같은 연결을 활용한다는 뜻이다.[1]
 
-Ansible is a radically simple IT automation platform that makes your applications and systems easier to deploy and maintain. Automate everything from code deployment to network configuration to cloud management, in a language that approaches plain English, using SSH, with no agents to install on remote systems. https://docs.ansible.com.
+## 같은 변경을 여러 장비에 적용하는 문제
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+설정 파일을 여러 컴퓨터에 복사한다고 생각해 보자.
+파일 내용만 같아서는 충분하지 않다.
+목적지 경로, 소유자, 권한이 맞아야 하고 이전 파일을 바꿀지 유지할지도 정해야 한다.
+사람이 장비마다 직접 명령을 실행하면 작업 순서와 조건이 달라지기 쉽다.
+Ansible은 사람이 읽고 검토할 수 있는 형태로 작업을 기술하고 여러 장비에 일관되게 적용하는 방향을 택한다.[1][2]
 
-- 주 언어: Python
-- Star 수: 70681
-- Fork 수: 24337
-- 최근 수정일: 2026-09-14
-- 라이선스: GNU General Public License v3.0
-- 기본 브랜치: devel
-- 홈페이지만의 페이지: https://www.ansible.com/
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+작업 기술에 쓰이는 YAML은 들여쓰기와 이름·값으로 구조를 표현하는 형식이다.
+개별 작업은 파일 복사처럼 특정 기능을 맡은 module을 호출한다.
+명령 문자열을 길게 조합하는 대신 모듈의 입력 항목으로 의도를 명시하면, 무엇을 변경하려는지와 어떤 조건이 적용되는지 검토하기 쉬워진다.
+대표 자료로 조회한 `copy.py`에는 모듈 설명, 입력 옵션, 공식 사용 예제가 함께 있다.[2]
 
-## 3. 이 Repository는 무엇인가?
+## 파일 복사도 상태를 다루는 작업이다
 
-- 목적: `Ansible is a radically simple IT automation platform that makes your applications and systems easier to deploy and maintain. Automate everything from code deployment to network configuration to cloud management, in a language that approaches plain English, using SSH, with no agents to install on remote systems. https://docs.ansible.com.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+`ansible.builtin.copy`는 로컬 또는 원격 원본을 관리 대상의 목적지로 복사하고 소유권·권한 같은 메타데이터를 설정한다.
+기본적으로 `src`는 제어 측 파일을 가리키지만 `remote_src`를 켜면 관리 대상의 파일을 찾는다.
+같은 `src`라는 이름도 이 옵션에 따라 의미가 달라진다. `dest`가 파일 경로일 때 부모 디렉터리가 없으면 실패할 수 있다는 조건도 문서화되어 있다.[2]
 
+`force`의 기본값은 true이며 내용이 다르면 목적지 파일을 바꾸는 의미다.
+false로 설정하면 목적지가 없을 때만 전달한다.
+따라서 “항상 복사한다” 또는 “기존 파일을 절대 건드리지 않는다”는 한 문장으로 모듈 동작을 설명할 수 없다.
+옵션은 명령의 편의 기능이 아니라 기존 상태를 어떻게 취급할지 결정하는 정책이다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+권한인 `mode`도 명시적으로 적는 것이 권장된다.
+소스 설명은 숫자를 따옴표 없이 잘못 쓰면 8진수가 아닌 10진수로 해석될 수 있다고 경고한다.
+공식 예제의 `'0644'`처럼 문자열로 전달하는 이유가 여기에 있다.
+권한을 생략하면 새 파일은 시스템 umask, 기존 파일은 기존 권한의 영향을 받으므로 동일한 작업 파일을 썼다는 사실만으로 모든 대상의 권한이 같아지지 않는다.[2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## 예시로 따라가는 흐름
 
-## 4. 주제 라벨(Topics)
+공식 예제는 `/srv/myfiles/foo.conf`를 `/etc/foo.conf`에 복사하면서 소유자와 그룹을 `foo`, 권한을 `'0644'`로 지정한다.
+입력은 단순 경로 두 개가 아니라 최종 파일에 기대하는 속성까지 포함한다.
+이 문서는 예제를 읽는 설명이며 실제 원격 컴퓨터에 적용한 결과가 아니다.
+사용자는 먼저 대상 경로와 계정이 의도한 시스템에 존재하는지, 그 위치에 쓸 권한이 있는지 확인해야 한다.[2]
 
-- ansible
-- python
+모듈은 설정에 따라 원본과 목적지를 처리하고 내용 및 메타데이터를 맞춘다.
+결과 설명에는 목적지와 checksum, 변경 시 원본 임시 경로, backup을 켠 경우 백업 파일 이름 등이 있다.
+checksum은 파일 내용이 전달 과정에서 달라졌는지 확인하는 지문이다.
+반환값을 읽으면 단순히 명령이 끝났는지를 넘어 무엇이 바뀌었고 어떤 파일을 확인해야 하는지 알 수 있다.[2]
 
-## 5. 대략적인 동작 흐름
+사람의 마지막 확인은 복사 성공과 애플리케이션의 설정 수용을 구분하는 것이다.
+파일이 존재해도 사용하는 프로그램의 문법에 맞지 않을 수 있다.
+같은 파일의 공식 예제에는 검증 명령을 거친 뒤 설정을 배치하는 경우와 원본이 다를 때 백업을 남기는 경우도 있다.
+이런 절차를 목적에 맞게 선택해야 하며, 모든 파일 복사가 자동으로 서비스 재시작이나 기능 검증까지 수행하는 것으로 오해하면 안 된다.[2]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+## agentless가 전제 조건 없는 실행은 아니다
 
-### 용어 풀이
+Ansible의 설계 원칙은 전용 에이전트와 추가 포트를 피하고 비-root 사용자로도 쓸 수 있게 하는 것이다.
+그러나 연결·인증·파일 접근 권한을 없애는 기능은 아니다.
+읽기 가능한 경로와 관리자 권한이 필요한 경로를 구분하고, 자동화 대상과 작업 범위를 먼저 정해야 한다.
+이 문서는 실제 장비 접근이나 권한 상승을 수행하지 않았다.[1][2]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+copy 모듈의 platform은 POSIX로 설명되며 Windows 대상에는 `ansible.windows.win_copy`를 사용하라고 안내한다.
+변수 치환이 필요한 파일은 copy의 content를 억지로 조합하기보다 template 모듈을 사용하도록 권고한다.
+대량 재귀 복사도 많은 파일에 잘 확장되지 않는다고 명시되어 있어, 복사 기능이 있다는 이유만으로 모든 배포·동기화 작업의 적합한 선택은 아니다.[2]
 
+또한 현재 조회한 브랜치는 `devel`이다.
+README는 개발 브랜치와 stable 브랜치를 구분하고 devel에서는 호환성을 깨는 변경을 만날 가능성이 높다고 설명한다.
+소스를 읽어 알게 된 옵션을 실제 환경에 적용할 때에는 설치한 릴리스의 문서와 맞추어야 한다.
+라이선스는 README에 GPL v3.0 이상으로 안내되어 있다.[1]
 
-## 6. 사용자 생각
+## 직접 읽어볼 자료
+
+1. [README의 Design Principles와 Branch Info](https://github.com/ansible/ansible/blob/devel/README.md)
+   agentless의 뜻을 AI 에이전트와 분리해 읽고, 조사한 devel 소스와 사용할 안정 릴리스가 같은지 확인한다.
+   자동화의 범위와 배포 버전을 먼저 이해하는 입구다.
+2. [copy.py의 DOCUMENTATION과 EXAMPLES](https://github.com/ansible/ansible/blob/devel/lib/ansible/modules/copy.py)
+   `src`, `dest`, `remote_src`, `force`, `mode`를 공식 예제와 함께 따라간다.
+   원본 위치와 기존 파일 처리, 권한 해석이 각각 독립된 결정이라는 점을 확인한다.
+3. [copy.py의 RETURN과 지원 속성](https://github.com/ansible/ansible/blob/devel/lib/ansible/modules/copy.py)
+   반환하는 파일 정보와 checksum을 읽고 check·diff 지원 및 POSIX 조건을 확인한다.
+   파일을 전달했다는 결과와 프로그램이 새 설정으로 정상 동작한다는 검증의 차이를 정리할 수 있다.
+
+## 정리
+
+Ansible은 장비에 반복할 작업을 명시적인 입력과 모듈로 표현하는 자동화 시스템이다.
+파일 복사 하나도 기존 상태·권한·플랫폼 조건에 따라 의미가 달라지며, 자동화 후 대상 기능의 확인은 별도로 설계해야 한다.
+
+## 자료 확인 범위
+
+2026-09-27의 공식 README와 `ansible.builtin.copy` 구현 파일의 설명·예제를 확인했다.
+Ansible 설치나 playbook 실행, 원격 장비 변경은 하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -82,13 +115,19 @@ Ansible is a radically simple IT automation platform that makes your application
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] ansible/ansible — README.md
+
+<https://github.com/ansible/ansible/blob/devel/README.md>
+
+[2] ansible/ansible — lib/ansible/modules/copy.py
+
+<https://github.com/ansible/ansible/blob/devel/lib/ansible/modules/copy.py>

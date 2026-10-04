@@ -5,7 +5,7 @@ url: "https://github.com/alibaba/open-code-review"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,72 +13,97 @@ tags:
 
 # alibaba/open-code-review
 
-> https://github.com/alibaba/open-code-review
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+Open Code Review는 Git 변경 내용을 읽고 코드 위치와 심각도를 포함한 검토 의견을 생성하는 CLI 도구다.
+파일 선택과 규칙 적용 같은 고정 절차는 프로그램이 처리하고, 문맥을 찾아 결함을 판단하는 일은 도구 사용이 가능한 언어 모델에 맡기는 혼합 구조를 사용한다.
+이름이 비슷한 범용 코딩 에이전트 OpenCode와는 별개 프로젝트다.[1]
 
-Fast, efficient, battle-tested at Alibaba's scale. Hybrid architecture code review tool: deterministic pipelines + LLM Agent, precise line-level comments, built-in multi-language ruleset (NPE, thread-safety, XSS, SQL injection), OpenAI & Anthropic compatible.
+## 변경 목록과 검토 범위가 어긋나는 문제
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+코드 리뷰에 변경 diff만 전달하면 함수 호출부나 다른 파일의 계약을 놓칠 수 있다.
+반대로 전체 저장소를 읽으라고 하면 검토할 파일과 시간을 통제하기 어렵다.
+README는 대규모 변경에서 일부 파일만 검토하는 문제, 잘못된 줄 번호, 프롬프트에 따른 품질 변동을 출발점으로 설명한다.
+이 프로젝트는 검토 대상 확정과 문맥 탐색을 서로 다른 책임으로 나눈다.[1]
 
-- 주 언어: Go
-- Star 수: 24453
-- Fork 수: 1797
-- 최근 수정일: 2026-09-14
-- 라이선스: Apache License 2.0
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://open-codereview.ai
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+diff는 이전 상태와 현재 상태의 차이를 나타낸다.
+기본 workspace 검토는 staged·unstaged뿐 아니라 untracked 파일도 포함하며, 특정 커밋이나 브랜치 범위도 지정할 수 있다.
+전체 파일을 읽는 `ocr scan`은 의미 있는 diff가 없는 디렉터리의 조사에 별도 경로를 제공한다.
+“현재 변경 검토”와 “파일 전체 감사”는 입력 범위부터 다른 요청이다.[1][2]
 
-## 3. 이 Repository는 무엇인가?
+## 결정적인 처리와 유연한 추론
 
-- 목적: `Fast, efficient, battle-tested at Alibaba's scale. Hybrid architecture code review tool: deterministic pipelines + LLM Agent, precise line-level comments, built-in multi-language ruleset (NPE, thread-safety, XSS, SQL injection), OpenAI & Anthropic compatible.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+프로그램 쪽은 검토 파일을 고르고 관련 파일을 묶으며 파일 특성에 맞는 규칙을 붙인다.
+README는 언어별 리소스 파일처럼 함께 봐야 하는 파일을 하나의 검토 단위로 묶는 예를 든다.
+묶음마다 독립된 맥락을 사용하면 전체 변경을 한 대화에 밀어 넣지 않고 검토를 나눌 수 있다.
+이는 누락이 없다는 실험적 증명이 아니라 프로젝트가 설명하는 처리 설계다.[1]
 
+모델 쪽은 전체 파일 읽기, 코드 검색, 다른 변경 파일 확인으로 필요한 맥락을 보충한다.
+결과 의견에는 `path`, 시작·끝 줄, category, severity와 선택적 수정 코드가 붙는다.
+추가로 읽은 공식 Skill은 두 줄 번호가 모두 0이면 위치 지정 실패라고 명확히 설명한다.
+정밀한 위치를 목표로 한다는 소개와 실제로 위치를 못 찾는 경우를 함께 읽어야 한다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+사용자 규칙도 기본 규칙에 무조건 덧붙는 것은 아니다.
+Skill의 우선순위는 명령행 지정, 프로젝트 설정, 사용자 전역 설정, 시스템 기본값 순서다.
+첫 일치 사용자 규칙이 기본 규칙을 대체하며 함께 쓰려면 `merge_system_rule`을 설정한다.
+규칙 파일이 있다는 사실만 확인하지 말고 무엇을 대체하는지 확인해야 검토 범위의 뜻을 알 수 있다.[2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## 예시로 따라가는 흐름
 
-## 4. 주제 라벨(Topics)
+공식 Skill의 브랜치 검토 예시는 기준 브랜치와 대상 브랜치를 지정하고 `--background`로 변경의 목적을 전달하는 방식이다.
+이해를 위해 “입력 검증을 추가한 기능 브랜치를 검토한다”는 가상 상황을 생각해 볼 수 있다.
+직접 실행한 결과가 아니다.
+입력은 코드 차이뿐 아니라 어떤 입력을 거절해야 하고 기존 호출자와 무엇이 같아야 하는지에 대한 짧은 설명이다.[2]
 
-- agent
-- agent-skills
-- code-review
-- code-review-assistant
-- harness
-- repository-level-context
+먼저 preview로 어떤 파일을 검토할지 확인하면 모델 호출 전 범위를 볼 수 있다.
+실제 검토 단계에서는 파일별 규칙과 관련 문맥이 모델에 전달되고, 결과는 심각도와 위치가 있는 의견으로 나온다.
+이때 사람이 봐야 하는 것은 의견 수가 아니라 근거가 실제 코드와 맞는지, 변경 요구사항과 충돌하지 않는지, 제외되거나 실패한 파일이 있는지다.
+위치가 0으로 반환된 의견은 정확한 줄을 찾아 다시 읽어야 한다.[2]
 
-## 5. 대략적인 동작 흐름
+큰 출력은 파일로 저장해 전부 읽도록 Skill이 권고한다.
+앞이나 뒤 일부만 표시하면 먼저 나온 의견을 잃을 수 있기 때문이다.
+검토만 요청했을 때에는 수정 전에 허락을 받아야 하고, 수정 후 커밋 역시 별도 확인을 요구한다.
+따라서 출력된 제안은 자동 적용 승인이 아니라 사람이 분류하고 재현할 결함 후보로 다루는 것이 이 흐름의 끝이다.[2]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+## 비용 제한과 정확도의 경계
 
-### 용어 풀이
+일반 경로는 LLM 제공자와 연결 설정이 필요하고, delegation 모드는 기존 호스트 에이전트에게 검토를 맡기는 다른 경로다.
+외부 모델을 사용하면 코드와 맥락의 전송 범위 및 호출 비용을 확인해야 한다.
+README의 벤치마크는 적은 잡음과 높은 precision을 택하면서 recall이 낮아지는 교환 관계도 명시한다.
+precision은 보고한 문제 중 실제 문제의 비율, recall은 존재하는 문제 중 찾아낸 비율이다.
+의견이 적다고 결함이 없다는 뜻은 아니다.[1]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+Skill에는 큰 diff가 예산을 넘으면 건너뛸 수 있고 총 토큰 예산에 걸린 파일은 `failed(budget)`로 보고한다는 조건이 있다.
+부분 결과가 출력되어도 모든 파일의 검토가 끝난 것은 아니다.
+모델 응답과 줄 번호가 그럴듯해도 실제 테스트·재현·사람의 리뷰를 대체한다고 결론 내릴 근거는 없다.[2]
 
+## 직접 읽어볼 자료
 
-## 6. 사용자 생각
+1. [README의 Core Design](https://github.com/alibaba/open-code-review/blob/main/README.md)
+   파일 선택, 묶음, 규칙 매칭이 모델 판단과 어디서 나뉘는지 읽는다.
+   성능 수치에 앞서 입력을 통제하는 구조를 이해하면 범용 에이전트와의 차이를 기능 이름보다 처리 방식으로 설명할 수 있다.
+2. [공식 open-code-review Skill](https://github.com/alibaba/open-code-review/blob/main/skills/open-code-review/SKILL.md)
+   Workflow에서 범위 지정과 결과 저장을 따라간 뒤 Output Format을 읽는다.
+   특히 줄 번호 0과 사용자 규칙 대체 조건은 실제 의견을 해석할 때 놓치기 쉬운 부분이다.
+3. [README의 Benchmark와 How to Use](https://github.com/alibaba/open-code-review/blob/main/README.md)
+   precision과 recall의 정의를 먼저 확인하고 workspace·커밋·범위·전체 파일 검토를 구분한다.
+   모델을 연결했다는 사실과 모든 검토 대상이 처리됐다는 사실을 따로 확인할 기준을 얻을 수 있다.
+
+## 정리
+
+Open Code Review는 코드 리뷰의 반복 가능한 준비 절차와 모델의 문맥 판단을 결합한다.
+출력은 위치와 심각도를 갖춘 검토 후보이며, 처리 범위·예산 초과·재현 여부까지 읽어야 검토의 실제 의미가 완성된다.
+
+## 자료 확인 범위
+
+2026-09-27 공식 README와 CLI 호출 Skill을 확인했다.
+설치나 Git 조작, 모델 호출, 코드 검토 실행은 하지 않았고 벤치마크 수치를 재검증하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -86,13 +111,19 @@ Fast, efficient, battle-tested at Alibaba's scale. Hybrid architecture code revi
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] alibaba/open-code-review — README.md
+
+<https://github.com/alibaba/open-code-review/blob/main/README.md>
+
+[2] alibaba/open-code-review — skills/open-code-review/SKILL.md
+
+<https://github.com/alibaba/open-code-review/blob/main/skills/open-code-review/SKILL.md>

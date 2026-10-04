@@ -5,7 +5,7 @@ url: "https://github.com/calesthio/OpenMontage"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,105 @@ tags:
 
 # calesthio/OpenMontage
 
-> https://github.com/calesthio/OpenMontage
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+OpenMontage는 AI 코딩 도우미가 영상 제작 절차를 수행하도록 지침, 파이프라인 정의, Python 도구를 묶은 프로젝트다.
+자체 영상 생성 모델 하나를 제공하는 서비스가 아니라 조사·대본·소재·편집·합성의 여러 단계를 연결한다.
+공식 README는 별도의 코드 오케스트레이터가 모든 결정을 내리는 구조가 아니며, 파일을 읽고 코드를 실행할 수 있는 AI 도우미가 진행을 조정한다고 설명한다.[1]
 
-World's first open-source, agentic video production system. 12 production pipelines, 100+ tools, 700+ agent skill and production-knowledge files. Turn your AI coding assistant into a full video production studio.
+## 영상 한 편은 생성 요청 하나보다 길다
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+“짧은 다큐멘터리를 만들어 달라”는 요청 안에는 주제 선정, 사실 확인, 장면에 맞는 소재 확보, 음악, 자막, 길이 조절이 함께 들어 있다.
+이미지를 생성했다고 움직이는 영상이 완성되는 것도 아니며, 실제 촬영 영상을 모았다고 하나의 논리 있는 편집이 되는 것도 아니다.
+OpenMontage는 이런 중간 결정을 읽을 수 있는 제작 지침과 산출물로 나눈다.
+원하는 영상의 종류에 따라 서로 다른 파이프라인을 고르고, 각 단계에서 필요한 도구와 검토 항목을 참조하게 한다.[1]
 
-- 주 언어: Python
-- Star 수: 58950
-- Fork 수: 7396
-- 최근 수정일: 2026-09-14
-- 라이선스: GNU Affero General Public License v3.0
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://www.openmontage.video/
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+README가 예시로 드는 일반 흐름은 조사, 제안, 대본, 장면 계획, 소재, 편집, 합성이다.
+그러나 모든 종류가 동일한 단계 이름을 강제하는 것은 아니다.
+실제 확인한 documentary-montage 정의는 아이디어, 장면 계획, 소재, 편집, 합성으로 구성되어 있다.
+개요 그림보다 선택한 파이프라인 파일이 구체적인 작업 조건을 알려준다.[1][2]
 
-## 3. 이 Repository는 무엇인가?
+## 읽는 지침과 실행하는 도구를 구분한다
 
-- 목적: `World's first open-source, agentic video production system. 12 production pipelines, 100+ tools, 700+ agent skill and production-knowledge files. Turn your AI coding assistant into a full video production studio.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+YAML manifest는 단계, 사용할 도구, 검토 기준, 성공 조건을 나열하는 설계표다.
+director Skill은 각 단계를 어떻게 수행할지 설명하는 Markdown 지침이다.
+Python 도구는 파일 처리나 외부 공급자 호출 같은 실행을 맡는다.
+따라서 “Skill을 읽었다”는 것은 영상이 생성되었다는 뜻이 아니고, 도구 결과와 제작 산출물이 뒤따라야 한다.[1]
 
+체크포인트는 진행 상태를 파일로 남기는 지점이다.
+README는 JSON 상태, 결정 기록, 비용 스냅샷을 이용해 작업을 재개할 수 있다고 설명한다.
+렌더링 직전에는 약속한 시각적 형태와 렌더러 선택을 검토하고, 렌더 뒤에는 ffprobe와 프레임·오디오 분석 등을 거쳐 결과를 확인하는 순서를 제시한다.
+이것은 검토 절차의 정의이며, 이 글에서 예제 영상의 품질을 직접 검증했다는 뜻은 아니다.[1]
 
-## 3-1. 쉽게 읽는 한 줄
+## 실제 영상 소재를 고르는 경로
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+Documentary Montage는 새 영상을 전부 생성하기보다 촬영 영상과 공개 아카이브를 검색해 편집하는 retrieval-first 경로다.
+검색할 영상 묶음인 corpus를 만들고 CLIP 기반 검색으로 장면 설명과 맞는 클립을 찾는 흐름을 정의한다.
+CLIP은 여기서 텍스트 설명과 시각 자료의 관계를 이용해 후보를 찾는 역할이지, 그 영상이 설명한 역사적 사건을 실제로 촬영했다는 증명은 아니다.[2]
 
-## 4. 주제 라벨(Topics)
+장면 계획에는 각 슬롯의 구체적인 설명, 검색 질의, 선호 출처와 유지 시간이 들어간다.
+소재 단계의 검토 기준에는 슬롯마다 선택 클립이 있어야 하고, 모든 소재에 공급자·원래 URL·라이선스 정보를 남겨야 한다는 항목이 있다.
+단순히 다운로드 가능한 영상을 모으는 것보다 출처 추적과 장면 목적의 연결을 중요하게 다룬 셈이다.[2]
 
-- agent
-- agentic-ai
-- ai
-- claude
-- copilot
-- cursor
-- elevenlabs
-- ffmpeg
-- flux
-- image-generation
+편집 단계는 컷마다 이유를 남기고, 인접 컷의 대상과 화면 크기, 음악, 전체 길이를 점검하도록 구성된다.
+확인한 정의에서는 합성의 종료 카드 의존성 때문에 `remotion` 런타임을 유지하도록 요구한다.
+README에서 여러 렌더러를 소개한다고 해서 어떤 파이프라인이든 임의로 바꿔도 되는 것은 아니다.[2]
 
-## 5. 대략적인 동작 흐름
+## 예시로 따라가는 흐름
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+“공개 촬영 자료로 도시와 자연의 대비를 보여주는 짧은 몽타주를 만든다”는 이해를 위한 가상 예시이며 직접 실행한 결과가 아니다.
+먼저 아이디어 단계에서 한 문장 주제, 길이, 분위기, 음악과 종료 문구 계획을 정한다.
+장면 계획은 이를 “붐비는 거리의 넓은 화면”, “바람에 흔들리는 나무의 가까운 화면”처럼 검색 가능한 슬롯으로 바꾸고, 각 장면이 얼마 동안 유지될지 기록한다.
+이는 해당 파이프라인이 요구하는 구체적인 명사·형용사 설명 및 검색 질의 구조를 풀어 쓴 것이다.[2]
 
-### 용어 풀이
+소재 단계에서는 후보를 찾고 각 슬롯에 하나의 클립을 선택하되, 출처와 이용 조건을 남긴다.
+검색 점수가 높아도 주제와 어긋나거나 권리가 불분명하면 사람이 확인할 이유가 된다.
+편집 단계는 컷 순서와 음악, 컷을 선택한 이유를 산출물로 만들고, 합성 단계는 그 결정에 맞춰 렌더링한다.
+결과는 “영상 파일이 생겼다”만으로 끝나지 않는다.
+계획한 길이·해상도·음악·종료 문구가 맞는지, 파일이 ffprobe 검사를 통과하는지 보고서와 함께 살펴야 한다.
+초기 창작 결정 지점은 정의상 사람 승인이 기본으로 설정되어 있다.[2]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+## 무료 예제와 실제 제작 비용은 다르다
 
+공식 Prompt Gallery에는 외부 API 키 없이 미리 만든 Remotion 구성물을 렌더링하는 데모와, 무료 도구를 조합해 전체 제작 흐름을 수행하는 프롬프트가 따로 있다.
+두 경우를 혼동하면 완성된 데모 재생을 새 주제의 조사·대본 작성 성능으로 오해할 수 있다.
+유료 이미지·영상·음성 공급자를 사용하는 프롬프트도 별도로 소개된다.[3]
 
-## 6. 사용자 생각
+문서의 시간과 비용은 예시 추정치이며 모든 요청의 상한이 아니다.
+코딩 도우미 자체의 이용 조건, 선택한 공급자, 재생성 횟수와 렌더링 자원에 따라 조건이 달라진다.
+확인한 documentary-montage는 `beta`로 표시되고 reference video input은 지원하지 않는다고 명시되어 있다.
+프로젝트 전체가 참고 영상 출발 기능을 소개하더라도 개별 경로의 지원 여부를 확인해야 한다.[1][3][2]
+
+소재가 공개 사이트에 있다는 이유만으로 자유로운 재배포가 허용되는 것은 아니다.
+파이프라인이 요구하는 라이선스 기록을 실제 제작에서도 확인해야 하며, 저장소의 AGPLv3 표기와 개별 외부 소재·공급자 조건은 별개의 검토 대상이다.[1][2]
+
+## 직접 읽어볼 자료
+
+1. [README의 Pipelines와 How It Works](https://github.com/calesthio/OpenMontage/blob/main/README.md)
+   먼저 원하는 영상의 형태를 고른 뒤 지침을 읽는 주체와 Python 도구의 역할을 나눠 확인한다.
+   “에이전트가 조정한다”는 문장이 어느 지점에 사람 승인을 남기는지 함께 보는 것이 좋다.
+2. [Prompt Gallery](https://github.com/calesthio/OpenMontage/blob/main/PROMPT_GALLERY.md)
+   Zero-Key Demos와 Zero-Key Prompts를 비교하면 준비된 구성물 렌더링과 처음부터 제작하는 작업의 차이가 보인다.
+   시간·비용은 예시 조건으로만 읽고, 어떤 외부 공급자가 필요한지 확인한다.
+3. [Documentary Montage 정의](https://github.com/calesthio/OpenMontage/blob/main/pipeline_defs/documentary-montage.yaml)
+   `produces`, `human_approval_default`, `review_focus`를 단계별로 따라가면 산출물과 검토 책임을 추적할 수 있다.
+   beta 표기와 reference input 제한, 렌더러 고정 조건도 이 파일에 있다.
+
+## 정리
+
+OpenMontage는 영상 생성 API 하나를 감싸는 도구가 아니라 제작 절차를 파일로 표현한 작업 환경이다.
+핵심은 요청을 장면과 소재, 편집 결정, 검증 가능한 결과로 나누는 데 있으며, 개별 파이프라인의 제약과 출처 관리는 사람의 확인을 남긴다.
+
+## 자료 확인 범위
+
+2026-09-27 수집본에서 공식 README의 소개·파이프라인·동작 구조, Prompt Gallery의 무료 및 공급자별 예시, documentary-montage 정의를 확인했다.
+코딩 도우미 연결, 소재 수집, API 호출 및 영상 렌더링은 실행하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +119,23 @@ World's first open-source, agentic video production system. 12 production pipeli
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] calesthio/OpenMontage — README.md
+
+<https://github.com/calesthio/OpenMontage/blob/main/README.md>
+
+[2] calesthio/OpenMontage — pipeline_defs/documentary-montage.yaml
+
+<https://github.com/calesthio/OpenMontage/blob/main/pipeline_defs/documentary-montage.yaml>
+
+[3] calesthio/OpenMontage — PROMPT_GALLERY.md
+
+<https://github.com/calesthio/OpenMontage/blob/main/PROMPT_GALLERY.md>

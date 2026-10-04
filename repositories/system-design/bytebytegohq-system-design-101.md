@@ -5,7 +5,7 @@ url: "https://github.com/ByteByteGoHq/system-design-101"
 category: "system-design"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "system-design"
   - "starred-draft"
@@ -13,76 +13,108 @@ tags:
 
 # ByteByteGoHq/system-design-101
 
-> https://github.com/ByteByteGoHq/system-design-101
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+System Design 101은 복잡한 시스템을 시각 자료와 짧은 설명으로 소개하는 학습 자료 모음이다.
+서버를 실행하는 프레임워크나 완성된 설계 생성기가 아니라, 시스템 구성 요소와 선택지를 비교해 이해하는 읽기 자료다.
+README는 시스템 설계 면접 준비뿐 아니라 시스템 내부가 어떻게 동작하는지 알고 싶은 독자를 대상으로 밝힌다.[1]
 
-Explain complex systems using visuals and simple terms. Help you prepare for system design interviews.
+## 기술 이름 사이의 관계를 먼저 보기
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+로드 밸런서, API 게이트웨이, 캐시 같은 이름을 각각 알아도 요청이 어느 순서로 지나가는지 설명하기는 어렵다.
+이 저장소의 목차는 API와 웹 개발, 데이터베이스·스토리지, 캐싱·성능, 소프트웨어 아키텍처, 분산 시스템 등으로 나뉘어 있으며, 각 항목은 좁은 질문에 초점을 맞춘 가이드로 연결된다.
+여러 요소를 한 번에 구현하기보다 역할 차이를 파악하는 출발점에 가깝다.[1]
 
-- 주 언어: 미확인
-- Star 수: 89171
-- Fork 수: 9897
-- 최근 수정일: 2026-09-14
-- 라이선스: Other
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://bytebytego.com/guides
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+시스템 설계는 기능을 어느 구성 요소에 맡길지, 요청과 자료를 어떻게 이동시킬지, 장애와 규모 변화에 무엇으로 대응할지 정하는 일이다.
+이 모음에는 개념 비교, 요청 흐름, 운영 사례가 함께 있지만 성격은 같지 않다.
+개념 가이드는 용어 구별의 출발점이고 사례는 특정 전제에서의 설명이다.
+한 사례를 모든 서비스의 표준 구조로 옮기는 식으로 읽으면 선택의 이유가 사라진다.[1]
 
-## 3. 이 Repository는 무엇인가?
+현재 저장소의 `data/guides`에는 개별 가이드의 Markdown 원문이 있다.
+대표 파일은 제목·설명·분류·작성일 같은 메타데이터와 이미지 링크, 짧은 설명으로 구성된다.
+README에서 주제를 고른 뒤 개별 원문으로 들어가면 큰 목차와 하나의 논점을 오가는 구조를 확인할 수 있다.
+파일에 작성 시점이 있다는 것은 소개된 기술의 현재 구현까지 자동 갱신되었다는 뜻은 아니다.[2][3]
 
-- 목적: `Explain complex systems using visuals and simple terms. Help you prepare for system design interviews.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+## 비교를 만드는 질문과 생략된 조건
 
+`Short/long polling, SSE, WebSocket` 가이드는 HTTP 서버의 새 정보를 브라우저가 어떻게 받는지 묻는다.
+폴링은 브라우저가 정보를 얻기 위해 요청을 보내는 방식이고, 짧은 폴링은 반복 요청, 긴 폴링은 새 자료가 올 때까지 응답을 기다리는 형태로 설명한다.
+SSE와 WebSocket은 연결이 만들어진 뒤 서버가 새 자료를 전달하는 흐름을 비교한다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+SSE는 서버에서 브라우저로 보내는 단방향 이벤트 스트림이며, WebSocket은 양쪽이 같은 연결에서 메시지를 주고받는 전이중 통신이다.
+여기서 단방향이라는 말은 SSE 스트림의 방향을 가리킨다.
+해당 브라우저가 별도의 HTTP 요청도 할 수 없다는 뜻으로 넓혀 읽으면 안 된다.
+짧은 가이드의 문장을 읽을 때 “어느 연결의 어느 방향을 말하는가”를 붙여 생각해야 하는 이유다.[2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+또 다른 대표 글인 `10 System Design Tradeoffs You Cannot Ignore`는 수직·수평 확장, 일괄·스트림 처리, 상태 유지 여부, 캐시 전략 등을 나란히 놓는다.
+트레이드오프는 한 성질을 얻으면서 다른 비용이나 제약을 받아들이는 선택 관계다.
+이 글은 비교할 축을 제공하지만 각 방식의 모든 실패 조건을 다루지는 않는다.
+예컨대 서버를 크게 만드는 것과 서버 수를 늘리는 것을 구분했다면, 다음에는 자료를 나누는 방법이나 실패 시 복구를 별도로 확인해야 한다.[3]
 
-## 4. 주제 라벨(Topics)
+## 예시로 따라가는 흐름
 
-- aws
-- cloud-computing
-- coding-interviews
-- computer-science
-- interview-questions
-- software-architecture
-- software-development
-- software-engineering
-- system-design
-- system-design-interview
+브라우저에 공개 행사 진행 상태를 갱신해서 보여주는 상황을 생각해 보자.
+이해를 위한 가상 예시이며 직접 실행한 결과가 아니다.
+입력은 서버에서 새로 생기는 상태 변화이고, 원하는 결과는 사용자가 페이지 전체를 새로 고치지 않아도 변화를 보는 것이다.
+이때 읽을 대표 항목은 README의 API and Web Development에 연결된 폴링·SSE·WebSocket 비교다.[1][2]
 
-## 5. 대략적인 동작 흐름
+먼저 변화가 드물어도 브라우저가 반복해서 물어볼지, 요청 하나를 더 오래 기다리게 할지 구분한다.
+이것이 짧은 폴링과 긴 폴링을 비교하는 질문이다.
+다음에는 연결이 유지된 뒤 서버가 일방적으로 진행 상태를 보내면 충분한지, 브라우저도 같은 연결로 메시지를 계속 보내야 하는지 묻는다.
+앞의 조건은 SSE를, 뒤의 양방향 조건은 WebSocket을 검토하는 근거가 된다.
+여기서 특정 방식이 무조건 빠르다는 결론을 내리는 것은 아니다.[2]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+이 가이드를 읽고 남길 결과는 하나의 제품명보다 요청 주체와 정보 방향을 적은 설명이다.
+사람은 필요한 갱신 속도, 연결이 끊겼을 때 재연결·누락 처리, 서버의 연결 수, 별도 사용자 입력의 경로가 무엇인지 확인해야 한다.
+이 중 재연결과 전달 보장의 구체 구현은 대표 파일의 짧은 설명에 충분히 들어 있지 않으므로 후속 자료가 필요하다.
+비교 그림을 이해하는 단계와 운영 가능한 전달 시스템을 완성하는 단계가 다르다는 점까지 정리해야 읽기 사례가 끝난다.
 
-### 용어 풀이
+## 짧은 자료가 맡는 역할의 한계
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+개별 글의 설명이 간결하다는 장점은 조건이 축약되어 있다는 한계와 연결된다.
+데이터베이스나 일관성, 동기·비동기 처리에 대한 짧은 문장을 엄밀한 표준 정의 대신 사용하면 구현마다 다른 의미를 놓칠 수 있다.
+이 모음은 어떤 질문을 더 해야 할지 찾는 지도로 보고, 실제 프로토콜 동작과 제품별 제약은 공식 명세나 제품 문서로 이어 확인하는 것이 적절하다.[2][3]
 
+기술 이름의 비교와 채택 결정도 다르다.
+서버 수를 늘리는 설계가 필요해 보이더라도 실제 자료량, 지연 허용치, 장애 조건이 없으면 선택을 평가하기 어렵다.
+대표 트레이드오프 글은 후보를 대비시키지만 특정 환경을 입력받아 안전한 구성을 보증하지 않는다.
+이 글 또한 소개된 설계를 배포하거나 성능을 검증한 기록이 아니다.[3]
 
-## 6. 사용자 생각
+재사용 조건은 특히 분명히 보아야 한다.
+저장소의 라이선스 파일은 CC BY-NC-ND 4.0을 명시한다.
+저작자 표시, 비영리, 변경 금지 조건이 있는 자료이므로 공개 저장소라는 이유만으로 그림을 번역·수정해 재배포하거나 상업적 콘텐츠에 복사할 수 있다고 단정해서는 안 된다.
+여기서는 원문 그림을 재제작하지 않고 자료의 구성과 읽는 방법을 설명하며 공식 링크로 안내한다.[4]
+
+## 직접 읽어볼 자료
+
+- [공식 README](https://github.com/ByteByteGoHq/system-design-101/blob/main/README.md)
+  API, 저장소, 성능처럼 큰 주제를 먼저 고르고 현재 설명하려는 질문 하나로 범위를 줄인다.
+  모든 목차를 순서대로 외우기보다 개념 비교와 실제 사례가 다른 종류의 자료라는 점을 구분하는 출발점이다.
+- [폴링·SSE·WebSocket 가이드 원문](https://github.com/ByteByteGoHq/system-design-101/blob/main/data/guides/shortlong-polling-sse-websocket.md)
+  요청을 누가 시작하는지, 응답을 언제 보내는지, 연결의 정보 방향이 무엇인지 순서대로 확인한다.
+  짧은 설명에서 다루지 않는 재연결과 전달 보장 문제를 별도 질문으로 남길 수 있다.
+- [시스템 설계의 선택 관계](https://github.com/ByteByteGoHq/system-design-101/blob/main/data/guides/10-system-design-tradeoffs-you-cannot-ignore.md)
+  한 쌍을 골라 정의 차이만 적지 말고 어떤 요구 조건이 선택을 바꾸는지 생각해 본다.
+  메모리·비용·변경 가능성 같은 조건을 넣지 않은 선택은 아직 설계 판단이 아니라 개념 비교라는 점을 확인한다.
+- [콘텐츠 라이선스](https://github.com/ByteByteGoHq/system-design-101/blob/main/LICENSE.md)
+  그림이나 원문을 외부 문서에 옮기기 전에 표시된 조건을 확인한다.
+  개인적인 읽기와 번역·변형물을 공개하는 행위를 구분하기 위한 자료다.
+
+## 정리
+
+System Design 101은 시스템 구성과 비교 질문을 빠르게 찾아 읽는 자료 모음이다.
+짧은 가이드가 보여주는 역할과 흐름을 이해한 뒤, 생략된 구현 조건과 콘텐츠 재사용 조건을 따로 확인해야 한다.
+
+## 자료 확인 범위
+
+2026-09-27 기준 README의 구조와 주요 목차, 두 대표 가이드 원문, 라이선스 파일을 읽었다.
+모든 가이드를 검증하거나 예제 시스템을 실행하지 않았으며, 연결된 그림의 세부 내용을 별도로 분석한 문서는 아니다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +122,27 @@ Explain complex systems using visuals and simple terms. Help you prepare for sys
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] ByteByteGoHq/system-design-101 — README.md
+
+<https://github.com/ByteByteGoHq/system-design-101/blob/main/README.md>
+
+[2] ByteByteGoHq/system-design-101 — data/guides/shortlong-polling-sse-websocket.md
+
+<https://github.com/ByteByteGoHq/system-design-101/blob/main/data/guides/shortlong-polling-sse-websocket.md>
+
+[3] ByteByteGoHq/system-design-101 — data/guides/10-system-design-tradeoffs-you-cannot-ignore.md
+
+<https://github.com/ByteByteGoHq/system-design-101/blob/main/data/guides/10-system-design-tradeoffs-you-cannot-ignore.md>
+
+[4] ByteByteGoHq/system-design-101 — LICENSE.md
+
+<https://github.com/ByteByteGoHq/system-design-101/blob/main/LICENSE.md>

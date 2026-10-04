@@ -5,7 +5,7 @@ url: "https://github.com/alsk1992/CloddsBot"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,98 @@ tags:
 
 # alsk1992/CloddsBot
 
-> https://github.com/alsk1992/CloddsBot
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+CloddsBot은 자연어 대화를 시장 데이터 조회, 거래 전략, 주문 실행과 연결하는 자체 호스팅 AI 거래 터미널이다.
+예측 시장과 암호자산 현물·무기한 선물 등을 다루는 연결부를 포함한다.
+공개 소스가 있다는 사실이 투자 수익이나 자금 안전을 보증하지 않으며, 아래 설명은 매매 권유가 아닌 프로그램 구조의 읽기 안내다.[1]
 
-Open Source AI trading agent that operates autonomously across 1000+ markets - Polymarket, Kalshi, Binance, Hyperliquid, Solana DEXs, 5 EVM chains. Scans    for edge, executes instantly, manages risk while you sleep. Agent commerce protocol for machine-to-machine payments. Self-hosted. Built on Claude.
+## 대화형 정보 조회와 주문 실행 사이
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+가격을 물어보는 요청과 실제 주문을 내는 요청은 결과의 무게가 다르다.
+이 프로젝트는 WebChat과 여러 메시징 채널을 같은 gateway에 연결하고, 에이전트·Skill·전략·위험 관리층을 거쳐 시장별 실행부에 닿는 구조를 제시한다.
+gateway는 외부 요청을 받아 내부 기능에 전달하는 입구다.
+자연어 인터페이스가 편리하더라도 그 뒤에 읽기 요청인지 자금을 움직이는 요청인지 구분하는 경계가 필요하다.[1]
 
-- 주 언어: TypeScript
-- Star 수: 2709
-- Fork 수: 330
-- 최근 수정일: 2026-09-14
-- 라이선스: MIT License
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://www.cloddsbot.com
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+README에는 시장 데이터, 차익 탐지, 포트폴리오, 백테스트, 자동화 기능이 넓게 나열되어 있다.
+그러나 기능 수나 지원 거래소 수를 모든 조합의 동작 보장으로 읽으면 안 된다.
+이 글에서는 전체 통합을 검증하지 않고, 거래를 멈추는 circuit breaker 구현을 대표 파일로 읽어 위험 관리가 어떤 조건과 상태로 표현되는지 살펴봤다.[1][2]
 
-## 3. 이 Repository는 무엇인가?
+## 위험을 예측하는 모델과 거래를 막는 규칙
 
-- 목적: `Open Source AI trading agent that operates autonomously across 1000+ markets - Polymarket, Kalshi, Binance, Hyperliquid, Solana DEXs, 5 EVM chains. Scans    for edge, executes instantly, manages risk while you sleep. Agent commerce protocol for machine-to-machine payments. Self-hosted. Built on Claude.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+circuit breaker는 정해진 불리한 조건에서 추가 거래를 차단하는 장치다. `circuit-breaker.ts`에는 변동성, 유동성, 손실, 연속 실패, 가격 차이, 수동 중단 조건이 타입으로 정의되어 있다.
+변동성은 가격 흔들림, 유동성은 원하는 거래를 소화할 시장의 여유, spread는 매수·매도 호가의 차이를 뜻한다.
+이들은 시장의 미래를 맞히는 주장보다 현재 상태를 제한하는 입력이다.[2]
 
+구현에는 전역 중단 상태와 시장별 중단 기록이 있고, `canTrade`가 해당 상태와 조건을 확인한다. `recordTrade`는 성공·실패와 선택적 손익 값을 받아 연속 실패 및 시간 구간별 손익 상태를 갱신한다.
+중단되면 이벤트와 로그를 남기고, 설정에 따라 대기 뒤 복구하거나 수동으로 초기화한다.
+기본 `autoReset`은 false지만 다른 preset은 true여서 설정별 차이를 확인해야 한다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+Trade Ledger는 결정과 근거, 예측 확신 수준과 실제 정확도, 거래 통계 등을 기록하는 별도 기능으로 소개된다.
+선택적 해시와 온체인 기록은 저장 내용의 변경 여부를 확인하는 수단이지 판단 자체가 옳다는 증명은 아니다.
+손실 제한 코드와 감사 기록을 함께 두더라도 주문 경로에서 실제로 호출되는지, 입력 값이 어떤 단위인지까지 봐야 통제의 범위를 알 수 있다.[1][2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## 예시로 따라가는 흐름
 
-## 4. 주제 라벨(Topics)
+이해를 위한 가상 예시이며 직접 실행한 결과가 아니다.
+거래 결과를 전달받는 모의 환경에서 연속 실패 조건을 설정했다고 가정한다.
+입력은 시장 전망에 대한 문장이 아니라 `success` 상태를 가진 거래 결과다.
+실패가 기록되면 구현은 연속 실패 수를 올리고 설정된 조건을 검사한다.
+조건에 도달하면 전역 중단 상태를 설정하고 중단 시각·이유를 기록하며 이벤트를 보낸다.[2]
 
-- agi
-- ai
-- arbitrage
-- claude
-- crypto
-- defi
-- ethereum
-- futures
-- hft
-- hyperliquid
+다음 요청이 `canTrade`를 통과하려 할 때 이미 전역 중단 상태라면 false를 돌려준다.
+정상 주문이 제출되었다는 결과가 아니라 다음 진행이 허용되지 않는다는 판단이 출력인 셈이다.
+사람은 이 반환값이 실제 주문 경로에서 지켜지는지, 중단 알림을 받을 수 있는지, 재설정이 수동인지 자동인지 확인해야 한다.
+여기서는 해당 파일의 함수 관계만 읽었으므로 모든 주문 경로에서 차단이 보장된다고 말할 수 없다.[2]
 
-## 5. 대략적인 동작 흐름
+또한 위험 지표를 얻지 못한 경우의 처리도 중요하다.
+조회한 변동성·유동성 검사는 지표가 존재하고 시장 범위 및 식별자가 갖춰질 때 비교한다.
+데이터가 없다는 상황과 위험이 낮다는 상황을 혼동하면 안 된다.
+실거래 전에 필요한 검토는 수익률 추정이 아니라 이런 입력 부재와 연결 실패, 상태 복구가 어떻게 다뤄지는지 확인하는 일이다.[2]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+## 코드에서 확인되는 제한을 먼저 읽기
 
-### 용어 풀이
+대표 파일의 조건 타입에는 여러 scope가 있지만 변동성·유동성·spread 검사 본문은 `scope === 'market'`과 플랫폼·시장 식별자를 요구한다.
+한편 제공 preset의 일부 변동성 조건은 global로 표기되어 있다.
+이 파일만으로 그 설정이 전역 변동성 차단을 수행한다고 단정할 수 없다.
+전체 risk engine의 추가 연결을 조사하지 않은 범위라는 점을 남겨야 한다.[2]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+손실 필드 이름은 퍼센트를 암시하지만 `recordTrade`는 전달된 `pnl`을 누적한다.
+따라서 호출자가 어떤 단위로 값을 주는지 확인하지 않고 “정확히 특정 비율의 손실에서 멈춘다”고 설명해서는 안 된다.
+코드에 위험 관리라는 이름이 붙은 것과 자금 손실이 제한된다는 검증은 별개의 사실이다.[2]
 
+실제 사용에는 모델 API 키와 채널·거래소 인증, 경우에 따라 지갑 비밀키가 필요하다.
+README는 셸 승인, 자격증명 암호화, 거래 감사 로그를 설명하지만 키가 유출되거나 잘못된 권한을 주면 별도의 위험이 생긴다.
+거래소 이용 조건과 지역별 규정, 수수료, 급격한 가격 변동, 레버리지 손실도 소프트웨어 설명으로 없어지지 않는다.
+설치 요구사항은 Node.js 22 이상이며 오래된 npm 패키지가 아닌 현재 배포 경로를 안내한다.[1]
 
-## 6. 사용자 생각
+## 직접 읽어볼 자료
+
+1. [README의 Architecture와 Configuration](https://github.com/alsk1992/CloddsBot/blob/main/README.md)
+   메시징 입구에서 전략·위험 관리·실행부로 이어지는 층을 구분한다.
+   조회용 인증과 자금을 움직이는 인증이 어디에서 필요한지 확인하는 것이 기능 목록보다 먼저다.
+2. [circuit-breaker.ts](https://github.com/alsk1992/CloddsBot/blob/main/src/risk/circuit-breaker.ts)
+   타입 선언 다음 `canTrade`, `recordTrade`, preset을 비교해서 읽는다.
+   조건 이름뿐 아니라 검사에 필요한 scope·식별자·입력 단위를 보면 문서의 위험 관리 주장을 어디까지 소스에서 확인했는지 판단할 수 있다.
+3. [README의 Security와 Trade Ledger](https://github.com/alsk1992/CloddsBot/blob/main/README.md)
+   승인, 암호화, 기록 무결성의 역할을 분리한다.
+   기록을 검증하는 명령이 거래 판단의 수익성이나 모든 주문의 차단을 검증하는 명령은 아니라는 경계를 확인할 수 있다.
+
+## 정리
+
+CloddsBot은 대화형 시장 접근과 실제 거래 기능을 함께 가진다.
+대표 위험 제어 코드에는 분명한 상태와 차단 절차가 있지만, 전체 통합·데이터 단위·실거래 안전성은 이 조사에서 검증한 범위를 넘는다.
+
+## 자료 확인 범위
+
+2026-09-27 공식 README와 circuit breaker 전체 파일을 확인했다.
+설치, 계정 연결, 주문, 모의 거래, 성과 측정은 실행하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +112,19 @@ Open Source AI trading agent that operates autonomously across 1000+ markets - P
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] alsk1992/CloddsBot — README.md
+
+<https://github.com/alsk1992/CloddsBot/blob/main/README.md>
+
+[2] alsk1992/CloddsBot — src/risk/circuit-breaker.ts
+
+<https://github.com/alsk1992/CloddsBot/blob/main/src/risk/circuit-breaker.ts>

@@ -5,7 +5,7 @@ url: "https://github.com/magnitudedev/magnitude"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,67 +13,96 @@ tags:
 
 # magnitudedev/magnitude
 
-> https://github.com/magnitudedev/magnitude
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+Magnitude는 사용자가 가진 컴퓨터에서 공개 AI 모델을 고르고 실행하도록 돕는 로컬 추론 엔진이다.
+추론은 이미 학습된 모델에 입력을 주고 답을 생성하는 과정이다.
+이 프로젝트는 새 모델을 학습시키거나 코딩 에이전트의 모든 행동을 대신하는 제품이 아니라, 모델 실행과 기존 에이전트의 연결을 맡는다.[1]
 
-Open source local inference engine. It runs models on the hardware you already have, whether that's a Mac, an NVIDIA or AMD GPU, or just a CPU. Plug it into Pi, OpenCode, Hermes, OpenClaw, Codex, Claude Code, Oh My Pi, and Cline.
+## 모델 파일을 받기 전에 생기는 문제
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+공개 모델을 발견했다고 해서 자신의 컴퓨터에서 쾌적하게 사용할 수 있는 것은 아니다.
+메모리 사용량, 응답 생성 속도, 모델의 능력 사이에서 선택해야 하며, 같은 모델도 저장 정밀도를 줄인 형식에 따라 조건이 달라진다.
+Magnitude의 README는 컴퓨터의 하드웨어를 조사하고, 다운로드 전에 모델별 생성 속도를 추정하며, 속도·정확성·지능·메모리를 기준으로 후보를 보여 준다고 설명한다.[1]
 
-- 주 언어: TypeScript
-- Star 수: 4474
-- Fork 수: 338
-- 최근 수정일: 2026-09-14
-- 라이선스: Apache License 2.0
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://magnitude.dev
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+여기서 중요한 구분은 ‘실행 가능한 모델을 직접 골라 서버를 띄우는 일’과 ‘어떤 모델을 고를지부터 지원받는 일’이다.
+Magnitude가 앞세우는 역할은 후자까지 포함한다.
+다만 화면에 나타나는 추정값은 해당 컴퓨터와 입력에서 직접 측정한 성능 보증이 아니다.
+README의 ‘가장 좋은 모델’이라는 표현도 모든 작업에 공통인 절대 순위로 읽기보다, 프로젝트가 제시하는 추천 기준으로 이해해야 한다.[1]
 
-## 3. 이 Repository는 무엇인가?
+## 화면의 선택과 내부 실행 엔진
 
-- 목적: `Open source local inference engine. It runs models on the hardware you already have, whether that's a Mac, an NVIDIA or AMD GPU, or just a CPU. Plug it into Pi, OpenCode, Hermes, OpenClaw, Codex, Claude Code, Oh My Pi, and Cline.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+사용자에게 보이는 시작 경로는 Discover에서 추천 모델을 골라 다운로드하고 Connections에서 에이전트를 연결하는 순서다.
+데스크톱 앱에는 CLI, 즉 터미널에서 명령으로 조작하는 인터페이스도 포함된다.
+README는 Apple Silicon, NVIDIA·AMD GPU와 CPU 전용 환경, macOS·Linux·Windows 지원을 설명한다.
+지원 목록은 제품의 문서상 범위이며 모든 조합을 이번 조사에서 시험한 것은 아니다.[1]
 
+앱 뒤쪽의 `inference/README.md`는 Inference Control Node를 별도 작업공간으로 설명한다.
+`icn-hardware`는 하드웨어 적합성 판단, `icn-models`는 모델 생명주기, `icn-engine`은 실제 추론, `icn-api`는 HTTP 경계를 담당한다.
+생명주기란 모델을 준비하고 메모리에 올렸다가 사용이 끝나면 내리는 과정이다.
+추천 화면, 모델 관리, 응답 생성이 하나의 함수로 뭉쳐 있는 것이 아니라 책임이 나뉘어 있다는 점을 확인할 수 있다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+개발용 문서에는 OpenAI와 호환되는 채팅 요청 형식이 나온다.
+`messages`에 사용자 문장을 넣고 `stream`을 켜면 응답이 한 번에 완성된 문서로만 오는 대신 여러 조각으로 전달된다.
+이 방식은 에이전트가 대화 API를 통해 모델을 부르는 연결 지점이다.
+같은 문서는 실제 모델 파일을 읽는 경로와 결정적 가짜 백엔드 경로를 명확히 구별한다.[2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## 예시로 따라가는 흐름
 
-## 4. 주제 라벨(Topics)
+공식 추론 문서의 `Hello` 요청을 따라가면 엔진과 모델의 차이를 쉽게 볼 수 있다.
+먼저 개발용 예시는 모델 이름을 `icn-fake`로 지정하고, 사용자 메시지에 `Hello`를 넣어 `/v1/chat/completions`로 전달한다.
+이 백엔드는 모델 파일이 없어도 통신 형식을 확인하도록 만든 것이다.
+문서는 응답이 `data:` 프레임들로 흘러오고 마지막에 `[DONE]`을 보낸다고 설명한다.
+이것은 공식 예제의 계약을 해설한 것이며 여기서 직접 서버를 실행하거나 응답을 생성한 결과가 아니다.[2]
 
-- 등록된 대표 주제 라벨이 없습니다.
+실제 추론으로 넘어갈 때는 GGUF 모델 파일의 절대 경로와 모델 별칭을 지정하고, 같은 요청의 모델 이름을 그 별칭으로 바꾼다.
+GGUF는 이 문서에서 실제 모델을 담아 전달하는 파일 형식이다.
+사람은 API 연결이 성공했는지뿐 아니라 요청이 가짜 백엔드가 아닌 의도한 모델로 갔는지, GPU 사용 설정과 메모리 조건이 맞는지, 답이 입력의 목적을 충족하는지도 따로 확인해야 한다.
+문서에는 GPU 레이어를 0으로 설정해 CPU 실행을 강제하는 선택지도 있어, 실행 위치가 결과 비교의 조건이라는 점을 보여 준다.[2]
 
-## 5. 대략적인 동작 흐름
+## 자동 관리가 없애지 않는 경계
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+README는 모델을 요청 시 올리고, 유휴 상태이거나 메모리가 부족할 때 내린다고 설명한다.
+항상 모든 모델을 메모리에 두지 않는 관리 방식이지만, 모델 파일의 다운로드와 저장 공간, 사용 중인 다른 프로그램의 자원 소비까지 사라지는 것은 아니다.
+‘토큰 비용이 없다’는 소개는 외부 모델 API의 토큰별 과금과 구별하는 말이다.
+컴퓨터 자원과 전력, 모델 자체의 배포 조건까지 무료라는 뜻으로 확장해서는 안 된다.[1]
 
-### 용어 풀이
+개인정보 설명도 범위를 나누어 읽어야 한다.
+README는 모델을 내려받은 뒤 프롬프트·파일·모델이 컴퓨터 안에 머물며 오프라인 추론이 가능하다고 명시한다.
+그 설명만으로 연결된 에이전트가 사용하는 웹 검색이나 다른 외부 도구까지 오프라인이라고 판단할 수는 없다.
+모델 서버의 경계와 에이전트의 전체 행동 범위는 서로 다르다.[1]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+추론 문서는 성능 비교에 앞서 동일한 모델 바이트, 설정, 샘플링과 작업량을 맞추어야 한다고 설명한다.
+출력이나 수행 작업이 달라지면 단순 시간 비교가 유효하지 않다는 기준이다.
+따라서 이 저장소에 벤치마크 절차가 존재한다는 사실과 특정 기기에서 빠르다는 결론은 구분해야 한다.[2]
 
+## 직접 읽어볼 자료
 
-## 6. 사용자 생각
+- [프로젝트 README](https://github.com/magnitudedev/magnitude/blob/main/README.md)
+  먼저 Get started의 Discover→Connections 순서를 읽는다.
+  무엇이 모델 선택이고 무엇이 에이전트 연결인지 나누면 앱과 모델, 코딩 도구를 같은 대상으로 혼동하지 않을 수 있다.
+- [추론 작업공간 안내](https://github.com/magnitudedev/magnitude/blob/main/inference/README.md)
+  First five minutes의 가짜 백엔드와 실제 GGUF 경로를 비교한다.
+  같은 채팅 API를 호출해도 내부 실행 대상이 달라질 수 있다는 사실과 스트리밍 응답의 끝을 어떻게 알리는지 확인할 수 있다.
+- [README의 FAQ](https://github.com/magnitudedev/magnitude/blob/main/README.md)
+  하드웨어 지원, 관리 방식, 개인정보 항목을 다시 읽는다.
+  추천의 추정치와 실제 측정치, 로컬 추론과 연결 도구의 외부 통신을 구별하면서 자신의 환경에서 추가 확인할 조건을 찾는 순서가 적절하다.
+
+## 정리
+
+Magnitude의 중심은 ‘로컬 모델을 실행한다’에 더해 하드웨어에 맞는 선택과 실행 설정을 연결하는 데 있다.
+추론 엔진이 제공하는 API와 그 위에서 일하는 에이전트는 별개이며, 성능 추정과 개인정보 설명도 그 경계 안에서 읽어야 한다.
+
+## 자료 확인 범위
+
+2026-09-27 수집 자료 기준으로 루트 README와 추론 작업공간의 구조·공식 요청 예제를 읽었다.
+앱 설치, 모델 다운로드, API 호출이나 하드웨어 성능 측정은 실행하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -81,13 +110,19 @@ Open source local inference engine. It runs models on the hardware you already h
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] magnitudedev/magnitude — README.md
+
+<https://github.com/magnitudedev/magnitude/blob/main/README.md>
+
+[2] magnitudedev/magnitude — inference/README.md
+
+<https://github.com/magnitudedev/magnitude/blob/main/inference/README.md>

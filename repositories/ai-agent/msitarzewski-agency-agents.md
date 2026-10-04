@@ -5,7 +5,7 @@ url: "https://github.com/msitarzewski/agency-agents"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,67 +13,94 @@ tags:
 
 # msitarzewski/agency-agents
 
-> https://github.com/msitarzewski/agency-agents
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+agency-agents는 전문 역할별 AI 에이전트 지침을 모은 저장소다.
+각 파일은 역할, 말하는 방식, 작업 절차와 결과물 기준을 정의한다.
+이름 그대로 여러 전문가의 역할을 선택하는 자료이지만, 이 저장소 자체가 모델을 실행하거나 모든 역할을 자동으로 협업시키는 독립 런타임은 아니다.[1]
 
-A complete AI agency at your fingertips - From frontend wizards to Reddit community ninjas, from whimsy injectors to reality checkers. Each agent is a specialized expert with personality, processes, and proven deliverables.
+## 같은 요청에도 다른 역할의 경계가 필요하다
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+‘이 저장소를 살펴봐 달라’는 요청에는 구조 설명, 버그 찾기, 설계 변경, 코드 작성이 모두 섞일 수 있다.
+AI가 어떤 역할로 일하는지 정하지 않으면 설명을 원했는데 수정 제안으로 흐르거나, 검토를 원했는데 구현을 시작할 수 있다.
+agency-agents는 개발, 설계, 테스트 등 여러 영역의 역할을 별도 문서로 나누어 임무와 산출물의 모양을 정한다.[1]
 
-- 주 언어: Shell
-- Star 수: 152228
-- Fork 수: 24526
-- 최근 수정일: 2026-09-14
-- 라이선스: MIT License
-- 기본 브랜치: main
-- 홈페이지만의 페이지: 미확인
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+README는 각 파일을 도구에 설치하는 방식뿐 아니라 참고 자료로 읽고 필요한 부분을 복사·수정하는 사용법도 제시한다.
+따라서 모든 역할을 한꺼번에 설치해야 의미가 생기는 묶음은 아니다.
+특정 역할의 규칙만 비교해서 읽거나 필요한 팀·에이전트만 선택하는 설치 옵션도 안내되어 있다.[1]
 
-## 3. 이 Repository는 무엇인가?
+## 역할 문서의 구조를 보는 방법
 
-- 목적: `A complete AI agency at your fingertips - From frontend wizards to Reddit community ninjas, from whimsy injectors to reality checkers. Each agent is a specialized expert with personality, processes, and proven deliverables.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+대표로 읽은 Codebase Onboarding Engineer는 처음 보는 코드베이스의 구조와 실행 경로를 설명하는 역할이다.
+문서 앞부분에는 이름과 설명 등의 메타데이터가 있고, 본문에는 임무, 필수 규칙, 산출물 형식, 작업 순서, 의사소통 방식이 이어진다.
+이 문서의 ‘경험’과 ‘성격’은 모델에게 역할을 부여하는 프롬프트이지 실제 사람의 경력이나 AI가 획득한 전문 자격을 증명하는 정보가 아니다.[2]
 
+가장 구체적인 규칙은 읽은 코드에 근거한 사실만 말하라는 것이다.
+어느 모듈이 기능을 맡는다고 설명하려면 실제 파일을 가리켜야 하며, 중요한 함수명·명령·설정 키를 정확히 쓰라고 요구한다.
+또한 구조 설명이 코드 리뷰나 리팩터링으로 번지지 않게 읽기 전용 경계를 정하고 파일 수정과 패치 생성을 금지한다.
+전문성이라는 추상적 표현보다 이런 행동 제한이 역할의 실질적인 내용을 보여 준다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+결과물은 한 줄 설명, 짧은 전체 설명, 상세 실행 경로의 세 단계로 제시하도록 되어 있다.
+먼저 프로젝트가 무엇인지 이해한 뒤 입력과 출력, 진입 파일, 모듈 경계를 확인하게 하는 순서다.
+진입점은 요청이나 명령이 프로그램 안으로 들어오는 시작 파일이나 함수이며, 실행 경로는 그 입력이 처리되어 결과로 나오는 연결을 뜻한다.[2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## 예시로 따라가는 흐름
 
-## 4. 주제 라벨(Topics)
+공식 역할 문서의 절차를 바탕으로 한 가상 예시이며 직접 실행한 결과가 아니다.
+독자가 공개 웹 API 저장소를 처음 읽고 ‘요청이 들어와 데이터베이스에 저장되기까지 어디를 지나가는가’를 묻는다고 하자.
+이 역할은 우선 파일 구성과 실행 환경 표시를 찾아 앱인지 라이브러리인지 구분하고, 서버 시작 파일과 라우터를 찾는다.
+이어 실제 요청 경로 하나를 골라 입력 검사, 작업 조정, 핵심 로직, 저장과 응답으로 연결되는 파일을 따라 읽는다.[2]
 
-- 등록된 대표 주제 라벨이 없습니다.
+결과는 그럴듯한 전체 아키텍처를 상상해 채우는 것이 아니라, 읽은 파일과 그 사이의 호출을 근거로 작성한 안내다.
+문서의 산출물 형식에는 입력과 출력, 주요 파일, 책임 경계, 구체적 흐름, 조사한 파일 목록이 포함된다.
+백그라운드 worker를 열지 않았다면 그 부분은 읽지 않았다고 명시해야 하며, 한 하위 시스템만 보고 전체 저장소를 이해했다고 말하지 말라는 규칙도 있다.
+사람은 설명 속 파일 경로가 실제로 해당 동작을 정의하거나 호출하는지 확인한다.
+이 경우 결과물은 코드 변경이 아니라 새 독자가 따라 읽을 수 있는 근거 있는 지도다.[2]
 
-## 5. 대략적인 동작 흐름
+## 역할 선택과 실행 도구를 구별하기
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+README는 여러 코딩 도구용 변환·설치 스크립트를 안내한다.
+역할 내용은 비슷해도 각 도구가 읽는 파일 형식과 설치 위치가 다르기 때문에 통합 경로가 존재하는 것이다.
+별도 네이티브 앱도 README에 연결되어 있지만, 그 앱은 다른 저장소로 연결된 제품이다.
+현재 살펴본 역할 모음과 데스크톱 앱 구현을 같은 대상으로 분석하지 않는다.[1]
 
-### 용어 풀이
+‘Production-ready’, ‘proven deliverables’ 같은 소개 문구는 프로젝트의 주장이다.
+역할 문서에 성공 기준이 있다고 해서 모델이 그 기준을 항상 달성했다는 뜻은 아니다.
+예를 들어 구조 설명에서 사실만 쓰라는 지시는 검증 목표이지, 잘못된 추론이 기술적으로 불가능하도록 만드는 장치는 아니다.
+사용하는 모델, 실제 도구 권한, 읽을 수 있는 자료와 사용자 요청이 결과를 좌우하므로 결과물의 근거를 따로 확인해야 한다.[1][2]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+README에는 특정 도구가 전체 역할을 모두 등록하지 못할 수 있다는 제한도 안내된다.
+이 글에서는 그 수치나 현재 동작을 재검증하지 않고, 전체 일괄 설치보다 대상 도구의 지원 조건과 선택 범위를 확인해야 한다는 경계만 남긴다.
+또한 온보딩 역할의 읽기 전용 규칙을 다른 모든 역할의 공통 속성으로 확대할 수 없다.
+구현이나 배포를 맡는 역할은 별도 문서를 읽어 행동 범위를 확인해야 한다.[1][2]
 
+## 직접 읽어볼 자료
 
-## 6. 사용자 생각
+- [README의 Quick Start](https://github.com/msitarzewski/agency-agents/blob/main/README.md)
+  설치 경로와 참고 자료로 쓰는 경로를 비교한다.
+  독립 실행 프로그램을 찾는 것인지, 현재 AI 도구에 줄 역할 지침을 찾는 것인지 먼저 구분할 수 있다.
+- [Codebase Onboarding Engineer](https://github.com/msitarzewski/agency-agents/blob/main/engineering/engineering-codebase-onboarding-engineer.md)
+  Critical Rules와 Workflow를 이어 읽는다.
+  코드 근거, 읽기 전용, 조사 범위 공개가 실제 결과물 형식과 어떻게 연결되는지 확인하는 대표 파일이다.
+- [README의 역할 목록과 통합 설명](https://github.com/msitarzewski/agency-agents/blob/main/README.md)
+  이름이 비슷한 역할의 임무를 비교하고 대상 도구의 설치 방식을 살핀다.
+  모든 역할을 모으는 것보다 요청에 맞는 경계와 산출물이 있는지 질문하는 편이 선택 기준을 분명하게 한다.
+
+## 정리
+
+agency-agents는 AI에게 어떤 전문가 역할과 작업 규칙을 부여할지 선택하는 문서 모음이다.
+대표 온보딩 역할은 사실 기반의 읽기와 설명을 제한 조건으로 삼지만, 그 규칙의 존재와 실제 모델의 준수 여부는 구별해야 한다.
+
+## 자료 확인 범위
+
+2026-09-27 README와 Codebase Onboarding Engineer 원문을 읽고 루트의 역할 분류를 확인했다.
+에이전트 설치·활성화·변환 스크립트 실행은 하지 않았으며 전체 역할의 품질을 일괄 검증한 것은 아니다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -81,13 +108,19 @@ A complete AI agency at your fingertips - From frontend wizards to Reddit commun
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] msitarzewski/agency-agents — README.md
+
+<https://github.com/msitarzewski/agency-agents/blob/main/README.md>
+
+[2] msitarzewski/agency-agents — engineering/engineering-codebase-onboarding-engineer.md
+
+<https://github.com/msitarzewski/agency-agents/blob/main/engineering/engineering-codebase-onboarding-engineer.md>

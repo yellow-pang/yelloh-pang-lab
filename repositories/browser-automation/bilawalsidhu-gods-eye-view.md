@@ -5,7 +5,7 @@ url: "https://github.com/bilawalsidhu/gods-eye-view"
 category: "browser-automation"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "browser-automation"
   - "starred-draft"
@@ -13,76 +13,111 @@ tags:
 
 # bilawalsidhu/gods-eye-view
 
-> https://github.com/bilawalsidhu/gods-eye-view
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+God’s Eye View는 항공기·위성·지진 등 공개 공간 정보를 3차원 지구 화면에 겹쳐 보여 주는 브라우저 앱이다.
+이름과 화면 연출은 위성 관측 장비를 떠올리게 하지만, 비공개 감시망에 접속하는 도구가 아니다.
+README는 공개 데이터와 여러 공급자의 지도를 모아 탐색하며, 선택적으로 음성 AI 제어를 더하는 프로젝트라고 설명한다.[1]
 
-A spy satellite simulator in your browser, except the data is real. Live open source spatial intelligence on a photorealistic 3D globe.
+## 한 화면에 보인다고 같은 종류의 관측은 아니다
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+지도에서 비행기, 위성, 도로와 카메라를 함께 보면 모두 같은 방식으로 측정된 실시간 정보처럼 느껴질 수 있다.
+그러나 README는 대부분의 피드가 실시간 또는 정기 갱신되는 자료이고, 도로 위 교통은 실제 도로와 집계 데이터를 이용한 시뮬레이션이라고 구분한다.
+카메라 자세와 로켓 궤적도 대략적인 추정이다.
+화면의 시각적 통일성과 데이터의 정확도·시간 해상도는 별개다.[1]
 
-- 주 언어: JavaScript
-- Star 수: 32905
-- Fork 수: 6567
-- 최근 수정일: 2026-09-14
-- 라이선스: Other
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://maptheworld.ai/
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+프로젝트의 핵심은 여러 레이어를 같은 지리적 위치에 배치하는 데 있다.
+레이어는 지도 위에서 켜고 끄는 정보 층이다.
+특정 항공기를 선택해 추적하거나 위성을 중심에 놓고 보는 조작은 서로 다른 원천 데이터를 공통 화면과 카메라로 연결한다.
+야간 시야나 열영상처럼 보이는 스타일은 지구 화면에 적용하는 그래픽 표현이므로 실제 해당 센서의 측정값을 확보했다는 뜻이 아니다.[1]
 
-## 3. 이 Repository는 무엇인가?
+## 장소를 찾는 일에도 변환 규칙이 필요하다
 
-- 목적: `A spy satellite simulator in your browser, except the data is real. Live open source spatial intelligence on a photorealistic 3D globe.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+대표 구현으로 읽은 `keylessGeocoder.js`는 Photon/OpenStreetMap 장소 검색 결과를 앱의 공통 형식으로 바꾼다.
+지오코딩은 지명이나 주소를 좌표와 장소 정보로 연결하는 과정이다.
+외부 서비스마다 결과의 이름과 분류·경계 상자 표현이 다르기 때문에, 좌표만 복사하면 지도 카메라가 잘못된 크기로 대상을 보여 줄 수 있다.[2]
 
+이 파일은 도시, 공원, 호수, 광장 같은 분류를 화면 이동에 사용할 유형으로 바꾼다.
+호수를 단일 건물처럼 취급하면 영역 전체를 보여 주지 못하고 너무 가까이 내려갈 수 있다.
+반대로 광장을 도시로 취급하면 너무 넓게 보일 수 있다.
+코드는 구체적인 OSM 태그를 먼저 판단하고 넓은 분류는 그 다음에 사용한다.
+장소의 점 좌표와 그 장소가 차지하는 영역을 함께 전달하는 이유다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+현재 화면 부근의 결과를 우선하는 것과 화면 밖 결과를 금지하는 것도 다르다. `photonSearchUrl`은 현재 화면의 중심을 가까운 결과에 대한 선호로 전달하며 딱 잘라 자르는 경계 상자 필터로 쓰지 않는다.
+덕분에 다른 대륙의 지명을 검색할 때 현재 화면 밖이라는 이유만으로 모두 제외되는 문제를 피하려는 구조다.
+이는 검색 공급자를 바꾸어도 사용자에게 같은 의미의 탐색을 제공하기 위한 변환이다.[2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## 예시로 따라가는 흐름
 
-## 4. 주제 라벨(Topics)
+공식 테스트는 “Hanoi”에 대한 Photon 응답에서 필요한 필드만 남긴 자료를 사용한다.
+입력에는 지명, 국가, 점 좌표와 도시의 영역을 나타내는 `extent`가 있다. `normalizePhotonFeature`는 이 정보를 앱이 쓰는 위도·경도, 표시 이름, 유형과 화면 범위로 바꾼다.
+테스트는 표시 이름을 `Hà Nội, Việt Nam`으로 만들고 유형을 `locality`로 해석해 도시 전체 보기 방식에 연결하는지를 검사한다.
+이 글에서는 해당 테스트를 실행하지 않았다.[3]
 
-- 3d-globe
-- cesium
-- flight-tracking
-- geospatial
-- geospatial-intelligence
-- gis
-- osint
-- photogrammetry
-- satellite-tracking
-- spatial-intelligence
+중간 단계에서 특히 중요한 것은 좌표의 순서다.
+Photon의 영역 배열은 서쪽·북쪽·동쪽·남쪽 순서인데, 이를 다른 서비스에서 익숙한 순서라고 가정해 옮기면 숫자가 있어도 틀린 상자가 된다.
+변환 함수는 범위를 확인하고 앱이 쓰는 남서·북동 경계로 정리한다.
+테스트는 잘못된 길이와 범위를 가진 입력에서 유효한 경계가 만들어지지 않아야 한다는 조건도 포함한다.[2][3]
 
-## 5. 대략적인 동작 흐름
+최종적으로 사람이 봐야 할 것은 지명의 문자열만 일치하는지가 아니다.
+선택한 곳이 도시인지 호수인지, 화면 범위가 그 장소에 맞는지, 검색 결과의 출처와 갱신 상태가 무엇인지도 확인해야 한다.
+같은 테스트 파일은 광장을 도시로 오해하지 않는 경우와 네트워크 실패를 찾지 못한 결과로 처리하는 경우를 분리한다.
+이 사례는 풍부한 지구 화면의 밑바탕에 데이터 해석과 오류 경계가 있음을 보여 준다.[3]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+## 외부 서비스와 자료의 조건
 
-### 용어 풀이
+README는 API 키 없이 시작하는 경로를 제공하지만 오프라인에서 모든 정보가 동작한다는 뜻은 아니다.
+기본 지도와 공개 피드에도 네트워크·공급자 이용 조건이 있다.
+사진처럼 보이는 3D 지도와 일부 검색 경로에는 공급자 키 및 사용량 조건이 붙고 음성 제어에는 OpenAI 키가 필요하다.
+로컬 브라우저에서 실행한다는 것과 외부 데이터 요청이 없다는 것은 구분해야 한다.[1]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+키 보관 안내는 로컬 파일이 평문이라는 점도 밝힌다.
+브라우저에서 사용하는 지도 키는 공급자 측 제한 설정이 필요하며, 개발 서버를 네트워크에 공개하는 문제 역시 별도 조건이다.
+이 글에서는 키를 만들거나 입력하지 않았다.
+공유 링크는 카메라·레이어·선택 대상을 전달하는 수단이지 당시 세계 상태를 그대로 고정한 증거 자료가 아니라는 README 설명도 함께 읽어야 한다.[1]
 
+LICENSE의 MIT 허가는 소스코드에만 적용된다.
+포함된 데이터와 실행 중 받아오는 자료, 3D 모델은 각 제공자의 조건을 따른다.
+일부 데이터에는 비상업 조건이나 동일조건 공유가 붙는다.
+특히 JavaScript 파일에 좌표가 들어 있다고 자동으로 코드와 같은 MIT 자료가 되는 것은 아니라는 주의가 있다.
+화면이나 데이터의 재사용을 판단할 때 코드 라이선스 하나만 확인해서는 안 된다.[4]
 
-## 6. 사용자 생각
+## 직접 읽어볼 자료
+
+- [공식 README](https://github.com/bilawalsidhu/gods-eye-view/blob/main/README.md):
+
+  Why This Exists와 데이터 레이어 설명을 먼저 읽고 관측·갱신·시뮬레이션을 나눈다.
+  Quick Start와 키 안내에서는 기본 탐색과 유료·선택 기능의 조건을 확인한다.[1]
+- [장소 검색 변환 구현](https://github.com/bilawalsidhu/gods-eye-view/blob/main/src/keylessGeocoder.js):
+
+  유형 매핑, `photonExtentToBounds`, `normalizePhotonFeature`를 따라간다.
+  같은 좌표라도 장소 분류와 경계 해석에 따라 카메라 이동이 달라지는 이유를 볼 수 있다.[2]
+- [장소 검색 테스트](https://github.com/bilawalsidhu/gods-eye-view/blob/main/src/keylessGeocoder.test.mjs):
+
+  Hanoi 입력과 광장·호수 사례를 비교하고 외부 네트워크를 실제 호출한 시험인지 확인한다.
+  이 파일의 중심은 변환 계약을 검사하는 데 있다는 점을 읽는다.[3]
+- [LICENSE](https://github.com/bilawalsidhu/gods-eye-view/blob/main/LICENSE):
+
+  MIT 본문 뒤의 데이터·자산 예외를 반드시 읽는다.
+  코드의 복제 허가와 화면에 들어간 데이터의 재배포 허가가 왜 별개인지 확인하는 자료다.[4]
+
+## 정리
+
+God’s Eye View는 공개 공간 신호를 공통 지구 화면과 탐색 방식으로 연결한다.
+시각적 사실감은 데이터의 정확성이나 실시간성을 보증하지 않는다.
+원천 자료의 종류와 좌표 해석, 공급자 조건을 구별할 때 화면을 올바르게 읽을 수 있다.[1][2][4]
+
+## 자료 확인 범위
+
+2026-09-27 공식 README, 장소 검색 변환 코드·테스트와 LICENSE를 확인했다.
+앱이나 테스트를 실행하지 않았으며 현재 위치·항공편·카메라를 조회하지 않았다.
+성능과 실시간 데이터 정확도는 검증하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +125,27 @@ A spy satellite simulator in your browser, except the data is real. Live open so
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] bilawalsidhu/gods-eye-view — README.md
+
+<https://github.com/bilawalsidhu/gods-eye-view/blob/main/README.md>
+
+[2] bilawalsidhu/gods-eye-view — src/keylessGeocoder.js
+
+<https://github.com/bilawalsidhu/gods-eye-view/blob/main/src/keylessGeocoder.js>
+
+[3] bilawalsidhu/gods-eye-view — src/keylessGeocoder.test.mjs
+
+<https://github.com/bilawalsidhu/gods-eye-view/blob/main/src/keylessGeocoder.test.mjs>
+
+[4] bilawalsidhu/gods-eye-view — LICENSE
+
+<https://github.com/bilawalsidhu/gods-eye-view/blob/main/LICENSE>

@@ -5,7 +5,7 @@ url: "https://github.com/MadsLorentzen/ai-job-search"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,106 @@ tags:
 
 # MadsLorentzen/ai-job-search
 
-> https://github.com/MadsLorentzen/ai-job-search
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 지원서를 대신 제출하는 봇이 아니라 준비 절차의 프레임워크
 
-## 1. 한 줄 요약
+AI Job Search는 Claude Code를 중심으로 채용 공고 평가, 이력서와 커버레터 작성, 검토와 면접 준비를 연결한 프레임워크다.
+프로필 자료, 명령 지침, 검색 도구와 문서 템플릿이 함께 들어 있다.
+README는 핵심 작성 흐름을 특정 국가에 묶이지 않는 구조로 설명하지만, 기본 채용 포털 검색 Skill은 덴마크 시장 중심이라고 구분한다.
+모든 국가의 공고를 자동 수집하는 완성형 서비스와는 다르다.[1]
 
-The job search that runs on your machine. AI job application framework built on Claude Code: evaluate postings, tailor CVs, write cover letters, prep interviews. Fork it and own it.
+지원서 작성에서 반복되는 일은 같은 경력을 복사하는 것만이 아니다.
+공고의 요구사항을 해석하고, 실제 경험 중 관련 부분을 고르고, 없는 능력을 꾸며내지 않으면서 형식을 맞춰야 한다.
+이 프로젝트는 이런 단계를 파일과 절차로 분리한다. `/setup`으로 근거 프로필을 준비하고, `/scrape`로 후보 공고를 찾은 뒤, `/apply`에서 해당 공고와의 적합성을 평가하고 문서를 만든다.
+산출물이 생겼다는 사실은 제출이나 합격을 뜻하지 않는다.[1][2]
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+## 원자료, 작성자, 검토자를 분리한다
 
-- 주 언어: Python
-- Star 수: 42559
-- Fork 수: 14595
-- 최근 수정일: 2026-09-14
-- 라이선스: MIT License
-- 기본 브랜치: master
-- 홈페이지만의 페이지: 미확인
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+프로필은 이후 문장들의 사실 근거다.
+실제 `/apply` 지침은 후보자 프로필, 원본 이력서, `CLAUDE.md`의 프로필 영역을 사실의 출처로 삼으며, 예전에 맞춤 작성한 이력서는 구조와 표현만 참고하라고 한다.
+이전 초안의 과장이 다음 초안의 '사실'이 되는 순환을 막으려는 규칙이다.
+사용자가 새 사실을 확인하거나 수정하면 프로필에 반영해야 다음 실행에서 근거 없는 주장으로 사라지지 않는다고 설명한다.[2]
 
-## 3. 이 Repository는 무엇인가?
+작성자 Agent는 공고와 프로필을 비교한 뒤 초안을 만들고, 별도 문맥의 검토자 Agent는 요구사항 누락, 표현과 사실 근거를 검토한다.
+검토자에게는 정확한 초안이 전달되며, 날짜·직책·수치가 원자료와 맞는지 확인하도록 지시한다.
+이는 역할 분리 방식이지 서로 다른 두 Agent의 동의가 사실을 보증한다는 의미는 아니다.
+원자료가 틀리거나 모호하면 사람의 정정이 여전히 필요하다.[2]
 
-- 목적: `The job search that runs on your machine. AI job application framework built on Claude Code: evaluate postings, tailor CVs, write cover letters, prep interviews. Fork it and own it.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+문서 검증도 두 층이다.
+기본 템플릿은 LaTeX로 작성한 원문을 PDF로 컴파일하고 화면에서 페이지 넘김과 글꼴 등을 확인한다.
+다음으로 ATS, 즉 채용 관리 시스템이 읽는 PDF의 텍스트 층을 추출해 연락처와 읽기 순서, 공고의 핵심 용어가 제대로 남았는지 점검한다.
+눈으로 보이는 PDF가 깔끔해도 추출 텍스트가 뒤섞일 수 있으므로 두 검사는 서로 대신할 수 없다.[1][2]
 
+키워드 점검은 실제 역량을 드러내는 데 목적이 있다.
+지침은 프로필에 있지만 빠진 용어와 실제로 부족한 역량을 구분하고, 후자의 용어를 억지로 넣지 말라고 명시한다.
+기본 이력서와 커버레터의 분량 기준도 제공하지만, 별도 템플릿을 등록하면 파일 확장자와 컴파일 명령 등이 바뀔 수 있다.
+자동 검증은 선택한 템플릿과 도구에 의존한다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+## 예시로 따라가는 흐름
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+공개된 채용 공고 한 편을 가져와 지원 문서를 준비하는 흐름을 따라가 보자.
+이는 공식 `/apply` 절차를 바탕으로 한 설명이며 직접 실행한 결과가 아니다.
+사용자는 공고 URL이나 전체 텍스트를 입력한다.
+Agent는 직무, 위치, 언어, 명시된 마감일을 추출하고 URL 입력이면 출처 호스트도 확인한다.
+원문이 로그인 화면이나 무관한 목록으로 바뀌었다면 제목만으로 초안을 작성해서는 안 된다는 규칙이 있다.[2]
 
-## 4. 주제 라벨(Topics)
+다음에는 프로필과 비교한 기술·경험의 일치와 부족한 부분을 사용자에게 제시한다. `/apply` 파일은 이 평가 뒤에 이력서와 커버레터 작성을 계속할지 묻고, 거절하면 멈추도록 되어 있다.
+승인한 경우 작성자는 실제 사실 범위에서 강조점을 조정하고 검토자의 피드백을 반영한다.
+사용자가 해본 적 없는 도구를 공고가 요구한다면, 그것은 빈틈으로 남기거나 관련 경험과의 차이를 솔직히 설명할 대상이지 새 경력을 만들 이유가 아니다.[2]
 
-- ai
-- ai-agents
-- career
-- claude-code
-- cover-letter
-- cv
-- interview-preparation
-- job-application
-- job-hunting
-- job-search
+이후 PDF를 만들고 화면과 추출 텍스트를 확인한 뒤 결과 파일과 검증 항목을 제시한다.
+텍스트 추출 도구가 없다면 기계적인 파싱 검사를 생략한 제한 상태를 보고하도록 되어 있다.
+지원 기록에는 새 행의 상태를 `drafted`로 적고 공고 원문을 보관한다.
+이미 제출한 기록을 다시 작성하더라도 상태를 뒤로 되돌리지 말라는 규칙이 있다.
+따라서 사람이 실제 제출을 마친 뒤 결과 기록을 갱신하는 단계와 문서 준비 단계를 분명히 나눌 수 있다.[2]
 
-## 5. 대략적인 동작 흐름
+## 경력 자료와 외부 공고를 한 Agent가 읽는 위험
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+README의 제목은 로컬 실행을 강조하지만, 기본 도구인 Claude Code 이용에는 별도 구독이나 API 비용과 관련 도구가 필요하다고 설명한다.
+검색 도구에는 Bun, 기본 PDF 생성에는 LaTeX 환경이 안내되어 있다.
+파일을 자신의 기기에 보관하는 것만으로 완전한 오프라인 처리나 모델 제공자에 대한 무전송이 보장되는 것은 아니므로, 실제 Agent의 자료 처리 정책과 전송 범위를 확인해야 한다.[1]
 
-### 용어 풀이
+개인정보 보호 안내에는 확인이 필요한 차이도 있다.
+README의 Quick start는 공개 포크에서 `/setup`이 추적 중인 파일에 이름·연락처·경력 등을 쓸 수 있다고 경고하며 개인 용도에는 비공개 저장소를 권한다.
+반면 `SECURITY.md`는 채워진 프로필과 지원 기록 등이 gitignore로 제외된다고 설명한다.
+두 설명만으로 현재 모든 개인 파일이 보호된다고 결론 내리지 말고, 작성 전에 실제 공개 범위와 추적 상태를 확인해야 한다.
+이 글은 그 보호 상태를 실행으로 검증하지 않았다.[1][3]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+보안 문서는 외부 공고와 개인 자료를 함께 읽는 Agent가 핵심 위험이라고 인정한다.
+공고 속 지시를 명령으로 따르지 않고 본문에 들어 있는 링크를 임의로 가져오지 않는 규칙이 있지만, 이런 지침은 격리된 실행 공간인 샌드박스가 아니다.
+실제 자료를 보내기 전 사람이 Agent가 읽고 작성한 내용을 검토해야 한다.
+README에 있는 저자의 취업 경험 역시 개인 사례이며 사용자에게 같은 결과가 보장된다는 근거는 아니다.[1][3]
 
+## 직접 읽어볼 자료
 
-## 6. 사용자 생각
+- [README의 What this is와 Prerequisites](https://github.com/MadsLorentzen/ai-job-search/blob/master/README.md):
+
+  핵심 작성 흐름과 지역별 포털 도구를 구분하고 비용·문서 생성 환경을 확인한다.
+  Quick start의 공개 포크 경고도 실제 프로필을 채우기 전에 읽을 내용이다.
+- [/apply 지침](https://github.com/MadsLorentzen/ai-job-search/blob/master/.claude/commands/apply.md):
+
+  적합성 평가 뒤 승인, 사실 근거 검토, PDF 화면·텍스트 검사, `drafted` 기록 순서를 따라간다. '초안 생성'과 '제출 완료'가 어느 지점에서 나뉘는지 확인할 수 있다.
+- [보안 정책](https://github.com/MadsLorentzen/ai-job-search/blob/master/SECURITY.md):
+
+  Threat model과 Personal data boundaries를 README의 경고와 대조한다.
+  명령 허용 목록과 자연어 지침의 한계, 개인정보 파일 보호 여부를 별도로 점검해야 하는 이유가 드러난다.
+
+## 정리
+
+AI Job Search는 공고마다 달라지는 지원 문서를 실제 프로필 근거와 연결하고 별도 검토·PDF 검사까지 이어가는 작업 구조다.
+문서의 품질 점검은 지원자의 사실 확인이나 최종 제출 판단을 대신하지 않는다.
+개인 자료의 공개 범위, 외부 공고의 신뢰 경계와 검증이 생략된 단계를 명시하는 것이 결과 파일만큼 중요하다.
+
+## 자료 확인 범위
+
+2026-09-27 공식 README와 루트 구조, `/apply` 명령 파일과 보안 정책을 읽었다.
+프로필 입력, 공고 조회 실행, 지원 문서 생성·컴파일, 실제 지원서 제출은 하지 않았다.
+개인정보 제외 규칙과 취업 성과도 독립적으로 검증한 범위가 아니다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +120,23 @@ The job search that runs on your machine. AI job application framework built on 
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] MadsLorentzen/ai-job-search — README.md
+
+<https://github.com/MadsLorentzen/ai-job-search/blob/master/README.md>
+
+[2] MadsLorentzen/ai-job-search — .claude/commands/apply.md
+
+<https://github.com/MadsLorentzen/ai-job-search/blob/master/.claude/commands/apply.md>
+
+[3] MadsLorentzen/ai-job-search — SECURITY.md
+
+<https://github.com/MadsLorentzen/ai-job-search/blob/master/SECURITY.md>

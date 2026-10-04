@@ -5,7 +5,7 @@ url: "https://github.com/jordan-gibbs/hyperresearch"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,71 +13,103 @@ tags:
 
 # jordan-gibbs/hyperresearch
 
-> https://github.com/jordan-gibbs/hyperresearch
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 번의 보고서를 다음 조사에 남기는 연구 도구
 
-## 1. 한 줄 요약
+Hyperresearch는 코딩 Agent를 자료 수집·분석·보고서 작성 절차에 연결하고, 읽은 출처를 지속적인 자료 보관소에 남기는 연구 도구다.
+Python CLI와 Skill·하위 Agent 절차가 함께 있으며, 단순한 링크 목록이나 자체 언어 모델이 아니다.
+README는 질문을 여러 항목으로 분해한 뒤 검색·심화 조사·비평·수정과 출처 확인을 거치는 흐름을 소개한다.[1]
 
-Agent-driven research knowledge base. Agents collect, search, and synthesize web research into a persistent, searchable wiki.
+보통 웹 조사에서 최종 요약만 남기면 다음 질문에 같은 자료를 다시 찾게 된다.
+무엇을 읽었는지, 본문을 읽은 것인지 초록만 본 것인지, 같은 보도자료를 옮긴 여러 페이지인지도 사라지기 쉽다.
+Hyperresearch는 보고서와 함께 원문을 바탕으로 한 노트와 출처 관계를 남겨 이러한 구분을 후속 조사에서 재사용하려는 구조다.[1]
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+## 보고서 절차와 vault의 역할
 
-- 주 언어: Python
-- Star 수: 3276
-- Fork 수: 319
-- 최근 수정일: 2026-09-14
-- 라이선스: MIT License
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://hyperresearch.ai
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+전체 절차는 질문 분해, 넓은 검색, 모순과 쟁점 조사, 증거 정리, 여러 초안, 종합, 비평과 수정 등으로 나뉜다.
+모든 질문이 같은 규모를 거치는 것은 아니며 제한된 질문에는 짧은 경로가 제공된다.
+단계별 지침은 필요할 때 불러오므로 긴 지시문 하나에 모든 규칙을 넣는 방식과 다르다.[1]
 
-## 3. 이 Repository는 무엇인가?
+Vault는 수집한 노트의 보관소다.
+README는 `research/notes/`의 Markdown을 원본 데이터로, SQLite를 다시 만들 수 있는 검색 캐시로 설명한다.
+YAML Front Matter에는 노트의 메타데이터가 들어간다.
+PDF 원문과 연결 관계도 남기므로 도구가 없어도 글을 열어 읽을 수 있다는 점과, 검색 속도를 위한 색인이 있다는 점이 함께 성립한다.[1]
 
-- 목적: `Agent-driven research knowledge base. Agents collect, search, and synthesize web research into a persistent, searchable wiki.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+출처의 독립성을 따지는 과정도 소개된다.
+여러 사이트가 같은 자료를 복제했다면 출처 개수가 많다는 이유만으로 합의가 강하다고 볼 수 없기 때문이다.
+출처 추적, 인용 검사, 반대 입장의 비평은 각각 다른 위험을 다룬다.
+구조 검사로 누락이나 끊긴 연결을 잡는 것과 내용의 사실성을 최종 판단하는 것은 구분해야 한다.[1]
 
+## 예시로 따라가는 흐름
 
-## 3-1. 쉽게 읽는 한 줄
+추가로 확인한 공식 `docs/source-search.md`에는 저장된 자료에서 ‘retrieval’을 검색하면서 명시적으로 철회되지 않았고 알려진 인용 수가 일정 기준 이상인 노트만 고르는 예시가 있다.
+입력은 검색어와 메타데이터 조건이고, 조건들은 AND로 결합된다.
+결과에는 DOI, 발행처, 인용 수, 철회 상태, 확보한 원고 버전이 함께 표시되어 어떤 이유로 선택되었는지 확인할 수 있다.[2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+이 검색은 외부 데이터베이스를 다시 조회하는 일이 아니라 vault에 이미 저장된 메타데이터를 거르는 과정이다.
+따라서 사람은 결과가 없을 때 관련 논문이 세상에 없다고 결론 내리지 말고, 자료를 아직 수집하지 않았거나 메타데이터가 없을 가능성을 살펴야 한다.
+특히 `not-retracted`는 명시적으로 false인 상태만 뜻하고, 상태가 없으면 `unchecked`다.
+인용 수를 0 이상으로 두어도 수치가 알려지지 않은 노트는 제외된다.
+이 예시를 직접 실행하지 않았으며 검색 결과 목록을 새로 만들지도 않았다.
+공식 필터 의미를 읽으면 ‘정보가 없음’을 ‘문제가 없음’으로 바꾸지 않는 것이 자료 재사용의 핵심임을 알 수 있다.
 
-## 4. 주제 라벨(Topics)
+## 확보한 원고의 버전과 최신 상태는 다르다
 
-- agents
-- agentskills
-- claude-code
-- deep-research
-- deep-research-agent
+`oa_version`은 지금 보관한 텍스트가 투고본·게재 승인본·출판본 중 무엇인지 나타내며 논문의 최신 출판 상태와 반드시 같지는 않다.
+투고본이 나중에 출판되더라도 저장한 텍스트의 버전은 그대로일 수 있다.
+오래된 자료를 재사용할 때는 최신 상태가 필요한지와 현재 읽은 원문의 버전을 별도로 확인해야 한다.[2]
 
-## 5. 대략적인 동작 흐름
+공식 문서는 과거 캐시가 미확인과 명시적 비철회 상태를 같은 방식으로 저장했던 문제와 갱신 절차도 설명한다.
+캐시 재구성만으로 Front Matter의 잘못 추정된 상태가 모두 고쳐지는 것은 아니라고 한다.
+이 점은 영속적 보관소가 저절로 최신·정확해지지 않으며 수집·정정·색인 갱신이 각기 다른 작업임을 보여 준다.[2]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+## 조사 범위와 강제 장치의 한계
 
-### 용어 풀이
+README의 성능 표는 내부 측정과 일부 표본에 기반한 예상치이며 제삼자 검증이 남아 있다고 표시된다.
+이를 독립적으로 확인된 최고 성능으로 소개하지 않는다.
+Claude Code 경로와 새 Codex 경로도 같지 않다.
+Codex에는 동일한 브라우저 경로가 없고, 일부 도구 제한은 강제된 허용 목록이 아니라 지시문이라고 명시한다.[1]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+이 도구는 유료 원문 접근권을 만들어 주지 않는다.
+합법적인 공개 사본이 있으면 회수하고 대체 사실을 표시하지만, 없으면 초록만 얻거나 아무것도 얻지 못할 수 있다.
+또한 단계 누락을 막는 hook과 인용 구조 검사는 사실 정확성을 보증하지 않는다고 README 스스로 경계를 둔다.
+질문의 중요성과 자료의 신뢰성 판단은 사용자의 몫으로 남는다.[1]
 
+설치 역시 단일 Skill 문서만 복사하는 것으로 끝나지 않는다.
+Python 패키지가 실제 CLI와 파이프라인을 제공하고 설치 대상 Agent에 따라 Skill·Agent·hook·짧은 지침 블록을 추가한다.
+파일 쓰기와 네트워크 권한, 선택한 모델과 조사 규모에 따른 비용을 고려해야 한다.[1]
 
-## 6. 사용자 생각
+## 직접 읽어볼 자료
+
+- [README의 pipeline과 vault](https://github.com/jordan-gibbs/hyperresearch/blob/main/README.md)
+
+  보고서 생성 단계와 자료 저장을 따로 읽는다.
+  Markdown이 원본이고 SQLite가 캐시라는 구분, 다음 조사에서 기존 출처를 먼저 찾는 방식이 핵심이다.
+
+- [학술 메타데이터 검색 안내](https://github.com/jordan-gibbs/hyperresearch/blob/main/docs/source-search.md)
+
+  실제 필터 예시와 `unchecked`, 원고 버전의 뜻을 확인한다.
+  검색 조건을 만족한 자료와 아직 확인하지 못한 자료의 차이를 구별하기 위한 문서다.
+
+- [README의 Codex 차이와 비지원 범위](https://github.com/jordan-gibbs/hyperresearch/blob/main/README.md)
+
+  도구 제한이 지시인지 강제인지, 막힌 원문이 어떻게 남는지, 구조 검사와 사실 검증의 경계가 무엇인지 확인한다.
+  내부 벤치마크의 상태도 함께 읽는 것이 좋다.
+
+## 정리
+
+Hyperresearch는 질문에 답하는 과정과 출처 보관소를 연결한다.
+재사용의 장점은 있지만 오래된 메타데이터, 미확인 상태, 제한된 원문 접근을 명확히 남길 때만 근거의 의미를 유지할 수 있다.
+
+## 자료 확인 범위
+
+2026-09-27에 수집한 기존 문서, README의 절차·vault·제약, 루트와 공식 source-search 예시를 읽었다.
+패키지 설치, 실제 연구 실행, 논문 검색과 보고서 벤치마크는 수행하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -85,13 +117,19 @@ Agent-driven research knowledge base. Agents collect, search, and synthesize web
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] jordan-gibbs/hyperresearch — README.md
+
+<https://github.com/jordan-gibbs/hyperresearch/blob/main/README.md>
+
+[2] jordan-gibbs/hyperresearch — docs/source-search.md
+
+<https://github.com/jordan-gibbs/hyperresearch/blob/main/docs/source-search.md>

@@ -5,7 +5,7 @@ url: "https://github.com/VoltAgent/awesome-agent-skills"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,103 @@ tags:
 
 # VoltAgent/awesome-agent-skills
 
-> https://github.com/VoltAgent/awesome-agent-skills
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+awesome-agent-skills는 여러 개발 팀과 커뮤니티가 공개한 Agent Skill을 찾아갈 수 있도록 정리한 링크 모음이다.
+Skill 실행기나 모든 기능을 포함한 단일 패키지가 아니다.
+기여 문서는 이 저장소가 링크만 정리하며 각각의 Skill은 원래 제작자의 저장소에 있다고 명확히 밝힌다.
+따라서 여기서 항목을 발견한 것과 해당 도구의 설치·동작·안전을 검증한 것은 다르다.[1][2]
 
-A curated collection of 1000+ agent skills from official dev teams and the community, compatible with Claude Code, Codex, Gemini CLI, Cursor, and more.
+## 기능보다 출처를 먼저 고르는 자료집
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+에이전트에게 문서 편집이나 코드 검토를 맡기려고 검색하면 이름이 비슷한 지침이 많이 나온다.
+어떤 것이 실제 도구 제작자가 제공한 것인지, 어떤 것이 커뮤니티의 응용인지 구분하기도 어렵다.
+이 목록은 제작 팀별 섹션과 커뮤니티의 주제별 묶음을 제공한다.
+독자가 필요한 작업에서 출발해 담당 제작자와 원문으로 이동하도록 돕는 것이 자료집의 역할이다.[1]
 
-- 주 언어: 미확인
-- Star 수: 34302
-- Fork 수: 3632
-- 최근 수정일: 2026-09-14
-- 라이선스: MIT License
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://officialskills.sh/
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+Skill은 대개 언제 사용할지 설명하는 메타데이터, 따라야 할 절차, 필요하면 함께 읽는 참고 파일이나 스크립트로 이루어진 지침 묶음이다.
+README의 품질 기준도 ‘무엇을 하는지’뿐 아니라 ‘언제 쓰는지’가 설명에 나타나야 한다고 요구한다.
+단순히 에이전트에게 역할 이름 하나를 붙이는 프롬프트와 달리 필요한 자료와 도구까지 연결될 수 있으므로 원문 검토가 중요하다.[1]
 
-## 3. 이 Repository는 무엇인가?
+## 목록을 유지하는 규칙이 보여주는 것
 
-- 목적: `A curated collection of 1000+ agent skills from official dev teams and the community, compatible with Claude Code, Codex, Gemini CLI, Cursor, and more.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+기여 안내는 각 항목에 저자 또는 조직 접두사, 링크, 짧은 기능 설명을 요구한다.
+개발 팀의 기존 섹션이 있으면 그곳에 넣고 커뮤니티 항목은 개발·테스트, 생산성·협업, 문맥 관리, AI·데이터 등 관련 분류에 넣는다.
+맞는 분류가 없으면 Other를 사용한다.
+이 구조는 동일한 이름의 Skill도 누가 관리하는지 추적할 수 있게 한다.[2]
 
+등록 조건에는 공개 저장소, 동작하는 Skill, README 또는 SKILL.md 문서가 포함된다.
+새로 만든 직후의 Skill보다 실제 커뮤니티 사용이 있는 항목을 받겠다는 기준도 제시한다.
+그러나 이 기준을 통과했다는 사실은 보안 감사 증명서가 아니다.
+README는 ‘curated, not audited’라고 직접 경계를 긋는다.
+선정과 검증을 같은 말로 사용하면 자료집의 설명보다 강한 보장을 만들어내게 된다.[1][2]
 
-## 3-1. 쉽게 읽는 한 줄
+품질 안내에서 특히 중요한 부분은 필요한 자료만 나중에 읽는 점진적 로딩과 도구 범위 제한이다.
+큰 참고 문서를 항상 지침 본문에 넣지 않고 필요할 때 불러오며, 모든 도구를 포괄적으로 요청하기보다 실제 필요한 의존성을 선언하도록 한다.
+이는 모델 입력량과 접근 권한을 동시에 생각하게 하는 기준이다.
+머신마다 달라지는 절대 경로를 고정하지 말라는 항목도 공유 지침의 이식성과 관련된다.[1]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## 예시로 따라가는 흐름
 
-## 4. 주제 라벨(Topics)
+스프레드시트를 읽고 편집할 Skill을 찾는 독자라면 README의 Official Claude Skills에서 `anthropics/xlsx` 항목을 볼 수 있다.
+목록이 제공하는 입력은 저자와 이름, 링크, ‘Excel 스프레드시트 생성·편집·분석’이라는 짧은 설명이다.
+바로 옆의 `docx`와 `pptx` 항목을 비교하면 문서 형식별 역할이 나뉜다는 점을 알 수 있다.
+이것은 목록에서 실제 확인한 대표 항목이며 파일 편집을 실행한 사례는 아니다.[1]
 
-- agent-skills
-- ai-agents
-- awesome
-- awesome-list
-- claude-code
-- claude-code-skills
-- claude-skills
-- codex-skills
-- cursor-skills
-- gemini-skills
+이 단계의 결과는 완성된 스프레드시트가 아니라 추가로 읽을 후보 하나다.
+연결 대상 제작자의 `skills/xlsx/SKILL.md`를 확인하면 셀·수식·서식 편집에는 `openpyxl`, 표 데이터 입출력에는 `pandas`를 사용하는 식으로 도구 역할이 나뉜다.
+계산 결과를 고정된 숫자로 넣지 말고 수식을 남기며, 기존 파일을 편집할 때는 원래 관례와 수식을 보존하라는 지침도 있다.
+특히 수식 문자열의 저장과 계산된 값의 검증을 구별하고, 재계산 결과에 오류가 없더라도 참조 범위가 틀릴 수 있다고 설명한다.
+목록의 한 줄 설명에서 보이지 않던 실제 작업 절차와 한계를 원문에서 발견하는 사례다.
+이 Skill을 실행한 것은 아니며, 사용자는 덮어쓰기·외부 전송 가능성과 호스트의 권한 설정을 별도로 확인해야 한다.[3]
 
-## 5. 대략적인 동작 흐름
+## 호환 표시와 안전 보장은 별개다
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+README는 여러 코딩 에이전트와의 호환성을 소개하고 프로젝트별·전역 Skill 경로를 표로 정리한다.
+같은 Skill 형식을 이해하는 도구라 해도 명령 실행 권한, 설치 디렉터리와 실제 도구 이름은 다를 수 있다.
+특히 목록은 자체 런타임을 제공하지 않으므로 링크 모음만 내려받았다고 그 모든 Skill이 활성화되는 것이 아니다.[1][2]
 
-### 용어 풀이
+보안 공지는 원래 관리자가 등록 후에도 내용을 변경하거나 교체할 수 있다고 경고한다.
+프롬프트 주입, 도구 오염, 악성 코드와 부적절한 데이터 처리 가능성도 명시한다.
+여기서 프롬프트 주입은 참고해야 할 자료가 에이전트에게 원래 요청과 다른 행동을 시키는 문제다.
+유명한 제작자나 유용한 제목만 보고 절차 전체를 신뢰하지 말고 실제 사용할 시점의 내용과 출처를 확인해야 한다.[1]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+저장소 자체의 MIT 표시는 모든 연결 대상에 같은 라이선스가 적용된다는 뜻도 아니다.
+각 Skill의 제작자, 유지보수, 라이선스와 문제 해결 창구는 원본 프로젝트에 있다.
+기여 안내도 Skill별 도움은 해당 저장소에서 구하라고 한다.
+이 자료집을 평가할 때에는 목록의 폭보다 원하는 작업에서 정확한 원문까지 도달할 수 있는지 보는 편이 목적에 맞다.[1][2]
 
+## 직접 읽어볼 자료
 
-## 6. 사용자 생각
+- [README의 제작 팀별 목록](https://github.com/VoltAgent/awesome-agent-skills/blob/main/README.md)
+  대표적으로 문서 형식별 Skill 항목을 비교하며 제작자 접두사, 링크, 짧은 설명이 어떤 정보를 제공하고 무엇을 생략하는지 읽는다.
+  목록 소개와 개별 프로젝트의 보장은 구분한다.
+- [CONTRIBUTING의 등록 기준](https://github.com/VoltAgent/awesome-agent-skills/blob/main/CONTRIBUTING.md)
+  링크만 정리한다는 설명부터 확인하고 공개 저장소·문서·사용 이력 조건을 읽는다.
+  항목 선정이 어떤 절차에 기반하는지, 왜 기능 질문을 원본 저장소로 가져가야 하는지 이해할 수 있다.
+- [README의 Security Notice와 Skill Quality Standards](https://github.com/VoltAgent/awesome-agent-skills/blob/main/README.md)
+  설치 경로보다 먼저 안전 공지를 확인한다.
+  필요한 도구만 요청하는지, 자료를 선택적으로 읽는지, 특정 컴퓨터 경로를 고정하지 않는지를 개별 원문 검토 질문으로 삼는다.
+
+- [XLSX Skill의 실제 작업 지침](https://github.com/anthropics/skills/blob/main/skills/xlsx/SKILL.md)
+  목록의 한 줄 설명과 원문을 비교한다.
+  수식을 남기는 원칙, 기존 파일 편집 시 보존할 내용, 재계산과 수식 의미 검증이 다른 이유를 살펴보면 선정 목록과 실제 실행 지침 사이의 차이를 이해할 수 있다.
+
+## 정리
+
+awesome-agent-skills는 Skill을 실행해 주는 플랫폼이 아니라 출처별 탐색을 돕는 안내 목록이다.
+후보 발견에는 유용한 구조를 제공하지만 원문 내용·실제 호환성·권한과 보안 검토는 각 항목에서 다시 해야 한다.
+
+## 자료 확인 범위
+
+2026-09-27 공식 README의 대표 항목·품질·보안·경로 안내, 기여 규칙과 원 제작자의 XLSX Skill 지침을 읽었다.
+개별 Skill을 실행하거나 설치하지 않았으며 목록 전체의 보안과 정확성을 감사한 것은 아니다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +117,23 @@ A curated collection of 1000+ agent skills from official dev teams and the commu
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] VoltAgent/awesome-agent-skills — README.md
+
+<https://github.com/VoltAgent/awesome-agent-skills/blob/main/README.md>
+
+[2] VoltAgent/awesome-agent-skills — CONTRIBUTING.md
+
+<https://github.com/VoltAgent/awesome-agent-skills/blob/main/CONTRIBUTING.md>
+
+[3] anthropics/skills — skills/xlsx/SKILL.md
+
+<https://github.com/anthropics/skills/blob/main/skills/xlsx/SKILL.md>

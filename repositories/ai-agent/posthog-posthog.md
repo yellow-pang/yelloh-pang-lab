@@ -5,7 +5,7 @@ url: "https://github.com/PostHog/posthog"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,106 @@ tags:
 
 # PostHog/posthog
 
-> https://github.com/PostHog/posthog
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+PostHog는 사용자 행동 분석, 세션 재생, 기능 공개 제어, 실험과 오류 추적 등을 한 제품 데이터 흐름에 연결하는 플랫폼이다.
+AI 에이전트 하나를 배포하는 저장소라기보다, 에이전트도 조회·조작할 수 있는 제품 분석 기반과 여러 도구를 함께 담은 저장소로 읽는 편이 정확하다.[1]
 
-:hedgehog: PostHog is the leading platform for building self-driving products. Our developer tools – AI observability, analytics, session replay, flags, experiments, error tracking, logs, and more – capture all the context agents need to diagnose problems, uncover opportunities, and ship fixes. Steer it all from Slack, web, desktop, or the MCP.
+## 숫자와 실제 사용 장면을 연결하는 문제
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+웹사이트에서 특정 버튼 다음에 사용자가 이탈한다고 가정해 보자.
+방문자 수만 알아서는 사용자가 오류를 만났는지, 버튼이 반응하지 않았는지, 바뀐 화면이 이해하기 어려웠는지 구분하기 힘들다.
+PostHog의 README는 이벤트 기반 분석으로 행동을 살피고, 세션 재생으로 상호작용을 관찰하며, 오류 추적과 실험을 통해 변경의 영향을 확인하는 도구들을 소개한다.
+이 상황은 기능의 관계를 설명하기 위한 가상 사례이지 실제 분석 결과가 아니다.[1]
 
-- 주 언어: Python
-- Star 수: 39787
-- Fork 수: 3373
-- 최근 수정일: 2026-09-14
-- 라이선스: Other
-- 기본 브랜치: master
-- 홈페이지만의 페이지: https://posthog.com
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+이벤트는 “어떤 일이 일어났다”는 기록이다.
+사용자가 페이지를 열거나 특정 동작을 했다는 사실을 수집하면 집계와 비교의 재료가 된다.
+PostHog는 자동 수집과 직접 정의한 이벤트 계측을 모두 설명한다.
+따라서 화면에 그래프가 생기기 전에 무엇을 수집하고 어떤 의미를 부여할지 정하는 작업이 필요하다.[1]
 
-## 3. 이 Repository는 무엇인가?
+## 수집, 관찰, 변경을 나누어 보기
 
-- 목적: `:hedgehog: PostHog is the leading platform for building self-driving products. Our developer tools – AI observability, analytics, session replay, flags, experiments, error tracking, logs, and more – capture all the context agents need to diagnose problems, uncover opportunities, and ship fixes. Steer it all from Slack, web, desktop, or the MCP.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+첫 축은 product analytics다.
+데이터를 시각화하거나 SQL로 질의해 사용자 행동을 읽는다.
+SQL은 저장된 데이터에서 조건에 맞는 값을 찾고 집계하는 질의 언어다.
+웹 분석, 세션 재생, 오류와 로그는 같은 문제를 서로 다른 해상도로 살피는 도구다.
+숫자로 이상 징후를 찾는 것과 특정 세션을 보는 것은 대체 관계가 아니라 확인 단계의 차이다.[1]
 
+두 번째 축은 feature flags와 experiments다.
+feature flag는 기능의 공개 대상을 제어하는 스위치이며, experiment는 변경이 목표 지표에 미치는 영향을 비교하는 장치다.
+데이터가 있다고 변경 효과가 자동으로 증명되는 것은 아니다.
+공개 대상과 평가 지표를 구별해야 하며, README의 “통계적 영향 측정” 설명을 실제 특정 실험의 유효성 보장으로 확대하면 안 된다.[1]
 
-## 3-1. 쉽게 읽는 한 줄
+세 번째 축은 외부 데이터와 에이전트 연결이다.
+데이터 웨어하우스와 파이프라인은 다른 도구의 데이터를 가져오거나 변환·전송하는 역할을 하고, MCP는 에이전트가 제공된 도구를 호출하는 접점이다.
+MCP는 모델과 외부 도구를 연결하는 공통 방식이지, 모든 API가 아무 제한 없이 모델에 노출된다는 뜻은 아니다.[1][2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+제품 분석의 `mcp/tools.yaml`을 보면 이 경계가 구체화된다.
+도구마다 `enabled`, 요구 scope, 읽기 전용 여부, 파괴적 동작 여부가 따로 선언되어 있다.
+예를 들어 insight 조회와 삭제는 서로 다른 권한과 의미를 갖는다.
+여기서 insight는 이름과 질의 정의를 저장한 분석 항목이다.
+조회 도구가 존재한다는 것과 저장·삭제 권한까지 부여했다는 것은 별개다.[2]
 
-## 4. 주제 라벨(Topics)
+## 예시로 따라가는 흐름
 
-- ab-testing
-- ai-analytics
-- analytics
-- cdp
-- data-warehouse
-- experiments
-- feature-flags
-- javascript
-- product-analytics
-- python
+대표 사례로 공식 도구 정의의 “저장된 insight를 찾아 실제 결과를 읽기”를 따라가자.
+이는 문서에 정의된 호출 의미를 설명한 것이며 직접 실행한 결과가 아니다.
+입력은 저장된 분석 항목의 이름이나 ID다. `insights-list`는 검색 조건에 맞는 항목의 이름, 설명, 태그, 소유 정보 같은 메타데이터를 돌려주도록 정의되어 있다.
+메타데이터는 데이터 자체가 아니라 데이터에 관한 설명이다.
+목록에 항목이 보였다고 차트 계산까지 성공한 것은 아니다.[2]
 
-## 5. 대략적인 동작 흐름
+다음 단계에서 `insight-get`은 숫자 ID나 짧은 ID로 질의 정의를 확인하게 한다.
+이 역시 계산 결과를 반환하지 않는다고 명시되어 있다.
+실제 결과가 필요하면 같은 식별자로 `insight-query`를 호출해야 한다는 안내가 이어진다.
+사람이 확인할 지점은 찾은 항목이 원하는 질문을 표현하는지, 기간이나 필터가 올바른지, 마지막으로 실제 수치가 조회되었는지다.
+에이전트가 “저장된 분석을 찾았다”와 “결과를 확인했다”를 구별해야 하는 구조다.[2]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+새 insight를 만드는 경우에도 정의는 질의를 먼저 시험한 뒤 저장하라고 안내하며, 생성 응답은 메타데이터만 준다고 설명한다.
+대시보드 연결 배열은 부분 추가가 아니라 전체 교체라는 경고도 있다.
+따라서 읽기에서 쓰기로 넘어갈 때는 기존 연결을 지우지 않는지 별도로 검토해야 한다.
+이 사례는 AI 연결 기능의 가치를 추상적으로 말하기보다, 실제 도구 계약이 어떤 오해를 막도록 설계되었는지를 보여 준다.[2]
 
-### 용어 풀이
+## 배포와 데이터 권한의 경계
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+README는 관리형 Cloud를 권장하고 별도로 고급 사용자를 위한 hobby self-hosting을 안내한다.
+자체 배포에 고객 지원이나 보증을 제공하지 않는다고 명시하므로, 코드 공개를 관리형 서비스와 같은 운영 조건으로 이해하면 안 된다.
+공개 README의 규모 가이드는 작성자의 안내이며 여기서 부하 실험으로 재검증한 수치가 아니다.[1]
 
+라이선스도 한 덩어리가 아니다.
+README는 저장소의 MIT expat 조건과 `ee` 디렉터리의 별도 라이선스를 구분한다.
+또한 무료 구간 이후 사용량 기반 요금을 설명하므로, 공개 소스라는 말만으로 모든 호스팅 기능과 사용량이 무제한 무료라고 요약할 수 없다.[1]
 
-## 6. 사용자 생각
+행동 기록과 세션 재생을 다루는 만큼 수집 범위를 먼저 정해야 한다.
+이 글에서 확인한 MCP 정의도 읽기 권한과 쓰기 권한을 나누므로, 분석을 맡기는 상황에는 필요한 권한만 부여하고 변경은 별도로 승인하는 접근이 타당하다.
+실제 개인정보 마스킹 설정이나 보존 정책은 이번에 읽은 두 파일만으로 확인하지 않았다.
+
+## 직접 읽어볼 자료
+
+- [README의 제품 소개와 Setting up](https://github.com/PostHog/posthog/blob/master/README.md)
+  행동 이벤트를 어떻게 가져오고 분석·재생·실험이 어떤 역할을 맡는지 먼저 읽는다.
+  기능명 목록을 하나의 자동화 기능으로 합쳐 해석하지 않는 것이 출발점이다.
+- [Product analytics MCP 도구 정의](https://github.com/PostHog/posthog/blob/master/products/product_analytics/mcp/tools.yaml)
+  `insights-list`, `insight-get`, `insight-create`의 반환 범위를 비교한다.
+  메타데이터와 계산 결과의 차이, scope와 쓰기 관련 annotation을 함께 보면 실제 권한 경계가 드러난다.
+- [README의 Self-hosting과 Open-source vs. paid](https://github.com/PostHog/posthog/blob/master/README.md)
+  자체 배포의 지원 조건과 별도 라이선스 디렉터리를 확인한다.
+  관리형 서비스 소개를 소스 배포판의 보증으로 읽지 않도록 구분할 자료다.
+
+## 정리
+
+PostHog의 중심은 제품 사용 데이터를 수집하고 조사하며 변경 효과를 살피는 연결 구조다.
+에이전트 연결도 그 위의 도구 계약으로 읽어야 하며, 자료 조회와 분석 실행, 읽기와 변경, 공개 소스와 관리형 운영을 구별해야 한다.
+
+## 자료 확인 범위
+
+2026-09-27 수집된 README, 루트 구조와 제품 분석 MCP 정의를 확인했다.
+플랫폼을 설치하거나 실제 이벤트 수집·질의·실험을 실행하지 않았으며 전체 제품의 구현과 운영 성능을 검증한 것은 아니다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +120,19 @@ tags:
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] PostHog/posthog — README.md
+
+<https://github.com/PostHog/posthog/blob/master/README.md>
+
+[2] PostHog/posthog — products/product_analytics/mcp/tools.yaml
+
+<https://github.com/PostHog/posthog/blob/master/products/product_analytics/mcp/tools.yaml>

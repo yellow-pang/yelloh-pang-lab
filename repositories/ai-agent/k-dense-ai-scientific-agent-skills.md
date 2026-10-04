@@ -5,7 +5,7 @@ url: "https://github.com/K-Dense-AI/scientific-agent-skills"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,99 @@ tags:
 
 # K-Dense-AI/scientific-agent-skills
 
-> https://github.com/K-Dense-AI/scientific-agent-skills
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 과학 분석 절차를 Agent에게 전달하는 자료 묶음
 
-## 1. 한 줄 요약
+Scientific Agent Skills는 과학 분야의 도구와 분석 순서를 AI Agent가 참고하도록 정리한 Skill 모음이다.
+Skill은 특정 상황에서 읽을 지침, 예제, 보조 스크립트를 묶은 작업 설명서에 가깝다.
+이 저장소가 하나의 새로운 과학 모델을 학습시키거나 연구자의 결론을 대신 인증하는 것은 아니다.
+README는 Agent Skills 표준을 지원하는 여러 클라이언트와 플러그인 방식의 배포를 소개하고, 생물정보학부터 시각화와 논문 작성까지 분야별 사용법을 연결한다.[1]
 
-Turn any AI agent into an AI Scientist. The #1 Agent Skills library for science, used by 190,000+ scientists worldwide. 165 ready-to-use validated skills plus 100+ scientific databases covering biology, chemistry, medicine, and drug discovery. Compatible with Cursor, Claude Code, Codex, Pi, Antigravity, and the open Agent Skills standard.
+예를 들어 세포별 유전자 발현 데이터를 받았다고 해서 곧바로 세포 종류를 신뢰성 있게 분류할 수 있는 것은 아니다.
+파일 형식을 알아야 하고, 품질이 낮은 관측치를 살펴보고, 수치 변환과 군집화를 거쳐 결과를 해석해야 한다.
+이 프로젝트가 정리하는 것은 이런 절차적 지식이다.
+패키지 이름을 아는 것에서 나아가 어느 입력에 어느 단계를 적용하고 어떤 중간 파일을 보존할지 Agent에 전달한다.[1][2]
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+## 분야별 지침과 실행 도구를 구분해서 읽는다
 
-- 주 언어: Python
-- Star 수: 44856
-- Fork 수: 4066
-- 최근 수정일: 2026-09-14
-- 라이선스: MIT License
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://arxiv.org/abs/2609.00065
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+README에는 데이터베이스 조회, Python 과학 패키지, 과학적 글쓰기처럼 역할이 다른 Skill들이 분류되어 있다.
+검색 API의 사용법을 알려주는 항목과 분석 라이브러리를 호출하는 항목은 필요한 권한도 다르다.
+하나의 자연어 요청에 여러 Skill을 연결할 수 있지만, 목록을 복사하는 것만으로 외부 서비스 계정이나 계산 자원이 함께 생기지는 않는다.
+전제 조건은 개별 `SKILL.md`에서 확인하도록 안내되어 있다.[1]
 
-## 3. 이 Repository는 무엇인가?
+대표로 읽은 `skills/scanpy/SKILL.md`는 단일세포 RNA-seq 분석을 다룬다.
+이는 세포마다 어떤 유전자의 RNA가 얼마나 관측되는지 분석하는 작업이다.
+핵심 자료형인 AnnData는 세포×유전자 수치 행렬에 세포·유전자 설명과 계산 결과를 함께 담는다.
+Skill은 품질 검사, 정규화, 차원 축소, 군집화, 표지 유전자 확인과 세포 유형 이름 붙이기를 연결하며, 데이터 형식 문제는 `anndata`, 확률적 모델 등은 `scvi-tools`로 역할을 나눈다.[2]
 
-- 목적: `Turn any AI agent into an AI Scientist. The #1 Agent Skills library for science, used by 190,000+ scientists worldwide. 165 ready-to-use validated skills plus 100+ scientific databases covering biology, chemistry, medicine, and drug discovery. Compatible with Cursor, Claude Code, Codex, Pi, Antigravity, and the open Agent Skills standard.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+이 파일의 특징은 Agent에게 매번 코드를 새로 쓰라고 하지 않는다는 점이다. `inspect_data.py`, `qc_analysis.py`, `preprocess.py`, `cluster.py` 등 이미 제공된 스크립트를 우선 사용하도록 안내한다.
+각 단계는 `.h5ad`를 읽고 쓰므로 중간 결과를 끊어 확인할 수 있다.
+전체 순서를 연결한 `run_pipeline.py`와 단계별 실행 예제가 함께 있어 한 번에 분석하는 경로와 판단 지점을 남기는 경로를 비교할 수 있다.[2]
 
+기법 이름보다 더 중요한 것은 매개변수를 결정하는 방식이다.
+문서는 품질 필터의 기준을 기본값 그대로 복사하지 말고 데이터 분포를 보라고 설명한다.
+군집화는 비슷한 세포를 묶는 과정이고, UMAP은 많은 변수의 관계를 낮은 차원에 보여주는 시각화다.
+보기 좋은 군집 그림이 생겼다는 사실만으로 생물학적 종류가 검증되지는 않는다.
+Skill도 여러 표지 유전자로 이름 붙이기를 확인하고, 군집별 유전자 순위의 통계값을 조건 간 엄밀한 차이 검정으로 혼동하지 말라고 경고한다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+## 예시로 따라가는 흐름
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+공식 Scanpy Skill의 단계별 예제를 읽으면 `raw.h5ad`에서 `qc.h5ad`, `norm.h5ad`, `red.h5ad`, `clu.h5ad`로 이어지는 파일 흐름이 보인다.
+원시 관측치를 가진 입력에서 품질 검사를 하고, 세포마다 전체 관측량이 다른 영향을 조정한 뒤 주요 변화를 요약한다.
+이후 이웃 관계를 바탕으로 세포를 군집으로 나누고, 각 군집을 특징짓는 유전자 목록과 그림을 확인한다.
+이 설명은 공식 예제의 읽기 해설이며 직접 실행한 결과가 아니다.[2]
 
-## 4. 주제 라벨(Topics)
+다음 단계는 자동으로 정답 이름을 붙이는 일이 아니다.
+예제는 `results/markers/*.csv`를 살펴보고 세포 유형 라벨을 결정한 다음 매핑 JSON을 작성하여 `annotate.py`에 넘기도록 구성되어 있다.
+사람은 표지 유전자들이 알려진 세포 특징과 맞는지, 낮은 품질의 세포나 여러 세포가 겹쳐 측정된 경우가 남지 않았는지 검토해야 한다.
+데이터가 여러 실험에서 왔다면 실험 조건 차이가 군집을 나눈 것은 아닌지도 별도 문제다.[2]
 
-- agent-skills
-- ai-scientist
-- bioinformatics
-- chemoinformatics
-- claude
-- claude-skills
-- claudecode
-- clinical-research
-- computational-biology
-- data-analysis
+결과로 기대하는 것은 주석이 붙은 AnnData 파일과 분석 그림, 유전자 목록이며 특정 발견이나 치료 후보의 확정이 아니다.
+README의 더 큰 예제는 공개 세포 데이터와의 통합이나 다른 분석 도구 연결까지 제안하지만, Scanpy 하나의 성공을 그 전체 연구 흐름의 검증으로 확대할 수 없다.
+각 연결에서 입력 형태와 표본 단위, 출처가 맞는지 다시 확인해야 한다.[1][2]
 
-## 5. 대략적인 동작 흐름
+## Skill을 읽는 일과 안전성을 보증하는 일은 다르다
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+README의 보안 안내는 모든 Skill을 한 번에 설치하지 말고 필요한 항목부터 검토하라고 명시한다.
+Skill은 Agent의 행동을 바꾸어 코드 실행, 패키지 설치, 네트워크 요청, 파일 수정을 지시할 수 있기 때문이다.
+저장소가 검토와 보안 스캔을 수행한다고 설명해도 모든 위험이 없어졌다는 보장은 아니라고 함께 밝힌다.
+필요한 기능의 지침과 의존성만 확인하는 선택적 접근이 공식 권고에 가깝다.[1]
 
-### 용어 풀이
+과학 자료는 정확성 외에도 이용 조건이 있다.
+README는 저장소 전체 MIT 표기와 별개로 개별 Skill의 라이선스가 다를 수 있다고 경고하며, 읽은 Scanpy Skill에는 BSD-3-Clause가 적혀 있다.
+외부 데이터베이스의 키·서비스 이용 조건이나 실제 데이터의 사용 허가는 별도로 확인해야 한다.
+README가 임상 관련 항목을 연구와 자격을 갖춘 사람의 검토로 제한하는 것처럼, 이 모음을 환자별 진단이나 치료 결정 시스템으로 소개해서는 안 된다.[1][2]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+## 직접 읽어볼 자료
 
+- [README의 분야별 설명과 Quick Examples](https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/README.md):
 
-## 6. 사용자 생각
+  원하는 연구 질문이 데이터 조회, 계산, 글쓰기 중 어느 단계인지 먼저 구분한다.
+  예제의 여러 Skill 이름을 하나의 만능 모델이 아니라 서로 다른 도구를 잇는 절차로 읽을 수 있다.
+- [Scanpy Skill](https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/skills/scanpy/SKILL.md):
+
+  Script Toolkit과 단계별 파일 이름을 대조한다.
+  군집 결과에서 사람이 표지 유전자를 보고 라벨을 결정하는 시점, 원자료와 중간 결과를 보존하는 방법이 구체적인 확인 대상이다.
+- [README의 Security Disclaimer와 License](https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/README.md):
+
+  자동 실행이 가능한 행동과 개별 라이선스 경고를 읽는다.
+  설치 지원 클라이언트 목록보다 먼저 어떤 코드를 신뢰하고 어떤 서비스로 자료가 나가는지 묻는 것이 중요하다.
+
+## 정리
+
+이 저장소의 제공물은 과학 도구를 쓰는 방법을 재사용 가능한 지침으로 만든 것이다.
+Scanpy 사례에서는 단계별 파일과 사람의 해석 지점이 그 구조를 잘 보여준다.
+분석 자동화와 과학적 결론의 검증은 서로 다른 책임이며, Skill의 개수나 지원 분야의 넓이가 결과의 타당성을 대신하지 않는다.
+
+## 자료 확인 범위
+
+2026-09-27 공식 README와 루트 파일 구성을 확인하고 Scanpy의 실제 `SKILL.md`를 추가로 읽었다.
+전체 Skill의 구현이나 과학적 유효성을 일괄 평가하지 않았고, 의존성 설치·데이터 분석 실행·임상 판단은 수행하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +113,19 @@ Turn any AI agent into an AI Scientist. The #1 Agent Skills library for science,
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] K-Dense-AI/scientific-agent-skills — README.md
+
+<https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/README.md>
+
+[2] K-Dense-AI/scientific-agent-skills — skills/scanpy/SKILL.md
+
+<https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/skills/scanpy/SKILL.md>

@@ -5,7 +5,7 @@ url: "https://github.com/chaitanyagiri/munder-difflin"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,107 @@ tags:
 
 # chaitanyagiri/munder-difflin
 
-> https://github.com/chaitanyagiri/munder-difflin
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+Munder Difflin은 실제 터미널 AI 도구 여러 개를 데스크톱 화면에서 실행하고 조정하는 멀티 에이전트 하네스다.
+화면에는 사무실과 아바타가 나오지만 그 아래의 작업자는 Claude Code, Codex 등 별도 CLI 프로세스다.
+자체 모델을 제공하는 것이 아니라 기존 도구의 실행·메시지·기억·작업 상태를 한곳에 모으는 구조다.[1]
 
-A local multi-agent harness that works with your existing Claude Code, Codex subscriptions, allows you to run an office of agents
+## 여러 터미널을 하나의 작업으로 보는 문제
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+서로 다른 역할에 조사, 구현, 검토를 맡기면 각각의 대화가 어디까지 진행되었는지 추적해야 한다.
+한쪽에서 정한 조건을 다른 쪽에 전달하지 못하거나, 같은 파일을 동시에 수정하면 병렬 작업의 이점이 줄어든다.
+이 프로젝트는 개별 세션에 이름과 작업 공간, 기억, 우편함을 부여하고 이를 조정하는 에이전트를 앞에 둔다.[1]
 
-- 주 언어: TypeScript
-- Star 수: 7077
-- Fork 수: 920
-- 최근 수정일: 2026-09-14
-- 라이선스: MIT License
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://munderdiffl.in
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+README에서 Michael 또는 GOD agent라고 부르는 조정자는 사용자가 주로 대화하는 입구다.
+요청을 배분하고 일반적인 판단을 처리하며 비용·파괴적 작업·범위 변경 같은 중요한 사안을 승인 대기열로 올린다고 설명한다.
+이런 명칭은 구현상 역할 이름이지 사람이 제공한 권한을 넘어서는 권한을 뜻하지 않는다.[1]
 
-## 3. 이 Repository는 무엇인가?
+## 진짜 프로세스와 시각화의 분리
 
-- 목적: `A local multi-agent harness that works with your existing Claude Code, Codex subscriptions, allows you to run an office of agents`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+각 CLI는 `node-pty`가 만든 의사 터미널 안에서 실행된다.
+의사 터미널은 명령줄 프로그램이 일반 터미널에서처럼 입력과 출력을 주고받도록 연결하는 장치다. `xterm.js`는 그 터미널 출력을 화면에 보여주고, Pixi.js는 사무실과 아바타를 그린다.
+아바타는 작업 상태를 표현하는 인터페이스이며, 움직였다는 사실이 산출물의 품질 증거는 아니다.[1]
 
+이 구분은 기존 구독과 공급자 한도를 그대로 사용하는 이유도 설명한다.
+화면을 통합한다고 각 CLI의 인증, 요금, 사용량 제한이 사라지는 것은 아니다.
+사용자는 자신의 세션에 직접 입력하거나 실시간 출력을 확인할 수 있으므로 조정자의 요약만 볼 필요는 없다.[1]
 
-## 3-1. 쉽게 읽는 한 줄
+협업의 중심인 hive는 로컬의 일반 파일로 구성되고, README상 자체 Git 기록을 가진다.
+에이전트는 자신의 `outbox/`에 메시지를 쓰고 라우터가 수신자의 `inbox/`로 배달한다.
+이 공유 기록에서는 여러 에이전트가 동시에 Git을 만지지 않고 하네스가 기록을 담당하는 single-committer 설계를 설명한다.
+프로젝트 작업 트리의 분리 옵션과 이 hive 내부 기록 규칙은 다른 층위다.[1]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## 반복을 감지하는 circuit breaker
 
-## 4. 주제 라벨(Topics)
+대표 구현 `src/main/breaker.ts`는 실행이 과도하게 반복되거나 비용이 커지는 신호를 판단하는 정책 모듈이다.
+circuit breaker는 전기 차단기에 빗댄 이름으로, 이상 징후가 계속되면 작업 방식을 제한하거나 멈추게 하는 장치를 뜻한다.
+여기서는 사용량 표본, 동일한 도구 호출 반복, 오류 폭증, 파일 변경 같은 진행 신호를 조합한다.[2]
 
-- agent-orchestration
-- agents
-- ai-agents
-- autonomous-agents
-- claude-code
-- codex
-- desktop-app
-- electron
-- free
-- gemini-cli
+코드의 주석과 타입은 판단과 집행을 구분한다.
+이 모듈은 신호를 읽고 `steer`, `constrain`, `stop` 같은 결정을 반환하며, 실제 메시지 전달이나 프로세스 종료는 호출자가 수행한다.
+상태는 healthy, steering, constrained, stopped로 나뉘며 즉시 종료로 뛰어가지 않도록 단계적 정책을 설명한다.[2]
 
-## 5. 대략적인 동작 흐름
+특히 `hardStop`의 기본값이 `false`라는 점이 중요하다.
+기본 설정에서는 제한 단계까지 올라가도 이 정책이 곧바로 프로세스를 죽이는 것은 아니다.
+“차단기가 있다”는 소개를 절대적인 비용 상한이나 모든 폭주 자동 종료의 보증으로 바꾸면 안 된다.
+비용·속도 표본을 모르는 경우 해당 신호 검사를 건너뛴다는 입력 계약도 있어 관측할 수 있는 범위를 확인해야 한다.[2]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+## 예시로 따라가는 흐름
 
-### 용어 풀이
+공개 개인 프로젝트의 문서와 예제 코드를 각각 점검하도록 두 세션에 맡기는 이해용 가상 예시이며 직접 실행한 결과가 아니다.
+사용자는 Michael에게 목표와 수정해도 되는 범위를 전달한다.
+개별 에이전트는 자신의 실제 CLI 프로세스로 작업하고, 필요한 질문이나 결과를 outbox 파일에 남긴다.
+라우터가 메시지를 상대 inbox로 옮기면 다른 세션은 그 내용을 읽고 다음 행동을 정할 수 있다.
+화면의 봉투나 아바타는 이 협업 상태를 알아보기 쉽게 표현한다.[1]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+한 세션이 같은 도구와 입력으로 계속 실패한다고 가정하면 breaker의 반복 기록은 그 패턴을 진행 신호와 구분한다.
+정상적으로 다른 도구를 쓰거나 실제 작업 공간을 변경하는 상황을 단순 정체로 취급하지 않기 위한 별도 신호도 있다.
+정책이 개입하더라도 사용자는 현재 수준과 이유를 확인해야 하며, 기본 설정에서 강제 종료까지 이루어진다고 가정해서는 안 된다.
+최종 검토에서는 두 세션이 남긴 파일, 터미널 기록, 메시지 내용이 원래 목표를 충족하는지 비교한다.
+화면상 모든 아바타가 쉬고 있다는 이유만으로 검토가 끝난 것은 아니다.[1][2]
 
+## 기억과 자동 진행의 한계
 
-## 6. 사용자 생각
+README는 Markdown 중심의 지속 기억과 의미 기반 검색을 소개한다.
+기억이 남으면 다음 세션의 참고 자료가 될 수 있지만, 오래된 메모가 최신 지시나 검증된 사실을 대신하지는 않는다.
+“가장 빠른 기억 계층” 같은 성능 표현은 저자의 소개이며, 이 글에서는 비교 측정 결과로 채택하지 않는다.[1]
+
+공식 빌드는 익명의 사용 이벤트를 전송한다고 밝히고, 프롬프트·코드·경로·에이전트 출력은 보내지 않는다고 설명한다.
+설정, `DO_NOT_TRACK`, 소스 빌드에 따른 제외 경로가 안내되어 있으므로 로컬 앱이라는 사실만으로 telemetry가 없다고 쓰면 부정확하다.
+외부 모델로 향하는 CLI 통신 또한 별개다.[1]
+
+소스 코드는 MIT로 표기되지만 포함된 픽셀 아트는 별도 라이선스와 크레딧 조건을 가진다.
+무료 오픈소스 빌드와 Pro 기능 안내도 README에 함께 있으므로 화면의 모든 기능이 같은 배포판에 들어 있다고 가정하면 안 된다.
+확인한 README는 프로젝트를 pre-release로 표시한다.[1]
+
+## 직접 읽어볼 자료
+
+1. [README의 What it is와 How it works](https://github.com/chaitanyagiri/munder-difflin/blob/main/README.md)
+   실제 CLI 프로세스, hive 파일, 시각화 화면을 세 층으로 나눠 읽는다.
+   각 에이전트의 메시지가 어느 폴더에서 만들어지고 누가 배달하는지 따라가면 “사무실”이라는 비유를 구현과 연결할 수 있다.
+2. [반복·비용 정책 구현](https://github.com/chaitanyagiri/munder-difflin/blob/main/src/main/breaker.ts)
+   기본값과 `BreakerInput`을 먼저 살피고, 같은 도구 호출을 기록하는 부분을 읽는다.
+   정책 판단과 실제 종료가 분리되어 있으며 어떤 신호가 없으면 검사를 할 수 없는지도 확인한다.
+3. [README의 Telemetry와 License](https://github.com/chaitanyagiri/munder-difflin/blob/main/README.md)
+   로컬 실행의 데이터 경계, 공식 빌드의 이벤트, 코드와 그래픽 자산의 이용 조건을 함께 검토한다.
+   화면 구성보다 실행 권한과 배포 조건을 먼저 정해야 하는 이유가 드러난다.
+
+## 정리
+
+Munder Difflin은 여러 터미널 에이전트의 활동을 하나의 협업 환경으로 묶는다.
+시각화는 관찰을 돕고 hive는 메시지를 잇지만, 실제 작업 권한과 공급자 한도, 정책의 집행 수준은 별도로 확인해야 한다.
+
+## 자료 확인 범위
+
+2026-09-27 수집 README의 동작·지원·telemetry·라이선스 설명과 breaker 구현의 입력, 기본값, 반복 기록 및 정책 설명을 읽었다.
+앱 설치, CLI 세션 실행, hive 생성이나 성능 측정은 하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +121,19 @@ A local multi-agent harness that works with your existing Claude Code, Codex sub
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] chaitanyagiri/munder-difflin — README.md
+
+<https://github.com/chaitanyagiri/munder-difflin/blob/main/README.md>
+
+[2] chaitanyagiri/munder-difflin — src/main/breaker.ts
+
+<https://github.com/chaitanyagiri/munder-difflin/blob/main/src/main/breaker.ts>

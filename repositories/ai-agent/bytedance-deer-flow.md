@@ -5,7 +5,7 @@ url: "https://github.com/bytedance/deer-flow"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,106 @@ tags:
 
 # bytedance/deer-flow
 
-> https://github.com/bytedance/deer-flow
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+DeerFlow는 언어 모델에 도구, 작업 공간, 기억, 하위 에이전트를 연결해 여러 단계의 일을 수행하게 하는 실행 기반이다.
+현재 README의 2.0은 과거 Deep Research 프레임워크와 코드를 공유하지 않는 재작성판이다.
+검색 전용 서비스나 자체 언어 모델로 이해하기보다, 모델이 조사하고 파일을 만들며 결과를 전달하도록 주변 절차를 구성하는 하네스(harness)로 보는 편이 정확하다.[1]
 
-An open-source long-horizon SuperAgent harness that researches, codes, and creates. With the help of sandboxes, memories, tools, skill, subagents and message gateway, it handles different levels of tasks that could take minutes to hours.
+## 긴 요청에는 답변 외의 상태가 필요하다
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+공개 자료를 조사해 설명문과 발표 자료를 함께 만드는 상황에서는 검색 한 번으로 일이 끝나지 않는다.
+자료의 출처, 작성 중인 파일, 남은 작업, 검토 결과를 다음 단계로 전달해야 한다.
+대화만 길어지면 모델이 한 번에 참고할 수 있는 정보량인 컨텍스트 한도를 소모하고, 중간 산출물과 최종 결과도 뒤섞인다.
+DeerFlow는 필요한 작업 지침을 선택해 읽고, 파일 시스템에 중간 결과를 남기며, 일부 작업을 별도 에이전트에 맡기는 구조를 제시한다.
+이 기능들이 모든 요청을 자동으로 성공시킨다는 뜻은 아니다.
+오래 이어지는 작업의 재료와 상태를 관리한다는 것이 핵심이다.[1]
 
-- 주 언어: Python
-- Star 수: 82413
-- Fork 수: 11367
-- 최근 수정일: 2026-09-14
-- 라이선스: MIT License
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://deerflow.tech
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+## 지침, 실행 공간, 분업의 관계
 
-## 3. 이 Repository는 무엇인가?
+Skill은 모델 자체에 새 지식을 학습시키는 파일이 아니라 작업 순서와 참고 자료를 담은 Markdown 지침이다.
+DeerFlow는 조사·보고서·슬라이드 등 기본 Skill을 제공하며, 필요한 때 내용을 읽는 점진적 로딩을 사용한다.
+따라서 설치된 모든 지침이 항상 모델 입력에 들어가는 것은 아니다.
+사용자 지침을 추가할 수 있다는 말과 그 지침의 도구 접근이 안전하게 격리된다는 말도 구분해야 한다.
+README는 Skill의 도구 제한을 강한 보안 경계가 아닌 최선 노력 방식의 행동 범위 지정이라고 설명한다.[1]
 
-- 목적: `An open-source long-horizon SuperAgent harness that researches, codes, and creates. With the help of sandboxes, memories, tools, skill, subagents and message gateway, it handles different levels of tasks that could take minutes to hours.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+실행 환경은 지침을 읽는 영역, 업로드, 작업 공간, 출력 파일을 구분한다.
+에이전트는 텍스트를 작성하는 데서 멈추지 않고 허용된 설정에 따라 파일을 읽고 쓰거나 셸 명령을 호출할 수 있다.
+하위 에이전트는 분리된 대화 문맥과 도구 범위로 맡은 부분을 처리한다.
+일반 위임은 격리 모드가 기본이며, snapshot 모드는 부모의 남아 있는 대화와 요약을 배경으로 전달한다.
+과거에 압축되어 사라진 내용을 복원하는 기능은 아니다.[1]
 
+분업도 무조건 병렬 실행하는 방식은 아니다.
+README는 실질적인 지연 감소, 전문 도구, 문맥 분리의 이득이 있을 때 적은 수의 하위 에이전트를 사용하고, 서로 의존하거나 같은 파일을 건드리는 작업은 병렬로 흩뜨리지 않도록 설명한다.
+결과를 다시 합치고 확인하는 책임은 선행 에이전트에 남는다.[1]
 
-## 3-1. 쉽게 읽는 한 줄
+## 완료 조건을 별도 상태로 다룬다
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+`/goal`은 현재 대화에 완료 조건을 붙이는 기능이다.
+Goal은 Skill 호출이 아니며, 매 모델 호출에 활성 목표가 전달되어 이전 메시지가 압축된 뒤에도 참조된다. `goal_state.py`에는 목표, 계속 시도한 횟수, 진전 없는 횟수와 한도, 마지막 평가가 구분되어 있다.
+평가 결과도 단순 성공·실패만이 아니라 근거 부족, 사용자 입력 필요, 실행 실패, 외부 대기, 아직 목표 미달 등으로 나뉜다.[1][2]
 
-## 4. 주제 라벨(Topics)
+이는 조건이 충족될 때까지 무제한 반복하겠다는 약속과 다르다.
+문서상 자동 후속 실행은 특정 blocker와 저장된 상태 등 조건을 충족할 때만 주입되고, 반복 한도와 진전 없는 시도를 끊는 장치가 있다.
+사용자 입력과 목표 해제도 대기 중인 자동 진행보다 우선한다.[1]
 
-- agent
-- agentic
-- agentic-framework
-- agentic-workflow
-- ai
-- ai-agents
-- deep-research
-- harness
-- langchain
-- langgraph
+대표 구현 `factory.py`는 모델과 도구, 중간 처리 절차인 middleware를 받아 에이전트를 조립한다.
+기능 플래그로 절차를 구성하는 방식과 사용자가 전체 middleware 목록을 넘기는 방식을 동시에 지정하면 오류로 막는다.
+추가 도구는 이름으로 중복을 제거하며 사용자 도구가 우선한다.
+이 파일은 설정 파일을 읽는 애플리케이션 입구와 SDK 수준의 조립 함수를 분리한다는 점을 보여준다.[3]
 
-## 5. 대략적인 동작 흐름
+## 예시로 따라가는 흐름
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+공식 README의 `/goal finish the implementation and make all tests pass` 예시를 읽어보자.
+입력은 막연한 “계속해”가 아니라 구현과 테스트 통과라는 완료 조건이다.
+조건을 설정하면 현재 대화의 목표 상태로 보관되고, 이후 모델 호출에서도 활성 목표로 전달된다.
+에이전트가 코드나 테스트를 다루는 동안 실제 도구의 결과가 대화에 남아야 평가할 근거가 생긴다.
+Goal을 썼다는 사실만으로 테스트가 실행되었다고 판정할 수는 없다.[1]
 
-### 용어 풀이
+Gateway 실행이 끝나면 별도의 평가가 보이는 대화와 목표를 대조한다.
+필요한 정보가 없으면 `needs_user_input`, 실행이 실패했다면 `run_failed` 같은 상태로 구별한다.
+단지 목표에 아직 못 미쳤고 안전 조건도 충족한 경우에만 후속 진행이 가능하다.
+사람은 최종 답변의 “완료” 문구뿐 아니라 실제 변경 파일, 실행 기록, 테스트 결과가 목표를 뒷받침하는지 확인해야 한다.
+이 설명은 문서와 상태 정의를 따라간 것이며, 해당 구현이나 테스트를 직접 실행한 결과가 아니다.[1][2]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+## 배포 권한과 판단의 경계
 
+모델 연결, 파일 쓰기, 셸 접근, 외부 도구는 각각 설정과 권한이 필요하다.
+도구가 많다는 이유만으로 안전한 자동화가 되는 것은 아니다.
+README는 신뢰할 수 있는 로컬 네트워크 배포를 강하게 권장하며, 다른 기기나 네트워크에서 접근하려면 강한 사전 인증과 접근 제한, 네트워크 격리 등의 조치를 요구한다.
+외부 모델 연결 시험도 공급자 요금을 발생시킬 수 있다고 명시한다.[1]
 
-## 6. 사용자 생각
+기억 기능 역시 대화의 모든 발언을 영구 지시로 바꾸는 것으로 이해하면 안 된다.
+기본 DeerMem의 추출 절차는 지속적인 사용자 사실과 현재 작업의 제약·일회성 권한을 구분하는 방향으로 설명되어 있다.
+저장된 기억과 사용자가 지금 허용한 행동은 서로 다른 문제다.[1]
+
+## 직접 읽어볼 자료
+
+1. [공식 README](https://github.com/bytedance/deer-flow/blob/main/README.md)
+   먼저 2.0과 1.x의 관계를 확인한 뒤 Skills, Sub-Agents, Session Goals 순서로 읽으면 지침 선택과 분업, 완료 판정이 서로 다른 장치라는 점을 구분할 수 있다.
+   보안 안내도 실행 설정과 함께 읽는 것이 좋다.
+2. [목표 상태 정의](https://github.com/bytedance/deer-flow/blob/main/backend/packages/harness/deerflow/agents/goal_state.py)
+   `satisfied`와 `blocker`가 왜 별도 필드인지, 반복 횟수와 진전 없는 횟수가 따로 기록되는 이유를 README의 후속 실행 조건과 대조한다.
+3. [에이전트 조립 함수](https://github.com/bytedance/deer-flow/blob/main/backend/packages/harness/deerflow/agents/factory.py)
+   `create_deerflow_agent`의 매개변수와 상호 배타적 설정 검사를 보면 언어 모델, 도구, 상태 저장을 어디에서 결합하는지 알 수 있다.
+   함수가 존재한다는 사실과 실제 배포에서 올바르게 설정되었다는 사실은 분리해서 읽어야 한다.
+
+## 정리
+
+DeerFlow의 역할은 긴 작업을 위한 실행·상태·산출물 관리다.
+Skill이 작업 절차를 알려주고 도구가 행동을 수행하며 Goal은 완료 조건을 유지한다.
+이 세 가지를 구분해야 자동 진행의 범위와 사람이 확인할 근거가 선명해진다.
+
+## 자료 확인 범위
+
+2026-09-27 수집 자료를 기준으로 공식 README의 구조·핵심 기능·목표·보안 설명, 목표 상태 정의 전체와 에이전트 조립 함수의 공개 인터페이스 및 검사를 읽었다.
+프로젝트 설치, 모델 호출, 샌드박스 및 테스트 실행은 하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +120,23 @@ An open-source long-horizon SuperAgent harness that researches, codes, and creat
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] bytedance/deer-flow — README.md
+
+<https://github.com/bytedance/deer-flow/blob/main/README.md>
+
+[2] bytedance/deer-flow — backend/packages/harness/deerflow/agents/goal_state.py
+
+<https://github.com/bytedance/deer-flow/blob/main/backend/packages/harness/deerflow/agents/goal_state.py>
+
+[3] bytedance/deer-flow — backend/packages/harness/deerflow/agents/factory.py
+
+<https://github.com/bytedance/deer-flow/blob/main/backend/packages/harness/deerflow/agents/factory.py>

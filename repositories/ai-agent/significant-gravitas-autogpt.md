@@ -5,7 +5,7 @@ url: "https://github.com/Significant-Gravitas/AutoGPT"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,100 @@ tags:
 
 # Significant-Gravitas/AutoGPT
 
-> https://github.com/Significant-Gravitas/AutoGPT
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+AutoGPT는 AI 에이전트의 작업 흐름을 만들고 배포하며 실행 상태를 살피는 플랫폼이다.
+현재 README가 설명하는 시각적 빌더 기반 플랫폼과 원래의 독립형 AutoGPT Classic은 구분되어 있다.
+이름만 보고 과거 터미널 에이전트의 사용법을 현재 플랫폼에 그대로 적용하면 안 된다.[1]
 
-AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters.
+## 한 번의 답변을 반복 가능한 작업으로
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+공개 자료의 새 소식을 정기적으로 읽어 요약 초안을 만들려면 자료 가져오기, 항목 선택, 요약과 결과 전달이 연결되어야 한다.
+대화창에 매번 같은 요청을 넣는 대신 입력과 처리 단계를 정해 반복 실행하는 것이 플랫폼이 다루는 문제다.
+README는 자연어로 원하는 결과를 설명하거나 시각적 빌더에서 단계를 연결하고, 필요할 때·일정에 따라·트리거로 실행하는 경로를 소개한다.[1]
 
-- 주 언어: Python
-- Star 수: 187320
-- Fork 수: 46018
-- 최근 수정일: 2026-09-14
-- 라이선스: Other
-- 기본 브랜치: master
-- 홈페이지만의 페이지: https://agpt.co
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+여기서 트리거는 새 사건이 발생했을 때 작업을 시작하게 하는 조건이다.
+자동화의 의미는 사람이 사라진다는 데 있지 않고, 어떤 입력이 어떤 후속 단계로 이동하는지 재사용 가능한 흐름을 만드는 데 있다.
+외부 서비스로 메시지를 보내거나 데이터를 바꾸는 단계가 있다면 그 권한은 별도로 결정해야 한다.
 
-## 3. 이 Repository는 무엇인가?
+## 대화, 실행 목록, 공유 에이전트, 빌더
 
-- 목적: `AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+README는 네 가지 표면을 구분한다.
+AutoPilot은 대화에서 작업을 에이전트로 만드는 입구이고, Agents는 실행·비용·주의가 필요한 행동을 보는 관리 화면이다.
+Marketplace는 다른 사람이 제공한 에이전트를 시작점으로 삼는 경로이며, Build는 블록을 연결하고 분기와 세부 동작을 살피는 화면이다.
+같은 플랫폼의 서로 다른 역할이지 네 개의 언어 모델이 아니다.[1]
 
+블록은 입력을 받아 처리한 뒤 이름 있는 출력을 내보내는 작은 작업 단위다.
+대표 구현 `ReadRSSFeedBlock`을 보면 이 개념이 구체적이다.
+RSS는 사이트의 새 글을 기계가 읽기 쉬운 형태로 제공하는 피드다.
+블록의 입력은 피드 URL, 시간 범위, 확인 간격, 계속 실행할지 여부이고 출력은 개별 항목 `entry`와 전체 목록 `entries`로 나뉜다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+각 RSS 항목은 제목·링크·설명·게시 시각·작성자·분류를 갖는 구조로 선언되어 있다.
+이런 필드가 정해져 있어 뒤쪽 블록은 원본 XML을 다시 해석하기보다 필요한 항목 속성을 받을 수 있다.
+XML은 계층적인 태그로 자료를 표현하는 형식이며, 구현에서는 `feedparser`가 읽는 역할을 맡는다.[2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+이 파일에는 실제 네트워크 대신 미리 준비한 피드를 반환하는 테스트용 mock도 들어 있다.
+mock은 외부 대상을 가짜 구현으로 바꾸어 특정 기능을 검사하는 장치다.
+예제 입력과 예상 출력의 존재는 데이터 계약을 읽는 근거지만, 실제 사이트를 대상으로 검사가 성공했다는 증거는 아니다.[2]
 
-## 4. 주제 라벨(Topics)
+## 예시로 따라가는 흐름
 
-- agentic-ai
-- agents
-- ai
-- artificial-intelligence
-- autonomous-agents
-- claude
-- gpt
-- llama-api
-- llm
-- openai
+이해를 위한 가상 예시이며 직접 실행한 결과가 아니다.
+공개 블로그의 새 글을 읽어 요약 초안을 만들고 싶다고 하자.
+RSS 블록에는 해당 공개 피드 URL과 확인할 시간 범위, 한 번만 읽을지 반복할지 설정을 입력한다.
+구현은 작업 시작 시각에서 지정한 기간을 뺀 기준 시각을 만들고, 피드를 받은 뒤 각 글의 게시 시각이 그 기준보다 이후인지 검사한다.[2]
 
-## 5. 대략적인 동작 흐름
+조건에 맞는 글은 구조화된 `RSSEntry`로 바뀌어 개별 출력으로 전달되며, 그 회차의 전체 목록도 출력된다.
+후속 요약 블록을 연결한다면 제목·설명·원문 링크를 입력으로 삼는 구성을 생각할 수 있다.
+다만 이번에 확인한 파일은 수집 블록이므로 요약의 정확성이나 실제 게시까지 작동한다고 말하지 않는다.
+사람이 확인할 것은 누락된 글이 없는지, 시간대가 맞는지, 요약 초안이 원문 링크로 되돌아갈 수 있는지다.
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+반복 모드에서는 주의할 구현 특성이 있다.
+기준 시각은 반복문 밖에서 한 번 계산되고, 이미 내보낸 글의 ID를 기억해 제외하는 로직은 이 파일에 없다.
+따라서 이 블록만을 근거로 “새 글을 정확히 한 번만 전달한다”고 설명할 수 없다.
+또한 가져오기 오류는 경고를 남기고 빈 피드로 바꾸므로, 항목이 없다는 결과가 정말 새 글이 없어서인지 수집 실패인지 로그와 함께 보아야 한다.[2]
 
-### 용어 풀이
+## 자체 운영과 관리형 서비스는 같은 비용이 아니다
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+README는 관리형 Platform을 유료 서비스로 설명하며 에이전트 실행에도 사용량 기반 비용이 든다고 명시한다.
+자체 운영은 별도 라이선스 비용 없이 시작하는 경로로 소개되지만 인프라, 모델 API 키와 유지 관리를 사용자가 맡는다.
+소스 접근이 가능하다는 것과 모델 호출 및 서버 운영이 무료라는 것은 다르다.[1]
 
+수집 당시 README는 단일 컨테이너 릴리스 설치기가 아직 다음 appliance 릴리스와 검증 관문을 기다리는 상태라고 적고, 그동안 수동 자체 운영 안내를 사용하도록 한다.
+향후 제공 예정인 설치 경로를 이미 검증된 실행 방법으로 옮겨 쓰지 않아야 한다.
+이 글은 설치 명령을 수행하지 않았다.[1]
 
-## 6. 사용자 생각
+라이선스는 특히 구분이 필요하다. `autogpt_platform/`은 Polyform Shield, `classic/` 및 나머지는 MIT로 README가 설명한다.
+전자는 경쟁 호스팅 서비스로 판매하는 사용에 제한이 있다고 명시되어 있으므로 저장소 전체를 하나의 MIT 프로젝트라고 요약하면 부정확하다.
+실제 배포 판단에는 해당 원문 조건을 확인해야 한다.[1]
+
+## 직접 읽어볼 자료
+
+- [README의 Four surfaces와 AutoGPT Classic](https://github.com/Significant-Gravitas/AutoGPT/blob/master/README.md)
+  현재 플랫폼의 네 화면과 원래 독립형 에이전트의 위치를 먼저 나눈다.
+  이름이 이어져도 실행 모델과 사용 경로가 다를 수 있음을 확인하는 출발점이다.
+- [RSS 입력 블록 구현](https://github.com/Significant-Gravitas/AutoGPT/blob/master/autogpt_platform/backend/backend/blocks/rss.py)
+  Input과 Output을 읽은 뒤 `parse_feed`, `run`으로 내려간다.
+  오류와 빈 결과의 관계, 반복 시 기준 시각과 중복 처리 범위를 직접 확인할 수 있다.
+- [README의 Managed Platform vs. self-hosting과 License](https://github.com/Significant-Gravitas/AutoGPT/blob/master/README.md)
+  관리 책임, API 키와 사용 비용, 디렉터리별 라이선스를 함께 살핀다.
+  “자체 운영 가능”이라는 소개만으로 운영 비용과 재배포 권한을 결정하지 않도록 돕는다.
+
+## 정리
+
+AutoGPT는 작업을 블록과 실행 경로로 연결하는 플랫폼이며 Classic과 구분해야 한다.
+작은 RSS 블록에서도 입력 계약, 실패 표현과 중복 가능성이 드러나므로 흐름의 존재와 실제 결과의 정확성을 나누어 읽는 것이 중요하다.
+
+## 자료 확인 범위
+
+2026-09-27의 공식 README, 루트 구성과 RSS 블록 전체 코드를 확인했다.
+플랫폼 설치, 피드 수집, 모델 호출과 테스트 실행은 하지 않았으며 실제 자동화 결과를 검증한 문서는 아니다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +114,19 @@ AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] Significant-Gravitas/AutoGPT — README.md
+
+<https://github.com/Significant-Gravitas/AutoGPT/blob/master/README.md>
+
+[2] Significant-Gravitas/AutoGPT — autogpt_platform/backend/backend/blocks/rss.py
+
+<https://github.com/Significant-Gravitas/AutoGPT/blob/master/autogpt_platform/backend/backend/blocks/rss.py>

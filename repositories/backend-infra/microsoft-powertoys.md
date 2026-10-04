@@ -5,7 +5,7 @@ url: "https://github.com/microsoft/PowerToys"
 category: "backend-infra"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "backend-infra"
   - "starred-draft"
@@ -13,76 +13,106 @@ tags:
 
 # microsoft/PowerToys
 
-> https://github.com/microsoft/PowerToys
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+PowerToys는 Windows에서 창 배치, 파일 조작, 입력과 화면 확인 같은 일상 작업을 보완하는 유틸리티 모음이다.
+별도의 운영체제나 모든 작업을 알아서 처리하는 자동화 에이전트가 아니라, 필요한 기능을 골라 Windows 사용 방식을 조정하는 프로그램이다.
+README는 FancyZones, PowerRename, Keyboard Manager, Color Picker 등을 각각의 도구로 소개한다.[1]
 
-Microsoft PowerToys is a collection of utilities that supercharge productivity and customization on Windows
+## 작은 반복 작업을 기능별로 나누기
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+문서를 읽으며 편집기를 옆에 놓고, 참고 창은 좁게 유지하려는 상황을 생각하면 창을 이동하고 크기를 맞추는 일부터 반복된다.
+파일 이름을 여러 개 바꾸거나 화면의 색을 확인하는 일은 또 다른 문제다.
+PowerToys는 이런 서로 다른 요구를 하나의 거대한 작업 절차로 묶기보다 개별 유틸리티의 목록으로 제공한다.
+따라서 어떤 도구를 켜야 할지는 원하는 작업에 따라 달라지며, 목록에 있다는 사실이 모든 기능을 동시에 사용할 필요가 있다는 뜻은 아니다.[1]
 
-- 주 언어: C
-- Star 수: 138635
-- Fork 수: 8564
-- 최근 수정일: 2026-09-14
-- 라이선스: MIT License
-- 기본 브랜치: main
-- 홈페이지만의 페이지: 미확인
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+여기서는 전체 기능을 나열하는 대신 FancyZones의 창 배치 과정을 대표로 살펴본다.
+저장소에 있는 해당 모듈의 README는 현재 설명 문서로 이동했음을 알리는 짧은 안내뿐이다.
+실제 메커니즘은 창을 마우스로 옮길 때 쓰이는 `WindowMouseSnap.cpp`에서 확인했다.
+이 파일에는 이동 시작, 위치 갱신, 이동 종료와 취소가 별도의 동작으로 나뉘어 있다.[2]
 
-## 3. 이 Repository는 무엇인가?
+## 영역을 보여 주는 것과 창을 옮기는 것
 
-- 목적: `Microsoft PowerToys is a collection of utilities that supercharge productivity and customization on Windows`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+FancyZones 코드의 `WorkArea`는 모니터에 대응하는 작업 영역이다.
+사용자가 창을 움직이기 시작하면 현재 모니터의 작업 영역을 찾고, 움직이는 동안 화면 좌표를 그 영역에서 쓰는 좌표로 바꾼다.
+이어 현재 레이아웃에서 해당 위치가 가리키는 구역을 계산하고 강조 표시한다.
+마우스의 위치, 어떤 모니터인지, 어떤 구역이 선택됐는지가 하나의 상태로 연결되는 셈이다.[2]
 
+스냅은 창을 정해진 구역에 맞추는 동작을 말한다.
+코드에서는 구역을 화면에 표시하는 단계와 실제로 창을 맞추는 단계를 분리한다. `MoveSizeUpdate`가 선택 구역을 갱신하고 `MoveSizeEnd`가 종료 시점에 `Snap`을 호출한다.
+다른 모니터로 이동하면 이전 선택을 초기화하고 작업 영역도 바꾼다.
+화면에 보이는 안내와 최종 창 배치가 같은 사건은 아니라는 점이 이 구분에서 드러난다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+예외 처리도 창 관리 기능의 일부다.
+크기 조절 커서이거나 처리할 수 없는 창이면 생성 단계에서 중단한다.
+일반 권한으로 실행 중인 PowerToys가 관리자 권한의 창을 다루려는 경우에는 경고를 표시할 수 있고 작업을 진행하지 않는다.
+드래그 도중 창이 사라지면 `Abort`는 이미 없어진 창에 배치를 적용하는 대신 강조 표시와 투명도를 정리한다.[2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## 예시로 따라가는 흐름
 
-## 4. 주제 라벨(Topics)
+다음은 소스의 처리 순서를 설명하기 위한 가상 예시이며 직접 실행한 결과가 아니다.
+두 모니터를 쓰는 사용자가 참고 문서 창을 첫 번째 화면에서 두 번째 화면의 한 구역으로 옮긴다고 하자.
+입력은 이동 중인 창, 커서 위치, 대상 모니터, 스냅 모드 여부다.
+이동 시작 시 해당 모니터의 작업 영역이 선택되고, 기존 구역에 붙어 있던 창은 우선 분리된다.
+이때 프로그램이 문서 내용을 읽거나 편집하는 것은 아니다.[2]
 
-- advanced-paste
-- color-picker
-- command-palette
-- desktop
-- fancyzones
-- keyboard-manager
-- microsoft-powertoys
-- powerrename
-- powertoys
-- windows
+창이 두 번째 모니터로 넘어가면 `MoveSizeUpdate`는 현재 작업 영역과 새 영역이 다른지 비교한다.
+다르면 강조 구역을 초기화하고 새 화면의 레이아웃에서 커서에 해당하는 구역을 계산한다.
+사용자가 이동을 끝낼 때 스냅 모드가 켜져 있고 유효한 작업 영역이 있으면 그 구역에 창을 맞추는 호출이 이어진다.
+반면 창이 최대화 상태가 된 경우에는 이 경로에서 배치를 적용하지 않는다.
+마지막에는 표시한 구역과 일시적인 투명도 변경을 정리한다.[2]
 
-## 5. 대략적인 동작 흐름
+사람이 확인할 부분은 창이 원하는 모니터와 구역을 가리키는지, 권한 차이로 처리되지 않은 것은 아닌지다.
+코드에 구역 계산과 예외 분기가 있다는 사실만으로 모든 프로그램 창에서 같은 결과가 보장되는 것은 아니다.
+이 예시는 창 관리가 단순 좌표 이동뿐 아니라 입력 상태와 창의 수명까지 다룬다는 점을 보여 준다.[2]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+## 설정·권한·진단 데이터의 경계
 
-### 용어 풀이
+설치 안내는 실행 파일을 고를 때 CPU 아키텍처와 설치 범위를 구별하도록 한다.
+사용자 계정에만 설치하는 방식과 컴퓨터 전체 설치는 같은 선택이 아니다.
+또한 Windows용 기능 모음이므로 다른 운영체제에서 동일한 창 관리가 제공된다고 읽어서는 안 된다.
+정확한 지원 환경은 README가 연결하는 설치 문서를 배포본에 맞춰 확인해야 한다.[1]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+진단 데이터에 대해서는 README의 짧은 문장보다 `DATA_AND_PRIVACY.md`가 구체적이다.
+해당 문서는 진단 전송이 선택 사항이고 v0.86 이후 기본값은 꺼짐이라고 명시한다.
+사용 빈도, 안정성, 성능 정보를 수집하는 목적과 개별 이벤트 목록도 제공한다.
+따라서 진단 기능이 존재한다는 사실과 사용자의 설정에서 실제 전송이 켜져 있는지는 구분해야 한다.[3]
 
+PowerToys 전체의 개인정보 범위를 FancyZones 한 파일만으로 설명할 수도 없다.
+이 글에서 확인한 코드는 창 이동과 배치에 관한 것이며, 다른 도구의 네트워크 사용이나 입력 데이터 처리는 해당 기능의 문서를 따로 읽어야 한다.
+기능이 한 설치 프로그램에 들어 있어도 입력과 권한의 범위는 서로 다를 수 있다.[1][3]
 
-## 6. 사용자 생각
+## 직접 읽어볼 자료
+
+- [공식 README](https://github.com/microsoft/PowerToys/blob/main/README.md):
+
+  먼저 Utilities에서 원하는 작업에 대응하는 도구를 찾는다.
+  설치 항목에서는 사용자별 설치와 컴퓨터 전체 설치가 어떻게 구별되는지 읽으면 기능 선택과 배포 선택을 혼동하지 않을 수 있다.[1]
+- [WindowMouseSnap.cpp](https://github.com/microsoft/PowerToys/blob/main/src/modules/fancyzones/FancyZonesLib/WindowMouseSnap.cpp):
+
+  `Create`, `MoveSizeUpdate`, `MoveSizeEnd`, `Abort` 순서로 따라가며 언제 구역을 보여 주고 언제 창을 실제로 맞추는지 확인한다.
+  권한 확인이 시작 단계에 있는 이유도 함께 살펴본다.[2]
+- [데이터와 개인정보 안내](https://github.com/microsoft/PowerToys/blob/main/DATA_AND_PRIVACY.md):
+
+  진단 전송의 기본값과 목적을 읽은 다음 General 및 관심 기능의 이벤트 표를 비교한다.
+  이벤트가 정의돼 있다는 것과 현재 자신의 설정에서 수집 중이라는 것을 분리해서 읽는 자료다.[3]
+
+## 정리
+
+PowerToys는 Windows의 반복 조작을 작은 유틸리티 단위로 보완한다.
+FancyZones는 그중 창의 이동 상태와 모니터별 구역을 연결하는 기능이다.
+기능 목록만으로 선택을 끝내기보다 해당 도구의 입력, 권한 조건, 설정과 진단 데이터 범위를 구별해야 한다.[1][2][3]
+
+## 자료 확인 범위
+
+2026-09-27 수집 자료를 기준으로 공식 README, FancyZones 이동 안내와 창 스냅 구현, 데이터·개인정보 문서를 읽었다.
+Windows에 설치하거나 창 이동을 실행하지 않았고, 동작 호환성이나 체감 성능을 측정하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +120,23 @@ Microsoft PowerToys is a collection of utilities that supercharge productivity a
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] microsoft/PowerToys — README.md
+
+<https://github.com/microsoft/PowerToys/blob/main/README.md>
+
+[2] microsoft/PowerToys — src/modules/fancyzones/FancyZonesLib/WindowMouseSnap.cpp
+
+<https://github.com/microsoft/PowerToys/blob/main/src/modules/fancyzones/FancyZonesLib/WindowMouseSnap.cpp>
+
+[3] microsoft/PowerToys — DATA_AND_PRIVACY.md
+
+<https://github.com/microsoft/PowerToys/blob/main/DATA_AND_PRIVACY.md>

@@ -5,7 +5,7 @@ url: "https://github.com/ruvnet/ruflo"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,108 @@ tags:
 
 # ruvnet/ruflo
 
-> https://github.com/ruvnet/ruflo
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+Ruflo는 Claude Code와 Codex 주변에 여러 에이전트의 역할 분담, 기억, 도구 연결과 반복 작업을 얹는 meta-harness로 소개된다.
+새 언어 모델이 아니라 모델이 실제 작업을 하도록 둘러싸는 실행·조정 계층이다.
+README에는 이전 이름인 Claude Flow와 새 이름 Ruflo의 관계도 명시되어 있다.[1]
 
-🌊 The original agent harness. Deploy intelligent multi-player swarms, coordinate autonomous workflows, and build conversational AI systems. Features adaptive memory, self-learning intelligence, federation, vector RAG integration, and native Claude Code / Codex / Hermes and many more Integrated
+## 여러 에이전트가 같은 목표를 다룰 때
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+한 에이전트가 코드 작성과 검토, 테스트를 모두 맡을 수도 있지만 서로 독립적인 과제는 나누어 처리할 수 있다.
+이때 필요한 것은 에이전트의 수보다 작업 소유권과 결과 전달 방식이다.
+같은 파일을 동시에 바꾸거나 서로 다른 가정으로 진행하면 병렬화가 오히려 충돌을 만든다.
+Ruflo는 swarm, 즉 여러 에이전트가 조정 규칙 아래 협업하는 구성을 중심에 둔다.[1][2]
 
-- 주 언어: TypeScript
-- Star 수: 72395
-- Fork 수: 8569
-- 최근 수정일: 2026-09-14
-- 라이선스: MIT License
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://Cognitum.One
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+README의 흐름도는 사용자에서 CLI 또는 MCP, 라우터, swarm, 에이전트, 기억과 모델 제공자로 이어진다.
+CLI는 터미널 명령 인터페이스이고 MCP는 에이전트와 외부 도구를 연결하는 규약이다.
+이 구조에서 모델의 응답 생성과 팀 조정은 다른 역할이다.
+“자기 학습 기억” 같은 소개 문구도 모델 자체의 가중치를 자동 훈련한다는 뜻으로 확대하지 않아야 한다.[1]
 
-## 3. 이 Repository는 무엇인가?
+## 설치 경로가 기능 표면을 바꾼다
 
-- 목적: `🌊 The original agent harness. Deploy intelligent multi-player swarms, coordinate autonomous workflows, and build conversational AI systems. Features adaptive memory, self-learning intelligence, federation, vector RAG integration, and native Claude Code / Codex / Hermes and many more Integrated`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+가장 먼저 읽어야 할 차이는 플러그인 경로와 CLI 초기화 경로다.
+README는 플러그인 경로를 명령·Skill·에이전트 정의를 선택적으로 받는 방식으로, CLI 경로를 MCP 서버·hook·daemon 등을 포함한 더 넓은 루프로 구분한다.
+hook은 특정 시점에 자동 실행되는 연결 지점이고 daemon은 백그라운드에서 지속되는 프로세스다.[1]
 
+플러그인 경로에서도 `ruflo-core`는 자신의 MCP 서버를 등록하지만 다른 플러그인 대부분은 그렇지 않다고 설명한다.
+등록된 도구의 이름에는 플러그인 namespace가 붙으며 CLI 경로의 짧은 도구 이름과 다르다.
+따라서 문서의 예제 이름을 다른 설치 경로에 그대로 대입하면 실제 사용 가능한 도구와 어긋날 수 있다.[1]
 
-## 3-1. 쉽게 읽는 한 줄
+CLI 초기화는 `.claude/`, `.claude-flow/`, `CLAUDE.md`, 설정과 helper 등 작업 공간에 파일을 만든다고 비교표가 밝힌다.
+선택적인 명령 몇 개를 써 보는 일과 전체 실행 루프를 프로젝트에 넣는 일은 변경 범위가 다르다.
+이 글은 어느 경로도 실행하지 않았다.[1]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## ruflo-swarm의 구체적인 조정 계약
 
-## 4. 주제 라벨(Topics)
+대표 플러그인 `ruflo-swarm`은 팀 구성, 상태 스트림과 worktree 격리를 설명하며 `ruflo-core`를 의존성으로 요구한다.
+worktree는 같은 저장소의 서로 다른 작업 디렉터리를 두는 방식으로, 각 에이전트가 같은 파일 사본을 즉시 덮어쓰지 않도록 작업 영역을 분리하는 데 쓰인다.
+격리된 작업 공간이 있다고 변경을 합칠 때의 의미적 충돌까지 사라지는 것은 아니다.[2]
 
-- agentic-ai
-- agentic-framework
-- agentic-workflow
-- agents
-- ai-agents
-- ai-assistant
-- ai-skills
-- autonomous-agents
-- claude-code
-- codex
+플러그인 문서는 MCP의 `swarm_*`, `agent_*` 도구와 Claude Code의 기본 팀·메시지·작업 추적 도구를 별도 표로 나눈다.
+팀 상태를 등록하는 도구와 실제 하위 에이전트를 시작하는 호스트 기능을 같은 것으로 보지 않도록 하는 구분이다. `Monitor`는 긴 프로세스의 이벤트를 받아 상태 변화를 관찰하는 표면으로 설명된다.[2]
 
-## 5. 대략적인 동작 흐름
+topology는 협업 연결 모양을 뜻한다.
+계층형은 조정자가 방향을 잡고, mesh는 구성원 사이의 연결을 활용한다.
+공식 플러그인은 코딩 작업에 역할을 전문화한 계층형 기본값을 제시한다.
+공유 기억에는 `swarm-state` namespace를 사용해 활성 팀, 역할 배정과 연결 구조의 스냅샷을 구분한다고 설명한다.
+namespace는 같은 저장소 안에서 자료를 논리적으로 나누는 이름이다.[2]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+## 예시로 따라가는 흐름
 
-### 용어 풀이
+이해를 위한 가상 예시이며 직접 실행한 결과가 아니다.
+공개 예제 프로젝트에 기능과 테스트를 함께 추가한다고 하자.
+문서의 계층형 조정 방식을 적용하면 먼저 조정자가 기능 작성, 테스트 검토처럼 역할을 나누고 각 작업이 어느 파일을 담당할지 정한다.
+필요한 core와 swarm 표면이 실제로 제공되는지 확인한 뒤 팀 상태와 에이전트 역할을 연결해야 한다.
+도구 이름이 문서에 있다는 사실만으로 현재 세션에 등록되었다고 가정해서는 안 된다.[1][2]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+각 에이전트는 별도 worktree에서 진행하고 메시지나 공유 작업 상태로 결과를 알리는 흐름으로 이해할 수 있다.
+조정자는 상태 스트림에서 멈춘 작업을 찾고, 기억의 배정 정보와 산출물을 대조해 같은 변경을 중복 수행하지 않았는지 확인한다.
+결과가 모이면 파일 변경의 합성 가능성과 테스트 결과를 사람이 검토해야 한다.
+서로 다른 디렉터리에서 성공한 두 수정이 결합한 상태에서도 맞는다는 보장은 별도다.[2]
 
+공식 플러그인은 smoke 스크립트를 검증 계약으로 제시하고 예상 출력을 적어 둔다.
+여기서 예상 출력은 문서 예시이지 이번 조사에서 나온 결과가 아니다.
+더구나 플러그인 계약 검사가 통과하는 것과 가상 프로젝트의 기능 요구가 충족되는 것은 다른 검사다.
+이 사례의 마지막 단계는 “팀이 만들어짐”이 아니라 요청한 변경과 결합된 결과의 검증이다.[2]
 
-## 6. 사용자 생각
+## 많은 기능 설명을 좁혀 읽어야 하는 이유
+
+README는 기억 검색, 브라우저 검사, 보안, 분산 에이전트 통신 등 넓은 기능을 소개한다.
+하지만 이번에 추가로 읽은 것은 swarm 플러그인의 계약이므로 다른 모든 보안·성능 주장을 구현 검증으로 확장하지 않는다.
+특히 자동 개인정보 제거 같은 표현만으로 외부 전송이 안전하다고 결론내릴 수 없다.[1]
+
+플러그인의 호환성 안내는 CLI의 특정 major·minor 계열에 묶여 있다.
+호스트가 제공하는 팀 도구, 등록한 MCP namespace, 설치 경로가 함께 맞아야 한다.
+도구 수나 에이전트 수는 자주 바뀌는 소개 정보이므로 이 글에서는 품질 근거로 사용하지 않는다.[2]
+
+## 직접 읽어볼 자료
+
+- [README의 Quick Start 비교표](https://github.com/ruvnet/ruflo/blob/main/README.md)
+  플러그인 경로와 CLI 초기화가 각각 무엇을 만들고 등록하는지 먼저 읽는다.
+  같은 Ruflo 이름 아래 서로 다른 변경 범위를 구분하는 입구다.
+- [ruflo-swarm 공식 문서](https://github.com/ruvnet/ruflo/blob/main/plugins/ruflo-swarm/README.md)
+  Requires, MCP surface와 기본 호스트 도구 표를 이어서 본다.
+  실제 하위 작업 실행과 팀 메타데이터 관리가 어떤 표면에 속하는지 확인할 수 있다.
+- [같은 플러그인의 Namespace coordination과 Verification](https://github.com/ruvnet/ruflo/blob/main/plugins/ruflo-swarm/README.md)
+  팀 상태가 어디에 묶이는지와 smoke 검사가 무엇을 대표하는지 읽는다.
+  문서의 예상 결과와 직접 관찰한 테스트 출력을 혼동하지 않기 위한 구간이다.
+
+## 정리
+
+Ruflo는 에이전트를 늘리는 것에 더해 역할·기억·관찰·격리를 연결하려는 조정 계층이다.
+사용할 설치 경로와 실제 도구 표면을 먼저 확정하고, 팀 상태와 기능 완성을 별도로 검증해야 한다.
+
+## 자료 확인 범위
+
+2026-09-27의 README, 루트 구성과 ruflo-swarm 문서를 확인했다.
+초기화·플러그인 설치·smoke 검사·에이전트 실행을 하지 않았으며 README 전반의 성능과 보안 주장을 재현하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +122,19 @@ tags:
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] ruvnet/ruflo — README.md
+
+<https://github.com/ruvnet/ruflo/blob/main/README.md>
+
+[2] ruvnet/ruflo — plugins/ruflo-swarm/README.md
+
+<https://github.com/ruvnet/ruflo/blob/main/plugins/ruflo-swarm/README.md>

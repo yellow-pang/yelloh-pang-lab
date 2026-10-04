@@ -5,7 +5,7 @@ url: "https://github.com/holaboss-ai/holaOS"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,96 @@ tags:
 
 # holaboss-ai/holaOS
 
-> https://github.com/holaboss-ai/holaOS
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## Agent와 앱을 같은 작업 공간에 두기
 
-## 1. 한 줄 요약
+holaOS는 앱 화면, 파일, 연결 도구, 기억과 AI Agent를 한곳에 모으는 데스크톱 작업 공간이다.
+이름에 OS가 있지만 이 문서에서 다루는 것은 컴퓨터의 운영체제를 교체하는 시스템이 아니라 Electron 기반 앱과 TypeScript 런타임이다.
+README는 Claude Code, Codex, 내장 Agent가 같은 도구와 기억을 공유하는 구성을 소개한다.[1]
 
-Open-source agentic workspace enterprises can make their own. Connect the systems you already run — 100+ integrations, MCP, chat tools, apps, browser, local files — with shared memory. Any agent (Claude Code, Codex), any model, or BYOK. Set up in clicks, not months. Local-first: your data never leaves your machines.
+채팅에 결과만 쌓이면 실제 문서나 앱에서 무슨 일이 일어났는지 다시 확인하기 어렵다.
+holaOS의 HolaApps는 Agent 옆에 실제로 조작할 수 있는 앱 화면을 열고, 사용자가 직접 개입할 수 있게 하는 방식이다.
+URL과 MCP 서버를 연결하는 형태도 소개된다.
+MCP는 Agent가 외부 도구를 부르는 통신 규약으로, 화면을 보여 주는 역할과 그 안에서 행동할 도구를 제공하는 역할을 구별해야 한다.[1]
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+## 화면·연결·기억은 다른 구성 요소다
 
-- 주 언어: TypeScript
-- Star 수: 11255
-- Fork 수: 721
-- 최근 수정일: 2026-09-14
-- 라이선스: Other
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://holaos.ai
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+README는 외부 서비스 연결, Skill, MCP, 이들을 묶는 Combo를 별개의 확장 단위로 설명한다.
+연결은 특정 서비스에 접근하는 인증과 도구를, Skill은 반복 작업의 절차를 제공한다.
+같은 연결을 여러 Agent가 사용하도록 구성할 수 있다는 것은 편리한 한편, 공유되는 접근 범위를 명확하게 이해해야 한다는 뜻이기도 하다.[1]
 
-## 3. 이 Repository는 무엇인가?
+기억은 세션과 Agent 사이에 이어지는 선호와 프로젝트 맥락을 로컬의 읽고 수정할 수 있는 파일로 보관하는 것으로 소개된다.
+이것은 모델의 학습 내용을 바꾸는 것과 다르다.
+저장된 맥락을 다음 작업에 다시 가져오는 구조이므로, 오래된 정보가 남거나 필요하지 않은 내용이 섞이면 사용자가 열어 보고 정리할 수 있어야 한다.
+README는 기억을 확인·수정·삭제할 수 있다는 점을 강조한다.[1]
 
-- 목적: `Open-source agentic workspace enterprises can make their own. Connect the systems you already run — 100+ integrations, MCP, chat tools, apps, browser, local files — with shared memory. Any agent (Claude Code, Codex), any model, or BYOK. Set up in clicks, not months. Local-first: your data never leaves your machines.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+대표 자료로 확인한 Plugin Template SDK 문서는 확장이 단순한 프롬프트 복사보다 구조적임을 보여준다.
+템플릿 하나로 플러그인 레코드, 해당 인스턴스의 데이터 컨테이너인 Base, 표처럼 필드를 가진 BaseObject, 화면인 BaseDashboard, 필요한 Workflow를 구성한다.
+화면은 저장된 `kind` 식별자에 대응하는 React 구성 요소를 찾아 그리는 방식이다.[2]
 
+SDK가 대신 처리하는 것과 작성자가 책임질 것도 나누어 적혀 있다.
+데이터 생성 순서와 트랜잭션 처리는 SDK가 맡지만, 사용자 설정 해석, 워크플로의 노드와 연결, 화면 구성 정보, 사용자 정의 React 화면은 작성자의 몫이다.
+따라서 마켓플레이스에서 앱을 사용하는 흐름과 새로운 기능을 개발하는 SDK 흐름은 같은 난이도의 작업이 아니다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+## 예시로 따라가는 흐름
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+SDK의 공식 설명은 `Meeting Notes` 템플릿을 예로 든다.
+개발자는 먼저 이름과 버전, 안내문을 가진 템플릿을 선언하고, 회의 제목·참석자·전사문·요약·발생 시각 같은 필드를 지정한다.
+이어 회의 노트를 날짜별로 보여 주는 대시보드를 선언하고, 그 화면이 어떤 데이터 객체를 읽는지 설정한다.
+화면의 종류를 새로 만들면 React 구성 요소 등록도 별도로 필요하다.[2]
 
-## 4. 주제 라벨(Topics)
+사용자가 설정 단계에서 녹음 출처와 플러그인 이름을 제공하면 설정 해석 함수가 필요한 값을 검사하고, 유효한 값이 인스턴스와 워크플로 생성에 전달된다.
+문서의 완료 규칙 예시는 회의 노트 워크플로가 저장되고 사용자가 끝났다고 확인한 뒤에만 온보딩을 완료하도록 되어 있다.
+이 흐름에서 최종 결과는 채팅 요약 한 줄이 아니라 필드가 있는 기록과 그것을 표시하는 화면이다.
+실제 앱을 실행한 기록은 아니며, 예시 코드에는 작성자가 채워야 할 부분이 남아 있다.
+사람은 녹음 이용 허가, 전사와 요약의 정확성, 기록 저장 위치, 완료 승인이 너무 일찍 내려가지 않았는지를 확인해야 한다.
 
-- agent
-- agent-harness
-- agent-os
-- agentic
-- ai
-- ai-agent
-- ai-agents
-- artificial-intelligence
-- claude-code
-- codex
+## 로컬 저장과 외부 추론을 혼동하지 않기
 
-## 5. 대략적인 동작 흐름
+README는 파일·기억·임베딩·세션 이력을 로컬 디스크에 보관한다고 설명하는 동시에 외부 모델 제공자와 BYOK를 지원한다.
+BYOK는 사용자가 자신의 API 키를 쓰는 방식이다.
+로컬에 작업 기록이 남는다는 설명만으로 모든 모델 호출과 연결 서비스의 통신이 기기 밖으로 나가지 않는다고 결론 내릴 수 없다.
+어떤 모델과 도구를 선택했는지에 따른 전송 범위는 실제 설정에서 확인할 문제다.[1]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+권한에 관해서는 연결과 읽기·수정에 사용자 승인을 받는다는 것이 README의 설명이다.
+이번 문서 조사는 모든 승인 경로를 시험한 보안 감사가 아니다.
+앱·브라우저·메시지·파일을 연결하는 도구인 만큼 연결 범위를 넓히기 전에 읽기와 쓰기 권한, 일정 실행 여부, 불필요한 공유 기억을 각각 살피는 것이 필요하다.
 
-### 용어 풀이
+라이선스는 일반 Apache 2.0과 같지 않다.
+실제 LICENSE에는 제삼자에게 호스팅 서비스를 제공하거나 상업적으로 배포하는 제품에 포함할 때 별도 허가가 필요한 조건과 전면 화면의 로고·저작권 표시를 바꾸지 못하는 조건이 있다.
+따라서 README의 ‘open source’ 표현만 보고 무제한 상업 재배포가 가능하다고 해석하면 안 된다.[3]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+## 직접 읽어볼 자료
 
+- [README의 HolaApps와 shared memory](https://github.com/holaboss-ai/holaOS/blob/main/README.md)
 
-## 6. 사용자 생각
+  실제 앱 화면과 채팅, 로컬 파일과 외부 제공자 호출을 구별하며 읽는다.
+  작업 공간을 공유한다는 설명이 무엇을 저장하고 누구에게 접근을 허용한다는 의미인지 질문해 볼 수 있다.
+
+- [Plugin Template SDK](https://github.com/holaboss-ai/holaOS/blob/main/docs/plugin-sdk.md)
+
+  Mental model 다음에 Meeting Notes 예시를 읽는다.
+  템플릿 선언이 데이터 객체와 대시보드로 이어지는 경로, SDK가 제공하지 않아 직접 작성해야 하는 부분을 확인한다.
+
+- [수정된 라이선스 원문](https://github.com/holaboss-ai/holaOS/blob/main/LICENSE)
+
+  호스팅·포함 배포·브랜딩 조항을 확인한다.
+  소스 열람, 개인적인 수정, 제삼자 대상 서비스 제공을 같은 조건으로 취급하지 않기 위해 필요한 자료다.
+
+## 정리
+
+holaOS의 중심은 여러 Agent가 앱 화면과 도구, 파일 기반 기억을 함께 사용하는 작업 공간이다.
+실제 기능은 연결 설정과 확장 구현에 좌우되며, 로컬 우선이라는 표현과 외부 서비스 통신·수정 라이선스의 범위는 따로 읽어야 한다.
+
+## 자료 확인 범위
+
+2026-09-27 수집 기준으로 기존 문서, README, 루트와 데스크톱 구조, Plugin SDK 예시 및 LICENSE를 확인했다.
+설치, 인증, 도구 호출, 메모리 저장과 승인 동작은 직접 실행하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +110,23 @@ Open-source agentic workspace enterprises can make their own. Connect the system
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] holaboss-ai/holaOS — README.md
+
+<https://github.com/holaboss-ai/holaOS/blob/main/README.md>
+
+[2] holaboss-ai/holaOS — docs/plugin-sdk.md
+
+<https://github.com/holaboss-ai/holaOS/blob/main/docs/plugin-sdk.md>
+
+[3] holaboss-ai/holaOS — LICENSE
+
+<https://github.com/holaboss-ai/holaOS/blob/main/LICENSE>

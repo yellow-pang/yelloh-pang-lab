@@ -5,7 +5,7 @@ url: "https://github.com/stablyai/orca"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,102 @@ tags:
 
 # stablyai/orca
 
-> https://github.com/stablyai/orca
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+Orca는 여러 코딩 에이전트를 각각의 작업 디렉터리에서 실행하고 결과를 한 화면에서 비교·검토하는 개발 환경이다.
+새 코드 생성 모델이 아니라 Codex, Claude Code, OpenCode, Pi 같은 CLI 에이전트를 관리하는 데스크톱 중심의 조정 도구다.[1]
 
-Orca is the ADE for working with a fleet of parallel agents. Run any coding agent with your own subscription. Available on desktop, mobile and remote runtime.
+## 대화창이 아니라 작업 사본을 나누기
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+같은 기능을 다른 방식으로 구현해 보거나 서로 다른 과제를 병렬로 맡길 때, 터미널만 여러 개 열면 어느 에이전트가 어떤 파일을 바꾸는지 혼란스러울 수 있다.
+Orca의 README는 에이전트마다 별도의 git worktree를 쓰고 한곳에서 추적하는 흐름을 강조한다.
+worktree는 같은 저장소에서 서로 다른 브랜치의 파일을 별도 디렉터리에 펼쳐 놓는 기능이다.[1]
 
-- 주 언어: TypeScript
-- Star 수: 68306
-- Fork 수: 4462
-- 최근 수정일: 2026-09-14
-- 라이선스: MIT License
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://onOrca.dev
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+이 구조는 에이전트의 문맥뿐 아니라 수정되는 파일 사본을 분리한다.
+따라서 동일한 요청의 여러 접근을 비교하거나 한 작업이 다른 작업의 미완성 파일을 즉시 덮어쓰는 일을 피할 수 있다.
+다만 분리된 사본에서 나온 변경을 합칠 때 생기는 논리적 충돌까지 자동으로 사라지는 것은 아니다.
 
-## 3. 이 Repository는 무엇인가?
+## 작업 공간, 관찰, 피드백의 연결
 
-- 목적: `Orca is the ADE for working with a fleet of parallel agents. Run any coding agent with your own subscription. Available on desktop, mobile and remote runtime.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+공식 첫 세션 안내에서 저장소를 추가하면 Orca가 Git 상태와 기본 브랜치를 읽고 새 worktree의 출발점인 base ref로 사용한다.
+ref는 브랜치나 커밋처럼 코드의 특정 상태를 가리키는 이름이다.
+새 작업을 만들 때 기본 ref 또는 다른 브랜치·커밋을 선택하고, 관리 디렉터리에 실제 worktree를 만든다고 설명한다.[2]
 
+그 안에서 에이전트를 선택하면 올바른 작업 디렉터리로 CLI를 실행하고 구독 자격 증명을 전달하는 방식이다.
+따라서 에이전트를 한 화면에 모은다는 것과 모델 사용 권한을 새로 제공한다는 것은 다르다.
+README의 “어떤 CLI 에이전트든”이라는 소개는 터미널 실행을 중심으로 한 범위이며, 각 제공자의 모든 기능을 동일하게 구현했다는 보증으로 읽을 수는 없다.[1][2]
 
-## 3-1. 쉽게 읽는 한 줄
+검토의 접점은 diff, 즉 파일의 변경 전후 차이다.
+README의 Annotate AI Diffs는 변경 줄에 의견을 달아 에이전트에게 다시 전달하는 기능이다.
+생성된 답변을 읽고 끝내는 대신 실제 바뀐 코드에 질문을 남기는 피드백 경로다.
+공식 첫 세션 안내 역시 여러 결과 중 가까운 것을 고른 뒤 줄 단위 의견을 보내고 검토하는 순서로 설명한다.[1][2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+UI 작업에는 Design Mode가 별도로 있다.
+실제 Chromium 창의 요소를 선택해 HTML, CSS와 해당 영역 스크린샷을 프롬프트에 넣는 기능으로 소개된다.
+이것은 사람이 “이 버튼”이라고만 설명할 때 빠지는 화면 구조를 전달하는 방식이다.
+화면 자료를 보내는 것과 에이전트가 올바른 디자인을 완성하는 것은 별개의 단계다.[1]
 
-## 4. 주제 라벨(Topics)
+## 예시로 따라가는 흐름
 
-- ade
-- agent-ide
-- ai-agents
-- claude-code
-- cli
-- codex
-- cursor-agent
-- devtools
-- ghostty
-- ide
+공식 “Your first 3-agent session”은 로그인 관련 과제 이름을 예로 들며 같은 요청을 서로 다른 세 에이전트에 맡기는 흐름을 제시한다.
+이는 문서를 따라 설명한 것이며 직접 실행한 결과가 아니다.
+먼저 로컬 저장소를 추가하고 출발 ref를 확인한다.
+같은 기준 상태에서 worktree들을 만들고 각각 다른 CLI 에이전트를 선택한 다음 동일한 요청을 입력한다.
+그 결과 비교 대상은 세 대화뿐 아니라 세 브랜치의 변경이다.[2]
 
-## 5. 대략적인 동작 흐름
+탭을 분할해 진행을 함께 보고, 작업이 잦아들면 각 worktree의 diff를 연다.
+이때 빠르게 답한 에이전트를 곧바로 승자로 삼는 대신 원래 요구와 변경 범위, 예상하지 않은 파일 수정, 실행한 검사 근거를 살펴야 한다.
+공식 안내는 가까운 결과에 줄 단위 의견을 달아 다시 보내는 경로를 제공한다.
+따라서 첫 출력이 최종 결과라고 가정하지 않고 수정과 재검토를 반복할 수 있다.[2]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+안내의 마지막은 선택한 결과를 검토한 뒤 commit·push하고 나머지 worktree를 정리하는 단계다.
+이 작업은 외부 반영과 파일 삭제를 수반하므로 실제 사용 시 승인 범위를 분리해야 한다.
+문서는 worktree를 삭제하면 해당 브랜치도 함께 제거된다고 설명한다.
+남길 변경이나 비교 기록이 없는지 확인하지 않고 “패배한 결과 정리”라는 이름으로 지우면 안 된다.
+이번 조사에서는 저장소 추가부터 정리까지 어느 단계도 수행하지 않았다.[2]
 
-### 용어 풀이
+## 로컬, 원격, 모바일은 실행 위치가 다르다
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+README는 SSH worktree를 통해 원격 컴퓨터에서 파일 편집·Git·터미널을 사용하고 재연결 및 포트 전달을 지원한다고 설명한다.
+SSH는 원격 장비에 연결하는 통로다.
+모바일 companion은 데스크톱과 연결해 상태를 보고 후속 지시를 보내는 구성으로 소개되므로, 휴대전화 화면에서 조작한다는 사실을 모든 계산이 휴대전화에서 이뤄진다는 뜻으로 바꾸면 안 된다.[1]
 
+Orca의 공개 소스와 에이전트의 구독·사용량 역시 구별해야 한다.
+여러 에이전트를 동시에 실행하면 각각의 제공자 제한과 비용 조건이 여전히 적용된다.
+README는 계정 전환과 사용량 표시를 제공한다고 설명하지만 이 글은 정확한 요금이나 속도 향상을 측정하지 않았다.[1]
 
-## 6. 사용자 생각
+프로그램에는 파일 편집, Git 변경, 브라우저 조작 등 실제 상태를 바꾸는 기능이 포함된다.
+CLI로 작업을 자동화할 수 있다는 설명도 있다.
+검토만 필요한 상황과 변경·게시까지 맡기는 상황을 나누고, 스크린샷이나 첨부 파일에 비공개 정보가 들어가는지 살펴야 한다.
+텔레메트리와 개인정보 세부 조건은 이번 추가 파일만으로 확인한 범위가 아니다.[1]
+
+## 직접 읽어볼 자료
+
+- [README의 Parallel Worktrees와 Annotate AI Diffs](https://github.com/stablyai/orca/blob/main/README.md)
+  작업 사본을 분리하는 기능과 생성 결과에 의견을 주는 기능을 연결해 읽는다.
+  터미널 수가 늘어나는 것 이상의 관리 흐름을 확인할 수 있다.
+- [공식 첫 3-agent 세션 예제](https://github.com/stablyai/orca/blob/main/docs/site/content/docs/first-session.mdx)
+  Add Repo에서 base ref, worktree, 에이전트, diff까지 따라간다.
+  특히 비교 실험의 출발 상태와 정리 시 브랜치 삭제 조건을 주의해서 읽는다.
+- [README의 SSH Worktrees와 Mobile Companion](https://github.com/stablyai/orca/blob/main/README.md)
+  명령을 실행하는 위치와 상태를 보는 위치가 어떻게 달라지는지 살핀다.
+  원격 실행과 휴대전화 후속 지시가 어떤 구성의 연결인지 구분할 자료다.
+
+## 정리
+
+Orca는 여러 에이전트의 코드 변경을 분리하고 비교하며 다시 지시하는 작업 환경이다.
+병렬 실행 그 자체보다 같은 기준 상태, 실제 diff, 검사 근거와 안전한 정리 절차가 결과의 의미를 결정한다.
+
+## 자료 확인 범위
+
+2026-09-27 기준 README, 루트 구조와 공식 첫 세션 예제를 읽었다.
+앱 설치, worktree 생성, 에이전트 실행, 인증 전달과 Git 변경은 하지 않았고 플랫폼별 실행 품질을 검증하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +116,19 @@ Orca is the ADE for working with a fleet of parallel agents. Run any coding agen
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] stablyai/orca — README.md
+
+<https://github.com/stablyai/orca/blob/main/README.md>
+
+[2] stablyai/orca — docs/site/content/docs/first-session.mdx
+
+<https://github.com/stablyai/orca/blob/main/docs/site/content/docs/first-session.mdx>

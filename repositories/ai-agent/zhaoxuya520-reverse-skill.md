@@ -5,7 +5,7 @@ url: "https://github.com/zhaoxuya520/reverse-skill"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,67 +13,101 @@ tags:
 
 # zhaoxuya520/reverse-skill
 
-> https://github.com/zhaoxuya520/reverse-skill
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+reverse-skill은 역공학과 허가된 보안 연구 작업을 적절한 방법론·도구 지침으로 연결하는 Skill 라우터 묶음이다.
+역공학은 프로그램의 구조와 동작을 자료에서 거꾸로 분석하는 활동이며, 라우터는 요청의 종류에 따라 먼저 읽을 지침을 고르는 역할이다.
+독립적인 보안 분석 모델이나 모든 도구를 포함한 운영체제가 아니다.
+README는 파일과 과제의 유형을 판단한 뒤 도구 가용성을 확인하고 반복 가능한 절차를 적용하는 흐름을 설명한다.[1]
 
-Reverse Engineering / Authorized Penetration Testing / Security Research Skill Router Pack AI-powered routing + On-demand toolchain bootstrapping + Self-evolving knowledge base  Supports Claude Code, Kiro, Cursor, Cline, and other AI coding clients 逆向/渗透/安全技能路由包 - AI 自动路由 + 按需自举工具链 + 自动进化经验库 | 支持 Claude Code / Kiro / Cursor / Cline 等代码 AI 客户端
+## 도구 이름을 아는 것과 분석 순서를 아는 것
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+자신이 만든 앱의 패키지, 실행 파일과 네트워크 기록은 분석에 필요한 도구가 다르다.
+에이전트가 익숙한 명령 하나를 모든 자료에 적용하면 적절하지 않은 결과를 얻거나 불필요한 실행을 할 수 있다.
+이 저장소는 요청을 먼저 분류하고 대표 경로인 PRIMARY를 선택한다.
+그 다음 해당 Skill을 읽고 설치된 도구의 실제 위치를 확인한다.
+명령 추측보다 분류와 근거를 먼저 두는 구조다.[1][2]
 
-- 주 언어: PowerShell
-- Star 수: 35878
-- Fork 수: 4937
-- 최근 수정일: 2026-09-14
-- 라이선스: MIT License
-- 기본 브랜치: main
-- 홈페이지만의 페이지: 미확인
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+README가 제시하는 산출물에는 보고서만 있는 것이 아니다.
+범위 문서, 시간순 기록과 작업 항목, 증거에서 발견으로 이어지는 연결도 있다.
+분석 결과를 나중에 사람이 검토하려면 무엇을 관찰했고 무엇을 추론했는지 구별해야 하기 때문이다.
+‘위험할 것 같다’는 모델의 문장과 실제 파일이나 로그에서 관찰된 내용을 같은 수준의 사실로 취급하지 않도록 읽는 것이 중요하다.[1]
 
-## 3. 이 Repository는 무엇인가?
+## 빠른 경로와 전체 분류표의 관계
 
-- 목적: `Reverse Engineering / Authorized Penetration Testing / Security Research Skill Router Pack AI-powered routing + On-demand toolchain bootstrapping + Self-evolving knowledge base  Supports Claude Code, Kiro, Cursor, Cline, and other AI coding clients 逆向/渗透/安全技能路由包 - AI 自动路由 + 按需自举工具链 + 自动进化经验库 | 支持 Claude Code / Kiro / Cursor / Cline 等代码 AI 客户端`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+대표 파일 `skills/MASTER-ROUTING.md`는 먼저 라우팅하고 PRIMARY 경로와 한 문장의 근거를 출력하도록 한다.
+강한 키워드에 맞는 경로가 없으면 일반 역공학 경로와 전체 분류표를 보도록 안내한다.
+전체 표는 별도의 경쟁 라우터라기보다 애매한 요청을 해석하는 보충 자료로 제시된다.
+여러 지침을 동시에 무작정 읽는 방식과 다르다.[2]
 
+경로 우선순위는 `config/routing.json`과 일치해야 한다는 규칙이 있다.
+PowerShell과 셸 진입점도 같은 라우팅 계약을 유지해야 하며 플랫폼은 호출 방법만 바꾼다고 명시한다.
+README의 클라이언트 중립성 역시 모든 AI 클라이언트가 동일한 설치 설정을 사용한다는 뜻이 아니라 핵심 분류 규칙과 사례 흐름을 특정 클라이언트 어댑터와 분리한다는 의미다.[1][2]
 
-## 3-1. 쉽게 읽는 한 줄
+도구 경로는 `tool-index`를 근거로 선택하고 부족한 도구의 준비는 manifest에 선언된 기능 범위 안에서 하도록 한다.
+즉 Skill을 읽는 일과 외부 프로그램을 설치하는 일은 다르다.
+설치나 MCP 등록이 수반되는 기능을 이미 준비된 것으로 가정하면 안 된다.
+README도 선택적인 Codex 어댑터가 외부 MCP 서버를 자동 등록하지 않는다고 설명한다.[1][2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## 예시로 따라가는 흐름
 
-## 4. 주제 라벨(Topics)
+공식 빠른 경로에는 로컬 오프라인 APK 샘플에 대한 사례 초기화 예제가 있다.
+이를 자신의 허가된 학습용 앱을 분석하는 읽기 사례로 한정해 보자.
+입력은 샘플 파일과 ‘offline apk’라는 작업 힌트다.
+라우팅 표는 APK 관련 요청을 APK 분석 Skill로 보낸다.
+그 뒤 사례 폴더의 범위와 네트워크 조건을 정리하고, 실제 분석 행동 전에는 범위가 준비됐는지 확인하는 단계가 있다.
+이 글에서는 해당 명령을 실행하거나 APK를 해체하지 않았다.[2]
 
-- 등록된 대표 주제 라벨이 없습니다.
+이 단계의 산출물은 취약점 확정 보고서가 아니라 어떤 자료를 어떤 권한 아래 다룰지 정한 분석 출발점이다.
+다음으로 선택된 Skill과 도구 색인을 읽고, 관찰 자료를 시간순 기록과 증거 연결에 남겨야 한다.
+사람이 확인할 것은 입력 파일이 승인받은 사본인지, 오프라인이라는 조건과 실제 도구의 네트워크 동작이 맞는지, 결과의 각 발견이 어떤 증거를 가리키는지다.
+빠른 경로 문서는 준비되지 않은 권한 상태에서 대상에 대한 ACT를 금지하며 강제 옵션도 이 문턱을 우회하지 못한다고 설명한다.
+에이전트가 경로를 골랐다는 사실은 대상에 대한 행위를 허가한 사실이 아니다.[2]
 
-## 5. 대략적인 동작 흐름
+## 넓은 보안 분류와 안전한 사용 범위
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+목록에는 방어적 코드 감사와 포렌식뿐 아니라 침투 테스트와 공격 연구에 관련된 범주도 들어 있다.
+이 글은 분류 구조와 증거 관리만 설명하며 외부 대상의 침해, 보호 우회나 악용 절차로 확장하지 않는다.
+학습용 자료라도 소유권과 허가 범위가 분명해야 하며 샘플에 민감한 정보나 악성 동작이 포함될 가능성을 따로 고려해야 한다.
 
-### 용어 풀이
+README는 플랫폼별 문서와 도구 준비 단계를 나누어 제공한다.
+핵심 라우팅이 Windows와 Ubuntu에서 검사된다는 설명은 모든 외부 분석 도구가 모든 운영체제에서 동일하게 동작한다는 보장이 아니다.
+도구의 라이선스, 바이너리 호환성과 MCP 설정은 각각 조건이 다르다.
+분석 지침을 발견했다는 사실과 실행 환경이 준비됐다는 사실을 구분해야 한다.[1]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+또한 README의 서로 다른 표에는 라우팅 규칙과 회귀 사례 수가 다르게 표기된 부분이 있다.
+여기서는 수치를 기능의 완전성 근거로 사용하지 않는다.
+중요한 것은 특정 입력이 어느 경로를 선택하는지와 그 규칙의 기준 파일이다.
+이번 확인은 문서의 계약을 읽은 것이며 플랫폼별 회귀 검사를 다시 실행해 일치 여부를 검증한 것은 아니다.[1][2]
 
+## 직접 읽어볼 자료
 
-## 6. 사용자 생각
+- [README의 About와 Key files](https://github.com/zhaoxuya520/reverse-skill/blob/main/README.md)
+  요청에서 범위 문서, 시나리오 Skill, 증거와 보고서로 이어지는 전체 흐름을 먼저 읽는다.
+  분석 도구 목록보다 각 문서가 맡는 역할을 구분하는 것이 출발점이다.
+- [PRIMARY 빠른 라우팅 계약](https://github.com/zhaoxuya520/reverse-skill/blob/main/skills/MASTER-ROUTING.md)
+  분류 근거 출력과 권한 준비 조건을 함께 확인한다.
+  오프라인 샘플 예제도 단순 실행법이 아니라 사례 범위와 행동 전 검사라는 순서로 읽는다.
+- [README의 Client-neutral integration](https://github.com/zhaoxuya520/reverse-skill/blob/main/README.md)
+  핵심 규칙과 선택적인 어댑터가 어디에서 갈라지는지 확인한다.
+  특정 클라이언트용 패키지 설치가 외부 도구 전체의 준비를 뜻하지 않는다는 점을 살핀다.
+
+## 정리
+
+reverse-skill은 요청을 보안 분석 절차로 보내고 범위·도구·증거 기록을 연결하는 라우터다.
+핵심 경계는 경로 선택과 실행 허가가 별개라는 점이며 결과도 근거 연결을 통해 검토해야 한다.
+
+## 자료 확인 범위
+
+2026-09-27 README와 PRIMARY 라우팅 문서를 확인했다.
+도구 설치, 샘플 실행, 외부 대상 접속과 회귀 테스트는 하지 않았다.
+안내된 보안 절차의 실제 강제력까지 검증한 문서는 아니다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -81,13 +115,19 @@ Reverse Engineering / Authorized Penetration Testing / Security Research Skill R
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] zhaoxuya520/reverse-skill — README.md
+
+<https://github.com/zhaoxuya520/reverse-skill/blob/main/README.md>
+
+[2] zhaoxuya520/reverse-skill — skills/MASTER-ROUTING.md
+
+<https://github.com/zhaoxuya520/reverse-skill/blob/main/skills/MASTER-ROUTING.md>

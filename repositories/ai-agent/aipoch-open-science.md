@@ -5,7 +5,7 @@ url: "https://github.com/aipoch/open-science"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,76 +13,96 @@ tags:
 
 # aipoch/open-science
 
-> https://github.com/aipoch/open-science
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+AIPOCH Open-Science는 자연어 연구 요청, 과학 데이터 접근, Python·R 계산, 산출물 검토를 한 공간에 모은 연구용 작업대다.
+macOS·Windows·Linux용 애플리케이션이며 특정 모델 하나가 아니라 여러 모델 제공자와 에이전트 실행 환경을 연결한다.
+논문의 결론을 자동 보증하는 연구자가 아니라 연구 과정과 증거를 확인할 수 있게 만드는 도구다.[1]
 
-AIPOCH Open-Science is an open-source, local-first, model-agnostic AI research workbench for macOS, Windows, and Linux, with scientific agents, Python/R notebooks, data connectors, and reproducible provenance.
+## 결과 그림만으로는 재현을 설명할 수 없다
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+논문의 분석을 다시 해보려면 데이터뿐 아니라 전처리 기준, 실행 코드, 환경, 결과가 연결되어야 한다.
+대화창에서 그래프 하나를 얻더라도 어떤 입력 버전으로 생성했는지 모르면 원문과 다른 이유를 찾기 어렵다.
+README의 Product Tour는 차등 발현 분석을 재현하고 원문과 비교하는 과제를 통해, 요청에서 보고서·표·그림과 출처 기록까지 이어지는 흐름을 설명한다.[1]
 
-- 주 언어: TypeScript
-- Star 수: 4179
-- Fork 수: 269
-- 최근 수정일: 2026-09-14
-- 라이선스: Apache License 2.0
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://aipoch.com/open-science
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+이 프로젝트에서 provenance는 산출물의 이력과 근거를 뜻한다.
+누가 작성했는지만 표시하는 꼬리표가 아니라 생성 코드, 실행 기록, 참조 입력, 관찰된 환경, 대화 분기, 해당 버전에 대한 검토 결과를 연결하는 정보다.
+확인할 수 없는 증거는 추론해서 채우지 않고 unavailable로 표시한다는 점이 README에 명시되어 있다.[1]
 
-## 3. 이 Repository는 무엇인가?
+## 대화, 계산, 파일 버전을 잇는 구성
 
-- 목적: `AIPOCH Open-Science is an open-source, local-first, model-agnostic AI research workbench for macOS, Windows, and Linux, with scientific agents, Python/R notebooks, data connectors, and reproducible provenance.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+사용자는 프로젝트와 세션을 만들고 파일을 첨부하거나 `@`로 기존 파일을 참조한다.
+에이전트는 연구용 Skill, 허가된 connector, 검색, 파일 작업, Notebook 계산을 조합한다.
+connector는 외부 과학 데이터나 도구에 접속하는 연결부이며, Notebook은 코드와 그 실행 결과를 함께 다루는 계산 공간이다.
+모델이 설명하는 문장과 실제 코드 실행은 이 구조에서 구분되는 활동이다.[1]
 
+산출물은 대화에 붙어 있을 뿐 아니라 프로젝트 파일 라이브러리에 모이고, 변경 불가능한 버전과 checksum으로 보관된다.
+checksum은 내용 변화를 검출하는 값이다.
+추가로 조회한 `immutable-input-authority.ts`는 입력 버전의 프로젝트, 원본 파일, 세션, 버전 번호, 저장 키, checksum, 크기를 비교하는 구현을 포함한다.
+같은 이름의 파일이라고 같은 입력으로 취급하지 않는 이유를 여기서 볼 수 있다.[1][2]
 
-## 3-1. 쉽게 읽는 한 줄
+구현의 `validateVersion`은 프로젝트가 다르면 `project-mismatch`, 버전을 찾지 못하면 `unavailable`, 기록된 신원이 맞지 않으면 `identity-mismatch`를 반환한다.
+이용 가능한 버전에 대해서도 `verifyUnchanged`를 호출한다.
+이는 재현성의 모든 조건을 해결하는 코드는 아니지만, 설명 속 입력과 실제 읽을 파일이 바뀌지 않았는지 확인하는 구체적인 장치다.[2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## 예시로 따라가는 흐름
 
-## 4. 주제 라벨(Topics)
+공식 Product Tour의 대표 과제는 이미 발표된 차등 발현 분석을 재현하는 것이다.
+입력에는 연구 질문, 논문과 데이터, 적용할 방법이나 임계값, 기대 산출물, 수용 기준을 적는다.
+파일을 업로드하거나 기존 프로젝트 파일을 지정해야 에이전트가 대화에 드러나지 않은 데이터가 있다고 가정하지 않는다.
+README의 화면들은 여러 문서화된 작업의 대표 장면이며 하나의 연속 실행 기록은 아니라는 설명도 함께 읽어야 한다.[1]
 
-- ai-for-science
-- ai-research
-- ai-workbench
-- bioinformatics
-- claude-science-alternative
-- desktop-app
-- electron
-- linux
-- local-first
-- macos
+처리 단계에서는 허용된 데이터 연결과 Python 또는 R 코드를 사용해 분석하고, 그림 옆에서 생성 코드를 확인한다.
+결과 단계에는 무엇이 재현되었고 무엇이 달랐는지 요약한 Markdown 보고서, CSV 표, 이미지 등이 세션 및 라이브러리에 남는다고 설명한다.
+이때 사람이 확인할 핵심은 그래프의 외형만이 아니다.
+입력 데이터의 버전이 맞는지, 원문의 조건과 실제 계산 조건이 같은지, 차이를 제한사항으로 기록했는지 확인해야 한다.[1]
 
-## 5. 대략적인 동작 흐름
+Provenance 화면에서는 해당 산출물 버전을 만든 코드와 실행 증거로 돌아간다.
+위 입력 버전 검증 구현은 이런 연결의 일부를 담당하며, 파일 신원 불일치를 정상 결과로 덮어쓰지 않게 한다.
+이 글은 공식 흐름과 소스 코드를 설명한 것이지 분석이 실제로 재현되었다는 보고가 아니다.
+생물학적 결론이나 통계적 유의성은 별도의 데이터·방법 검토가 필요하다.[1][2]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+## 권한과 계산 환경이 결과의 일부다
 
-### 용어 풀이
+로컬에는 프로젝트 데이터, 설정, 파일 버전, 근거 기록이 저장되지만 모델 요청의 프롬프트와 필요한 맥락은 선택한 제공자로 전송될 수 있다.
+검색과 원격 connector도 외부 서비스에 매개변수를 전달하며, 로컬 connector는 컴퓨터에서 명령을 실행할 수 있다.
+따라서 local-first를 네트워크 차단과 동일하게 읽으면 안 된다.[1]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+권한 모드는 승인 요청, 편집 자동 승인, Full access로 나뉘며 실제 동작은 선택한 백엔드와 기존 승인 범위에 영향을 받는다.
+새 연구나 민감한 입력에서는 도구 매개변수와 실행 내용을 읽고 승인할 필요가 있다.
+Python·R Notebook 환경과 원격 계산 자원도 따로 준비해야 하며, SSH·Slurm 항목이 있다고 해서 원격 호스트의 소프트웨어와 권한이 자동 제공되지는 않는다.[1]
 
+Reviewer는 완료된 턴의 답변·로그·관련 파일을 별도 맥락에서 검토하는 선택 기능이다.
+검토 대상은 그 턴에서 접근 가능한 기록이므로, 데이터의 대표성이나 연구 설계의 타당성을 외부 검증 없이 보장한다고 받아들일 수 없다.
+README의 벤치마크 순위 역시 프로젝트가 제시한 비교 결과이며 이 조사에서 재측정하지 않았다.[1]
 
-## 6. 사용자 생각
+## 직접 읽어볼 자료
+
+1. [README의 Product Tour](https://github.com/aipoch/open-science/blob/main/README.md)
+   연구 요청에서 산출물 검토까지 따라가며 어떤 정보가 입력으로 명시되는지 본다.
+   화면들이 한 번의 실행을 촬영한 것인지 대표 장면을 모은 것인지 설명까지 읽으면 시연과 재현 보고를 혼동하지 않는다.
+2. [immutable-input-authority.ts](https://github.com/aipoch/open-science/blob/main/src/main/immutable-input-authority.ts)
+   `matchesVersionIdentity`와 `validateVersion`을 먼저 읽는다.
+   파일 이름 밖에 어떤 식별자가 필요한지, 버전이 없거나 달라졌을 때 어느 상태를 반환하는지 확인하는 짧은 소스 읽기 경로다.
+3. [README의 Data, Permissions, and Trust](https://github.com/aipoch/open-science/blob/main/README.md)
+   로컬 저장 항목과 외부 전송 항목을 나란히 확인한다.
+   이어 권한 모드 및 원격 계산 FAQ를 읽고 데이터 공개 범위, 실행 권한, 계산 환경을 각각 따로 준비해야 하는지 판단한다.
+
+## 정리
+
+Open-Science의 역할은 연구 대화와 계산 산출물을 검토 가능한 파일 이력으로 연결하는 데 있다.
+기록을 추적할 수 있다는 사실과 연구 결론이 옳다는 판정은 다르며, 입력·권한·방법 검토는 사용자에게 남는다.
+
+## 자료 확인 범위
+
+2026-09-27 수집본의 README와 불변 입력 버전 검증 소스를 확인했다.
+프로그램 설치, 모델 호출, Notebook 실행, 벤치마크 재현은 수행하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -90,13 +110,19 @@ AIPOCH Open-Science is an open-source, local-first, model-agnostic AI research w
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] aipoch/open-science — README.md
+
+<https://github.com/aipoch/open-science/blob/main/README.md>
+
+[2] aipoch/open-science — src/main/immutable-input-authority.ts
+
+<https://github.com/aipoch/open-science/blob/main/src/main/immutable-input-authority.ts>

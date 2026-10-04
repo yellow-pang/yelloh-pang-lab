@@ -5,7 +5,7 @@ url: "https://github.com/Imbad0202/academic-research-skills"
 category: "ai-agent"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "ai-agent"
   - "starred-draft"
@@ -13,74 +13,96 @@ tags:
 
 # Imbad0202/academic-research-skills
 
-> https://github.com/Imbad0202/academic-research-skills
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 연구와 원고 작성 사이에 검토 지점을 두는 도구
 
-## 1. 한 줄 요약
+Academic Research Skills는 Claude Code에서 연구 조사, 논문 작성, 검토, 수정과 최종 형식 정리를 돕는 Skill 묶음이다.
+논문을 승인하는 기관이나 연구 결과를 생성하는 실험 장비가 아니라, AI와 연구자가 협업할 때 따를 절차와 역할을 제공한다.
+README는 AI가 초안을 쓸 수 있어도 연구 질문과 방법, 해석과 제출한 주장에 대한 책임은 저자에게 있다고 명시한다.[1]
 
-Academic Research Skills for Claude Code: research → write → review → revise → finalize
+자료가 많아도 어떤 질문에 답하는지, 인용이 실제 주장을 뒷받침하는지, 수정 뒤 앞뒤 설명이 맞는지는 별개의 문제다.
+이 프로젝트는 글을 빨리 늘리는 일보다 조사·작성·검토의 경계를 나누고 중간 산출물과 판단을 남기는 데 초점을 둔다.
+스타일 보정 역시 AI 사용을 숨기는 도구가 아니라 글의 품질을 다루는 기능이라고 설명한다.[1]
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+## 전문 Skill과 조정자를 분리한다
 
-- 주 언어: Python
-- Star 수: 47996
-- Fork 수: 3737
-- 최근 수정일: 2026-09-14
-- 라이선스: Other
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://buymeacoffee.com/crucify020v
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+README에는 Deep Research, Academic Paper, Academic Paper Reviewer, Academic Pipeline의 네 역할이 소개된다.
+각각 자료 조사, 글 작성, 여러 관점의 비평, 단계 조정을 담당한다.
+Agent라는 말은 여기서 특정 역할의 지시를 받은 AI 작업 단위를 뜻한다.
+여러 역할이 있다고 해서 독립된 전문가가 실제로 논문을 심사한 것과 같아지는 것은 아니다.[1]
 
-## 3. 이 Repository는 무엇인가?
+추가로 확인한 `academic-pipeline/SKILL.md`는 조정자가 실질적인 연구를 직접 수행하지 않고 단계 감지, 모드 추천, Skill 호출, 전환과 상태 기록을 맡는다고 설명한다.
+사용자가 명확한 개별 요청을 하면 해당 모드로 보내고, 여러 단계에 걸친 자료만 주어 의도가 불분명하면 확인하도록 규정한다.
+이미 있는 원고와 검토 의견을 무조건 처음부터 재작성하는 흐름이 아니다.[2]
 
-- 목적: `Academic Research Skills for Claude Code: research → write → review → revise → finalize`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+전체 경로에는 조사와 작성 뒤 무결성 검사가 있고, 검토와 수정·재검토를 거쳐 최종 무결성 검사와 형식 변환, 과정 기록으로 이어진다.
+무결성 검사는 참고문헌·인용·등록된 주장·보고된 데이터 등 선언된 확인 범위에 한정된다.
+확인하지 않은 영역과 미지 상태를 남기도록 되어 있으므로 PASS를 논문의 모든 사실이 옳다는 보증으로 읽어서는 안 된다.[2]
 
+## 예시로 따라가는 흐름
 
-## 3-1. 쉽게 읽는 한 줄
+공식 Pipeline의 중간 진입 규칙에는 이미 논문 초안이 있는 사용자를 작성 다음의 무결성 확인 단계로 보내는 경우가 나온다.
+이 입력에서는 원고를 처음부터 다시 쓰기보다, 초안의 근거와 표시된 데이터를 점검한 뒤 검토 Skill로 넘기는 흐름을 따라갈 수 있다.
+검토 결과에 수정이 필요하면 수정 초안과 검토자 응답을 만들고, 재검토에서 남은 문제를 확인한다.[2]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+이 구조를 읽는 구체적인 방법은 한 주장이 수정 전후에 같은 참고문헌을 여전히 정확히 사용하고 있는지 추적하는 것이다.
+예를 들어 초안의 관찰 결과를 더 강한 인과 주장으로 바꾸었다면 문장 표현이 좋아졌다는 이유만으로 통과시키지 않고 원자료가 그 강도를 지지하는지 확인해야 한다.
+이 세부 상황은 이해를 위한 가상 예시이며 직접 실행한 결과가 아니다.
+사람은 수정 요구가 연구 질문을 벗어나지 않는지, 실제로 확인한 자료와 확인하지 못한 자료가 구분되는지, 최종 형식 변환 전에 제출 기준과 인용 스타일을 승인했는지 살펴야 한다.
+자동 검토의 의견을 받아들이는 것과 연구 판단을 위임하는 것은 다르다.
 
-## 4. 주제 라벨(Topics)
+## 멈추는 규칙도 기능의 일부다
 
-- academic-pipeline
-- academic-writing
-- ai-research
-- claude
-- claude-code
-- literature-review
-- peer-review
-- prompt-engineering
+Pipeline 문서의 체크포인트는 FULL, SLIM, MANDATORY로 나뉜다.
+반복적인 ‘계속’ 응답 뒤에는 설명을 줄일 수 있지만 중요한 무결성 실패, 검토 결정, 최종화 진입 같은 지점은 명시적 입력 없이 건너뛸 수 없다.
+‘완전 자동으로’라는 요청도 필수 승인 경계를 제거하지 않는다는 규칙이 있다.
+이는 단순한 친절한 안내가 아니라 단계 이동 조건이다.[2]
 
-## 5. 대략적인 동작 흐름
+검토를 여러 번 반복한다고 정확도가 자동으로 높아지는 것도 아니다.
+README는 현재 실제 검토가 `NOT_CALIBRATED`이며 보정 실험이 실제 사용에 완전히 연결되어 있지 않다고 밝힌다.
+인용과 주장의 일치 여부를 판단하는 기능에도 배포된 시험이 가짜 판정기로 도구 흐름을 검사한 것이며 실제 판정기의 보정 결과가 없다는 한계를 적고 있다.
+기능 존재와 효과의 실증을 분리해서 읽어야 한다.[1]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+설치 경로에 따라서도 제어 기능의 범위가 달라진다.
+핵심 Skill은 프롬프트 중심이고 일부 쓰기 범위 검사나 선택 명령에는 실제 Python이 필요하다.
+다른 플랫폼으로 가져오면 방법론은 옮겨가도 Claude Code 전용 hook과 하위 Agent 조정 기능은 그대로 이전되지 않는다고 안내한다.
+DOCX·PDF 출력도 Pandoc이나 추가 도구가 필요한 선택 경로다.[1]
 
-### 용어 풀이
+README는 CC BY-NC 4.0을 표시한다.
+따라서 일반적인 무제한 상업 사용 허가로 읽으면 안 된다.
+문헌 검색과 선택적 외부 모델 확인에는 외부 데이터 흐름이 있으므로, 미공개 원고나 개인정보를 제공하기 전 설치 방식별 연결·권한과 데이터 처리 안내를 확인해야 한다.[1]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+## 직접 읽어볼 자료
 
+- [README의 역할과 한계 설명](https://github.com/Imbad0202/academic-research-skills/blob/main/README.md)
 
-## 6. 사용자 생각
+  ‘AI is your copilot’ 문단과 Features at a glance를 먼저 읽는다.
+  검토 기능의 존재와 실제 보정 여부를 구별하고, 연구 책임이 어디에 남는지 확인한다.
+
+- [Academic Pipeline 지침](https://github.com/Imbad0202/academic-research-skills/blob/main/academic-pipeline/SKILL.md)
+
+  단계 표와 상태 전환, Adaptive Checkpoint System을 연결해서 읽는다.
+  기존 초안으로 들어가는 위치와 사용자의 승인이 필요한 경계가 핵심이다.
+
+- [README의 Quick install](https://github.com/Imbad0202/academic-research-skills/blob/main/README.md)
+
+  설치 채널별 제어 차이, 선택적 Python과 문서 변환 도구를 확인한다.
+  가져오기 기능이 모든 안전장치의 동일한 동작까지 의미하지 않는다는 주의문을 함께 읽는다.
+
+## 정리
+
+이 프로젝트는 연구 자료와 원고, 검토 의견을 단계별 산출물과 승인 경계로 연결한다.
+논문 작성 보조 흐름을 제공하지만 연구 타당성이나 실제 심사 통과를 보증하지 않으며, 자동 검사에는 선언된 범위와 미검증 한계가 남는다.
+
+## 자료 확인 범위
+
+2026-09-27에 수집한 기존 문서, README의 핵심 기능·설치·한계 부분, 루트 구성과 Pipeline 지침을 확인했다.
+Skill 실행, 문헌 검증 API 호출, 논문 작성·심사와 형식 변환은 수행하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -88,13 +110,19 @@ Academic Research Skills for Claude Code: research → write → review → revi
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] Imbad0202/academic-research-skills — README.md
+
+<https://github.com/Imbad0202/academic-research-skills/blob/main/README.md>
+
+[2] Imbad0202/academic-research-skills — academic-pipeline/SKILL.md
+
+<https://github.com/Imbad0202/academic-research-skills/blob/main/academic-pipeline/SKILL.md>

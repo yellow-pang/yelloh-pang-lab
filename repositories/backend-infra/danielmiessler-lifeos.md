@@ -5,7 +5,7 @@ url: "https://github.com/danielmiessler/LifeOS"
 category: "backend-infra"
 created: "2026-09-14"
 status: "draft"
-star_reason: "GitHub Star 분류 초안"
+star_reason: ""
 tags:
   - "backend-infra"
   - "starred-draft"
@@ -13,75 +13,100 @@ tags:
 
 # danielmiessler/LifeOS
 
-> https://github.com/danielmiessler/LifeOS
+## ⭐ 내가 이 Repository를 Star한 이유
 
-## 0. 조사 배경
+<!-- 사용자 작성 -->
 
-이 문서는 `repositories/github-stars-classified.md` 초안 대상에서 가져온 항목을 대상으로, GitHub API에서 제공되는 공식 메타데이터를 기준으로 정리했습니다.
+## 한 줄 요약
 
-## 1. 한 줄 요약
+LifeOS는 사용자의 목표와 맥락을 AI 작업 환경에 연결하는 개인화 계층이다.
+이름에 Operating System이 들어 있지만 컴퓨터의 운영체제를 대체하는 소프트웨어는 아니다.
+기존 AI 에이전트 실행 도구 위에 기억, Skill, 작업 분기와 사용자 문맥을 더하는 시스템으로 소개된다.[1]
 
-⛰️ The Life Operating System — an intent engineering platform that moves you from your current state to your ideal state, in life and work.
+## 매번 자신을 설명해야 하는 문제
 
-## 2. GitHub 공식 정보 (검증 가능한 사실)
+AI에게 한 번의 질문만 한다면 현재 대화에 필요한 정보만 알려 주면 된다.
+반면 여러 세션에 걸친 개인 프로젝트나 학습 목표를 다루면 이전 결정과 선호를 다시 설명해야 한다.
+LifeOS는 현재 상태와 원하는 상태를 중심으로 개인 맥락을 유지하고, 그 맥락을 이후 작업에 활용하는 방향을 제시한다.
+목표를 자동으로 달성한다는 실험 결과가 아니라 프로젝트가 지향하는 운영 방식이다.[1]
 
-- 주 언어: TypeScript
-- Star 수: 19013
-- Fork 수: 2465
-- 최근 수정일: 2026-09-14
-- 라이선스: MIT License
-- 기본 브랜치: main
-- 홈페이지만의 페이지: https://ourlifeos.ai
-- 아카이브 상태: 아님
-- 활성도: 사용 가능
+README의 harness는 AI 모델이 파일·도구를 사용하며 작업하는 실행 틀을 가리킨다.
+LifeOS는 그 위에 얹히는 계층이므로 모델 자체도, 독립적인 채팅 서비스도 아니다.
+Skill은 특정 작업을 수행하는 지침과 도구 묶음이고, hook은 실행 과정의 특정 시점에 연결되는 처리다.
+이 구성들을 사용자 정보와 결합해 일관된 작업 환경을 만들려는 구조다.[1][2]
 
-## 3. 이 Repository는 무엇인가?
+## 하나의 배포 묶음 안에 있는 두 단계
 
-- 목적: `⛰️ The Life Operating System — an intent engineering platform that moves you from your current state to your ideal state, in life and work.`를 공식 설명으로 시작점으로 둡니다.
-- 해결하려는 문제: 저장소 소개의 범위 안에서 기능을 확인하면 알 수 있습니다. README/코드 검토 전 단계의 초안입니다.
-- 이 항목을 먼저 본 이유: 전체 우선순위 분류에서 해당 카테고리로 들어와 추가 검토 대상이었기 때문입니다.
+공식 `LifeOS/SKILL.md`는 `LifeOS/` 디렉터리를 자체 완결적인 배포 단위라고 설명한다.
+진입 지침, Workflows, Tools와 설치용 payload가 함께 포함된다.
+따라서 “Skill 하나”라는 말이 작은 프롬프트 한 장만 추가한다는 뜻은 아니다.
+실제 설정 파일과 hook, 사용자 디렉터리에 영향을 주는 설치 흐름이 들어 있다.[2]
 
+기본 흐름은 Setup과 Interview로 나뉜다.
+Setup은 운영체제와 harness를 확인하고 충돌을 드러내며, 사용자 트리와 통합 지점을 준비하는 단계다.
+Interview는 사용자 정체성과 현재·이상 상태를 받아 TELOS 맥락을 채우고 Pulse 화면을 준비하는 단계다.
+TELOS는 이 프로젝트에서 개인 목표와 방향을 구조화하는 중심 개념이며, Pulse는 그 상태를 보여 주는 화면으로 설명된다.[2]
 
-## 3-1. 쉽게 읽는 한 줄
+분기 표에는 setup, interview, doctor, update, uninstall이 각각 다른 처리로 연결된다.
+특히 doctor는 워크플로 문서 대신 진단 도구를 실행하는 경로다.
+기능이 살아 있는지, 고장 났는지, 사용자가 거절했는지, 상태가 오래되었는지를 구분한다.
+이 구분은 도구가 없을 때 무조건 설치하라고 반복하는 대신 실제 사용 가능 범위를 표현하려는 설계다.[2][3]
 
-- 공식 소개가 영문/복잡하게 보일 수 있어서 초안 단계에서는 핵심 용어만 정리했습니다.
-- 이 문서의 초점은 "GitHub 공식 소개"와 "카테고리/주제 라벨" 기준의 확인 가능한 범위입니다.
-- 정확한 동작 방식이나 사용 예시는 README 실습 후에 채울 예정입니다.
+## 예시로 따라가는 흐름
 
-## 4. 주제 라벨(Topics)
+공식 Skill에 있는 “install LifeOS” 사례를 문서 수준에서 따라가면, 입력은 AI 실행 도구에 주는 설치 요청이다.
+첫 단계는 환경을 파악하고 기존 설정과 충돌할 수 있는 부분을 보여 주는 것이다.
+hook 변경에서는 정확한 변경 내용을 제시하고 설정을 백업한 뒤 명시적인 승인을 기다리도록 규정한다.
+사용자 맥락을 수집하는 인터뷰보다 실행 환경 준비가 먼저라는 순서도 명확하다.[2]
 
-- ai
-- ai-harness
-- augmentation
-- coding
-- humans
-- intent-engineering
-- lifeos
-- personal-ai
-- productivity
+환경 통합이 끝난 뒤에는 보조 AI의 이름, 사용자 정체성, 현재 상태와 원하는 상태를 묻는 Interview로 넘어간다.
+사용자가 제공한 기존 노트나 내보낸 자료가 있다면 이를 맥락 보강에 활용하고 Pulse를 채우는 흐름이다.
+여기서 중요한 입력은 AI가 추측한 사용자의 삶이 아니라 사용자가 직접 알려 준 내용과 제공한 자료다.
+이 글에서도 특정 목표나 실제 개인 기록을 만들어 예시 데이터로 넣지 않았다.[2]
 
-## 5. 대략적인 동작 흐름
+결과를 확인하는 단계에서는 설치 지침의 완료 선언만 믿기보다 어떤 통합이 이루어졌는지와 어떤 외부 기능이 실제 준비됐는지를 분리해야 한다. `GETTING-STARTED.md`는 진단 결과를 안내하고, 별도 도구가 없으면 결과의 범위를 정직하게 표시하도록 설명한다.
+예컨대 교차 공급자 검토 도구가 없으면 검토 자체가 모두 사라지는 것이 아니라 같은 공급자 검토로 표시된다.
+위 과정은 공식 사례를 해설한 것이며 설치나 인터뷰를 실행한 기록이 아니다.[2][3]
 
-```text
-요청 또는 필요성 파악
-    ↓
-저장소의 코어 파일(도구, 라이브러리, 문서)
-    ↓
-실행/적용/테스트
-    ↓
-결과를 기준으로 다시 판단
-```
+## 선택 기능과 필수 의존성을 구분한다
 
-### 용어 풀이
+설치 후 안내는 많은 외부 도구를 선택 사항으로 다루지만 예외도 명시한다.
+Work System은 비공개 GitHub 저장소를 기록 기준으로 사용하며 `gh`를 대체 경로 없이 호출하므로, 이 기능을 쓸 때 `gh`가 없으면 작업 기록이 실패한다고 설명한다.
+“대부분 선택”이라는 문장을 모든 기능에 확대하면 안 된다.[3]
 
-- **Repository**: GitHub에서 소스코드, 문서, 이슈를 한 번에 관리하는 저장소입니다.
-- **Issue**: 버그, 개선 요청, 질문을 기록하는 게시판입니다.
-- **Star**: 좋은 저장소라고 단정하는 등급이 아니라, 나중에 쉽게 찾기 위한 관심 표시입니다.
-- **License(라이선스)**: 코드를 어디까지 사용할 수 있는지(상업 이용, 수정, 배포 권한)를 정한 규칙입니다.
-- **Fork**: 기존 저장소를 복사해 내 환경에서 실험하는 기능입니다.
+진단 manifest 역시 최종 진실이 아니라 유효 기간을 가진 참고 캐시라고 설명된다.
+실제 기능 사용 시 다시 확인하며, 필요한 도구 없이 만든 결과는 제한을 표시한다.
+실제 브라우저 검증, 음성 알림, 영상 처리 등은 서로 다른 도구와 인증·자원 조건을 가진다.
+개인 정보가 포함된 자료를 어느 외부 API나 저장소에 연결할지도 사용자가 검토해야 한다.[3]
 
+README는 다양한 harness를 지향하지만 가장 많이 시험하는 경로를 별도로 밝힌다.
+이식 가능한 개념과 모든 환경에서 동일한 hook·기능이 바로 작동한다는 주장은 다르다.
+또한 로컬 모델 지원 등의 Roadmap 항목을 현재 구현 완료 목록으로 읽지 말아야 한다.
+설치 전 기존 설정 백업을 권하는 설명도 이런 통합형 시스템의 변경 범위를 보여 준다.[1][2]
 
-## 6. 사용자 생각
+## 직접 읽어볼 자료
+
+- [공식 README](https://github.com/danielmiessler/LifeOS/blob/main/README.md)
+  “무엇을 AI에게 요청하는가”와 “AI 작업 환경을 어떻게 운영하는가”의 차이를 FAQ에서 확인한다.
+  현재 기능 소개와 Roadmap을 분리해서 읽어 소개 문구를 지원 보장으로 확대하지 않는 것이 첫 순서다.
+- [설치·온보딩 Skill](https://github.com/danielmiessler/LifeOS/blob/main/LifeOS/SKILL.md)
+  Workflow Routing과 두 단계 설명을 연결해 읽는다.
+  단일 배포 디렉터리에 어떤 변경 도구가 포함되는지, 어느 시점에 사용자 승인이 필요한지 확인할 수 있다.
+- [설치 후 외부 도구 안내](https://github.com/danielmiessler/LifeOS/blob/main/LifeOS/GETTING-STARTED.md)
+  모든 항목을 설치 목록으로 보기보다 쓰려는 기능의 의존성을 찾는다.
+  특히 Work System의 `gh` 예외와 진단 캐시의 한계를 읽으면 “설치됨”과 “필요한 기능이 검증됨”을 나눌 수 있다.
+
+## 정리
+
+LifeOS는 개인 목표와 맥락을 기존 AI 작업 도구에 지속적으로 연결하려는 통합 계층이다.
+개인화의 깊이만큼 설정 변경과 데이터 연결의 범위가 있으므로, 기능 이름보다 설치 단계의 승인과 실제 의존성을 구분해 읽어야 한다.[1][2][3]
+
+## 자료 확인 범위
+
+2026-09-27 기준 README와 루트 구조, 설치 Skill, 설치 후 도구 안내를 확인했다.
+LifeOS를 설치하거나 현재 AI 환경을 변경하지 않았으며 개인화 효과를 실험하지 않았다.
+
+## 사용자 생각
 
 아래는 실제 판단을 넣기 전까지 비워두는 영역입니다.
 
@@ -89,13 +114,23 @@ tags:
 - [ ] 내 작업 환경에서 바로 적용할 수 있을까?
 - [ ] 실험 10~20분으로 검증 가능한 값이 있는가?
 
-## 7. 나중에 할 일
+## 나중에 할 일
 
 - [ ] README 전체 읽기
 - [ ] 설치/실행 예시가 있는지 확인
 - [ ] 장단점, 주의점, 대체안 비교
 - [ ] 블로그 글 제목/개인 결론 반영
 
-## 8. 정리
+## Sources
 
-이 문서는 기본 메타데이터 검증용 초안입니다. 실제 사용감은 README 실행/실험 후에 추가 보강 예정입니다.
+[1] danielmiessler/LifeOS — README.md
+
+<https://github.com/danielmiessler/LifeOS/blob/main/README.md>
+
+[2] danielmiessler/LifeOS — LifeOS/SKILL.md
+
+<https://github.com/danielmiessler/LifeOS/blob/main/LifeOS/SKILL.md>
+
+[3] danielmiessler/LifeOS — LifeOS/GETTING-STARTED.md
+
+<https://github.com/danielmiessler/LifeOS/blob/main/LifeOS/GETTING-STARTED.md>
